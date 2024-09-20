@@ -1,0 +1,51 @@
+.tables-Legend {
+  width: 70px;
+  padding-top: calc(60px - 7px);
+
+  .hour {
+    position: relative;
+    height: 30px;
+
+    .text {
+      font-size: 16px;
+      line-height: 16px;
+      color: #00000088;
+    }
+
+    .line {
+      position: absolute;
+      top: 7px;
+      right: 0;
+      width: 5px;
+      height: 1px;
+      background-color: #00000022;
+      z-index: 1;
+    }
+
+    &.midnight {
+      .text {
+        color: #000000bb;
+      }
+
+      .line {
+        background-color: #00000044;
+      }
+    }
+  }
+
+  > .line {
+    position: relative;
+    height: 7px;
+    z-index: 1;
+
+    &::before {
+      position: absolute;
+      top: 7px;
+      right: 0;
+      width: 5px;
+      height: 1px;
+      background-color: #00000022;
+      content: "";
+    }
+  }
+}

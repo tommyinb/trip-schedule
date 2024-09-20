@@ -1,0 +1,64 @@
+.tables-Column {
+  width: 200px;
+
+  .header {
+    height: 60px;
+
+    > .date {
+      text-align: center;
+
+      .date {
+        font-size: 24px;
+      }
+
+      .month {
+        color: #888;
+        font-size: 12px;
+      }
+    }
+
+    .weekday {
+      text-align: center;
+      font-size: 18px;
+    }
+
+    &.holiday {
+      > .date {
+        .date {
+          color: #a04747;
+        }
+      }
+
+      .weekday {
+        color: #a04747;
+      }
+    }
+  }
+
+  .cell {
+    height: 30px;
+    position: relative;
+
+    .line {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background-color: #00000022;
+      z-index: 1;
+    }
+
+    &.midnight {
+      .line {
+        background-color: #00000044;
+      }
+    }
+  }
+
+  .line {
+    height: 1px;
+    background-color: #00000022;
+    z-index: 1;
+  }
+}

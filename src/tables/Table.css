@@ -1,0 +1,18 @@
+.tables-Table {
+  display: flex;
+
+  > .column {
+    display: flex;
+
+    > .column {
+      margin-bottom: 5px;
+    }
+
+    > .line {
+      margin-top: calc(60px - 5px);
+      width: 1px;
+      background-color: #00000022;
+      z-index: 1;
+    }
+  }
+}
