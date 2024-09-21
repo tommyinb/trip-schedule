@@ -38,27 +38,47 @@ export function DeskCard({ card }: Props) {
   const { deskRef } = useContext(DeskContext);
 
   const outputRects = useMemo(() => {
-    const deskRect = deskRef.current?.getBoundingClientRect();
+    const groupRects = rectGroups.map((rects, index) => {
+      const firstRect = rects[0];
 
-    return rectGroups.map((rects) => {
-      const left =
-        Math.min(...rects.map((rect) => rect.left)) - (deskRect?.left ?? 0);
-      const top =
-        Math.min(...rects.map((rect) => rect.top)) - (deskRect?.top ?? 0);
+      const sortedRects = [...rects].sort((a, b) => a.top - b.top);
 
-      const right =
-        Math.max(...rects.map((rect) => rect.right)) - (deskRect?.left ?? 0);
-      const bottom =
-        Math.max(...rects.map((rect) => rect.bottom)) - (deskRect?.top ?? 0);
+      const topRect = sortedRects[0];
+      const topValue =
+        topRect.top +
+        (index <= 0
+          ? (card.content.time.getMinutes() / 60) * topRect.height
+          : 0);
+
+      const minuteValue =
+        Math.round(
+          card.content.time.getMinutes() + card.content.duration / 1000 / 60
+        ) % 60;
+
+      const bottomRect = sortedRects[sortedRects.length - 1];
+      const bottomValue =
+        bottomRect.bottom -
+        (index >= rectGroups.length - 1 && minuteValue > 0
+          ? ((60 - minuteValue) / 60) * bottomRect.height
+          : 0);
 
       return {
-        left,
-        top,
-        width: right - left,
-        height: bottom - top,
+        left: firstRect.left,
+        top: topValue,
+        width: firstRect.right - firstRect.left,
+        height: bottomValue - topValue,
       };
     });
-  }, [deskRef, rectGroups]);
+
+    const deskRect = deskRef.current?.getBoundingClientRect();
+
+    return groupRects.map((rect) => ({
+      left: rect.left - (deskRect?.left ?? 0),
+      top: rect.top - (deskRect?.top ?? 0),
+      width: rect.width,
+      height: rect.height,
+    }));
+  }, [card.content.duration, card.content.time, deskRef, rectGroups]);
 
   return outputRects.map((rect, index) => (
     <DeskCardArea key={index} card={card} {...rect} />

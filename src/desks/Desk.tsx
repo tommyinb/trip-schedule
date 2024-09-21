@@ -15,7 +15,7 @@ export function Desk({ children }: PropsWithChildren) {
       content: {
         name: "John Doe",
         location: "Hong Kong",
-        time: new Date("2024-09-22T11:00:00"),
+        time: new Date("2024-09-23T11:00:00"),
         duration: 2 * 60 * 60 * 1000,
       },
     },
@@ -25,7 +25,7 @@ export function Desk({ children }: PropsWithChildren) {
       content: {
         name: "Jane Doe",
         location: "Hong Kong",
-        time: new Date("2024-09-23T13:00:00"),
+        time: new Date("2024-09-24T13:00:00"),
         duration: 1 * 60 * 60 * 1000,
       },
     },

@@ -1,4 +1,6 @@
 import { useContext, useEffect, useRef, useState } from "react";
+import { EditContext } from "../edits/EditContext";
+import { TargetType } from "../edits/targetType";
 import { Card } from "./card";
 import { CardState } from "./cardState";
 import "./DeskCardArea.css";
@@ -44,6 +46,8 @@ export function DeskCardArea({ card, left, top, width, height }: Props) {
       return () => clearTimeout(timer);
     }
   }, [card, cards, pointer, setCards]);
+
+  const { target, setTarget } = useContext(EditContext);
 
   return (
     <div
@@ -167,6 +171,10 @@ export function DeskCardArea({ card, left, top, width, height }: Props) {
 
         if (pointer.status === PointerState.Down) {
           setCards(replace(cards, card, { ...card, state: CardState.Idle }));
+
+          if (!target || target.card !== card) {
+            setTarget({ type: TargetType.Update, card });
+          }
         } else if (pointer.status === PointerState.Drag) {
           setCards(
             replace(without(cards, card), pointer.newCard, {

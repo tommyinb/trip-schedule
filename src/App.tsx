@@ -1,5 +1,6 @@
 import "./App.css";
 import { Desk } from "./desks/Desk";
+import { Edit } from "./edits/Edit";
 import { Table } from "./tables/Table";
 import { TripProvider } from "./trips/TripProvider";
 
@@ -9,9 +10,11 @@ function App() {
       <h1>Trip Schedule</h1>
 
       <TripProvider>
-        <Desk>
-          <Table />
-        </Desk>
+        <Edit>
+          <Desk>
+            <Table />
+          </Desk>
+        </Edit>
       </TripProvider>
     </div>
   );
