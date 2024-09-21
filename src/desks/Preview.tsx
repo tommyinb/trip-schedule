@@ -58,24 +58,26 @@ export function Preview({ className, card }: Props) {
 
   return (
     <div className={`desks-Preview ${className}`}>
-      {nameVisible && <div className="name">{card.content.name}</div>}
+      <div className="display">
+        {nameVisible && <div className="name">{card.content.name}</div>}
 
-      {locationVisible && (
-        <div className="location">{card.content.location}</div>
-      )}
+        {locationVisible && (
+          <div className="location">{card.content.location}</div>
+        )}
 
-      {timeVisible && (
-        <div className="time">
-          {card.content.time.getHours().toString().padStart(2, "0")}:
-          {card.content.time.getMinutes().toString().padStart(2, "0")}
-        </div>
-      )}
+        {timeVisible && (
+          <div className="time">
+            {card.content.time.getHours().toString().padStart(2, "0")}:
+            {card.content.time.getMinutes().toString().padStart(2, "0")}
+          </div>
+        )}
 
-      {durationVisible && (
-        <div className="duration">
-          {card.content.duration / (60 * 1000)} minutes
-        </div>
-      )}
+        {durationVisible && (
+          <div className="duration">
+            {card.content.duration / (60 * 1000)} minutes
+          </div>
+        )}
+      </div>
 
       <div className="measure" ref={measureRef}>
         <div className="name" ref={nameRef}>
