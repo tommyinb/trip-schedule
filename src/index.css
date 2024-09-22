@@ -6,3 +6,19 @@ body {
   padding: 0;
   font-family: "Montserrat", sans-serif;
 }
+
+body {
+  overflow-y: scroll;
+}
+
+input {
+  font-family: inherit;
+}
+
+a {
+  color: inherit;
+
+  &:not(:hover) {
+    text-decoration: none;
+  }
+}

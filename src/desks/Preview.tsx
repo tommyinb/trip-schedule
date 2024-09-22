@@ -1,6 +1,7 @@
-import { useLayoutEffect, useRef, useState } from "react";
-import "./Preview.css";
+import { useLayoutEffect, useMemo, useRef, useState } from "react";
 import { Card } from "./card";
+import { getTimeText } from "./getTimeText";
+import "./Preview.css";
 
 export function Preview({ className, card }: Props) {
   const measureRef = useRef<HTMLDivElement>(null);
@@ -8,14 +9,19 @@ export function Preview({ className, card }: Props) {
   const [nameVisible, setNameVisible] = useState(false);
   const nameRef = useRef<HTMLDivElement>(null);
 
-  const [locationVisible, setLocationVisible] = useState(false);
-  const locationRef = useRef<HTMLDivElement>(null);
+  const timeText = useMemo(
+    () =>
+      `${getTimeText(card.content.time)} - ${getTimeText(
+        new Date(card.content.time.getTime() + card.content.duration)
+      )}`,
+    [card.content.duration, card.content.time]
+  );
 
   const [timeVisible, setTimeVisible] = useState(false);
   const timeRef = useRef<HTMLDivElement>(null);
 
-  const [durationVisible, setDurationVisible] = useState(false);
-  const durationRef = useRef<HTMLDivElement>(null);
+  const [locationVisible, setLocationVisible] = useState(false);
+  const locationRef = useRef<HTMLDivElement>(null);
 
   useLayoutEffect(() => {
     if (!measureRef.current) {
@@ -34,19 +40,14 @@ export function Preview({ className, card }: Props) {
         setNameVisible(nameRect.bottom <= measureRect.bottom);
       }
 
-      const locationRect = locationRef.current?.getBoundingClientRect();
-      if (locationRect) {
-        setLocationVisible(locationRect.bottom <= measureRect.bottom);
-      }
-
       const timeRect = timeRef.current?.getBoundingClientRect();
       if (timeRect) {
         setTimeVisible(timeRect.bottom <= measureRect.bottom);
       }
 
-      const durationRect = durationRef.current?.getBoundingClientRect();
-      if (durationRect) {
-        setDurationVisible(durationRect.bottom <= measureRect.bottom);
+      const locationRect = locationRef.current?.getBoundingClientRect();
+      if (locationRect) {
+        setLocationVisible(locationRect.bottom <= measureRect.bottom);
       }
     }
 
@@ -59,23 +60,12 @@ export function Preview({ className, card }: Props) {
   return (
     <div className={`desks-Preview ${className}`}>
       <div className="display">
+        {timeVisible && <div className="time">{timeText}</div>}
+
         {nameVisible && <div className="name">{card.content.name}</div>}
 
         {locationVisible && (
           <div className="location">{card.content.location}</div>
-        )}
-
-        {timeVisible && (
-          <div className="time">
-            {card.content.time.getHours().toString().padStart(2, "0")}:
-            {card.content.time.getMinutes().toString().padStart(2, "0")}
-          </div>
-        )}
-
-        {durationVisible && (
-          <div className="duration">
-            {card.content.duration / (60 * 1000)} minutes
-          </div>
         )}
       </div>
 
@@ -89,12 +79,7 @@ export function Preview({ className, card }: Props) {
         </div>
 
         <div className="time" ref={timeRef}>
-          {card.content.time.getHours().toString().padStart(2, "0")}:
-          {card.content.time.getMinutes().toString().padStart(2, "0")}
-        </div>
-
-        <div className="duration" ref={durationRef}>
-          {card.content.duration / (60 * 1000)} minutes
+          {timeText}
         </div>
       </div>
     </div>

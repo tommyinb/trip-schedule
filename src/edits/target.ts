@@ -1,7 +1,8 @@
-import { Card } from "../desks/card";
 import { TargetType } from "./targetType";
 
 export interface Target {
+  targetId: number;
   type: TargetType;
-  card: Card;
+
+  cardId: number;
 }

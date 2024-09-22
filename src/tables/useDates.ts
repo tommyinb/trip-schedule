@@ -5,7 +5,12 @@ export function useDates() {
   const { startDate, endDate, startHour, endHour } = useContext(TripContext);
 
   return useMemo(() => {
-    const fromDate = new Date(startDate);
+    const fromDate = new Date(
+      startDate.getFullYear(),
+      startDate.getMonth(),
+      startDate.getDate()
+    );
+
     if (startDate.getHours() < startHour && startDate.getHours() <= endHour) {
       fromDate.setDate(fromDate.getDate() - 1);
     }

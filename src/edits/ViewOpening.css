@@ -1,0 +1,30 @@
+.edits-ViewOpening {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  .weekdays {
+    display: flex;
+    gap: 2px;
+
+    .weekday {
+      min-width: 45px;
+      padding-top: 1px;
+      border-bottom: 1px solid #888;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 14px;
+
+      &:not(.active) {
+        border-color: #ccc;
+        color: #eee;
+      }
+    }
+  }
+
+  .time {
+    display: flex;
+    gap: 5px;
+  }
+}

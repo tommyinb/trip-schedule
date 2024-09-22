@@ -1,3 +1,20 @@
 .edits-Form {
-  position: absolute;
+  position: fixed;
+  left: auto;
+  right: auto;
+  bottom: 0;
+  box-sizing: border-box;
+  width: min(100%, 1000px);
+  background-color: #ffffffee;
+  backdrop-filter: blur(4px);
+  transition: 0.3s;
+  z-index: 3;
+
+  &:not(.active) {
+    transform: translateY(100%);
+  }
+
+  &.active {
+    box-shadow: 0px -5px 10px rgba(0, 0, 0, 0.1);
+  }
 }

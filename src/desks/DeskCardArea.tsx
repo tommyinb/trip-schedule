@@ -7,7 +7,6 @@ import "./DeskCardArea.css";
 import { DeskContext } from "./DeskContext";
 import { Preview } from "./Preview";
 import { replace } from "./replace";
-import { without } from "./without";
 
 export function DeskCardArea({ card, left, top, width, height }: Props) {
   const ref = useRef<HTMLDivElement>(null);
@@ -21,25 +20,25 @@ export function DeskCardArea({ card, left, top, width, height }: Props) {
   useEffect(() => {
     if (pointer.status === PointerState.Down) {
       const timer = setTimeout(() => {
-        const newCard = {
-          ...card,
-          id: Math.max(...cards.map((card) => card.id)) + 1,
-          state: CardState.Create,
-        };
+        const newId = Math.max(...cards.map((card) => card.id)) + 1;
 
         setPointer({
           status: PointerState.Drag,
           pointerId: pointer.pointerId,
           offsetY: pointer.offsetY,
-          newCard,
+          newCardId: newId,
         });
 
         setCards([
           ...replace(cards, card, {
             ...card,
-            state: CardState.Drag,
+            state: CardState.Dragging,
           }),
-          newCard,
+          {
+            ...card,
+            id: newId,
+            state: CardState.Creating,
+          },
         ]);
       }, 500);
 
@@ -51,7 +50,9 @@ export function DeskCardArea({ card, left, top, width, height }: Props) {
 
   return (
     <div
-      className={`desks-DeskCardArea ${card.state}`}
+      className={`desks-DeskCardArea ${card.state} ${
+        target?.cardId === card.id ? "edit" : ""
+      }`}
       ref={ref}
       style={{ left, top, width, height }}
       onPointerDown={(event) => {
@@ -70,6 +71,10 @@ export function DeskCardArea({ card, left, top, width, height }: Props) {
           clientY: event.clientY,
           offsetY: rect ? event.clientY - rect.top : 0,
         });
+
+        if (target) {
+          setTarget(undefined);
+        }
       }}
       onPointerMove={(event) => {
         if (pointer.status === PointerState.Idle) {
@@ -89,28 +94,38 @@ export function DeskCardArea({ card, left, top, width, height }: Props) {
             return;
           }
 
-          fromCard = {
-            ...card,
-            id: Math.max(...cards.map((card) => card.id)) + 1,
-            state: CardState.Create,
-          };
+          const newId = Math.max(...cards.map((card) => card.id)) + 1;
 
           setPointer({
             status: PointerState.Drag,
             pointerId: pointer.pointerId,
             offsetY: pointer.offsetY,
-            newCard: fromCard,
+            newCardId: newId,
           });
+
+          fromCard = {
+            ...card,
+            id: newId,
+            state: CardState.Creating,
+          };
 
           setCards([
             ...replace(cards, card, {
               ...card,
-              state: CardState.Drag,
+              state: CardState.Dragging,
             }),
             fromCard,
           ]);
         } else {
-          fromCard = pointer.newCard;
+          const pointerCard = cards.find(
+            (card) => card.id === pointer.newCardId
+          );
+
+          if (!pointerCard) {
+            return;
+          }
+
+          fromCard = pointerCard;
         }
 
         const cells = document.querySelectorAll("[data-date][data-hour]");
@@ -147,13 +162,6 @@ export function DeskCardArea({ card, left, top, width, height }: Props) {
           },
         };
 
-        setPointer({
-          status: PointerState.Drag,
-          pointerId: pointer.pointerId,
-          offsetY: pointer.offsetY,
-          newCard: toCard,
-        });
-
         setCards((cards) => replace(cards, fromCard, toCard));
       }}
       onPointerUp={(event) => {
@@ -172,16 +180,30 @@ export function DeskCardArea({ card, left, top, width, height }: Props) {
         if (pointer.status === PointerState.Down) {
           setCards(replace(cards, card, { ...card, state: CardState.Idle }));
 
-          if (!target || target.card !== card) {
-            setTarget({ type: TargetType.Update, card });
-          }
-        } else if (pointer.status === PointerState.Drag) {
-          setCards(
-            replace(without(cards, card), pointer.newCard, {
-              ...pointer.newCard,
-              state: CardState.Idle,
-            })
+          setTarget({
+            targetId: (target?.targetId ?? 0) + 1,
+            type: TargetType.Update,
+            cardId: card.id,
+          });
+        } else {
+          const pointerCard = cards.find(
+            (card) => card.id === pointer.newCardId
           );
+          if (pointerCard) {
+            setCards(
+              replace(
+                replace(cards, card, {
+                  ...card,
+                  state: CardState.Deleted,
+                }),
+                pointerCard,
+                {
+                  ...pointerCard,
+                  state: CardState.Idle,
+                }
+              )
+            );
+          }
         }
       }}
       onPointerCancel={(event) => {
@@ -199,13 +221,25 @@ export function DeskCardArea({ card, left, top, width, height }: Props) {
 
         if (pointer.status === PointerState.Down) {
           setCards(replace(cards, card, { ...card, state: CardState.Idle }));
-        } else if (pointer.status === PointerState.Drag) {
-          setCards(
-            replace(without(cards, card), pointer.newCard, {
-              ...pointer.newCard,
-              state: CardState.Idle,
-            })
+        } else {
+          const pointerCard = cards.find(
+            (card) => card.id === pointer.newCardId
           );
+          if (pointerCard) {
+            setCards(
+              replace(
+                replace(cards, card, {
+                  ...card,
+                  state: CardState.Deleted,
+                }),
+                pointerCard,
+                {
+                  ...pointerCard,
+                  state: CardState.Idle,
+                }
+              )
+            );
+          }
         }
       }}
     >
@@ -251,5 +285,5 @@ interface PointerDrag {
   pointerId: number;
   offsetY: number;
 
-  newCard: Card;
+  newCardId: number;
 }

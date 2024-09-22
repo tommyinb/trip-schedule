@@ -3,7 +3,7 @@ import { Target } from "./target";
 
 export const EditContext = createContext<{
   target: Target | undefined;
-  setTarget: (target: Target) => void;
+  setTarget: (target: Target | undefined) => void;
 }>({
   target: undefined,
   setTarget: () => {},

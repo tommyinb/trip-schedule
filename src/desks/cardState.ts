@@ -1,5 +1,6 @@
 export enum CardState {
-  Create = "create",
+  Creating = "creating",
   Idle = "idle",
-  Drag = "drag",
+  Dragging = "dragging",
+  Deleted = "deleted",
 }

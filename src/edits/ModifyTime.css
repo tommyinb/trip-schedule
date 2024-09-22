@@ -1,0 +1,46 @@
+.edits-ModifyTime {
+  border-bottom: 1px solid #ccc;
+  display: flex;
+  align-items: center;
+
+  .left,
+  .right {
+    width: 20px;
+    height: 20px;
+    border-radius: 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.3s;
+
+    &:hover,
+    &:active {
+      background-color: #77e4c8;
+    }
+
+    &::after {
+      width: 14px;
+      height: 14px;
+      background-image: url(./arrow.svg);
+      background-size: contain;
+      content: "";
+      transition: 0.3s;
+    }
+  }
+
+  .text {
+    width: 80px;
+    border: none;
+    padding: 6px 10px 5px;
+    font-size: 14px;
+    color: #444;
+
+    &.invalid {
+      color: #a04747;
+    }
+  }
+
+  .right {
+    transform: rotate(180deg);
+  }
+}

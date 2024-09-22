@@ -14,12 +14,21 @@
     flex: 1;
   }
 
-  &.create {
+  &.creating {
     transform: translate(-5px, -5px);
     opacity: 0.8;
   }
 
-  &.drag {
+  &.dragging {
     opacity: 0.2;
+  }
+
+  &.edit {
+    background: #36c2ce;
+    color: #fff;
+  }
+
+  &.deleted {
+    opacity: 0;
   }
 }

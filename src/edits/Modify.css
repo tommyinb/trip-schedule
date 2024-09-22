@@ -1,0 +1,102 @@
+.edits-Modify {
+  padding: 35px 50px;
+
+  .header {
+    display: flex;
+    align-items: center;
+
+    .back,
+    .close {
+      width: 36px;
+      height: 36px;
+      border-radius: 12px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      &::after {
+        width: 20px;
+        height: 20px;
+        background-size: cover;
+        content: "";
+      }
+
+      &:hover,
+      &:active {
+        background-color: #77e4c8;
+      }
+    }
+
+    .back {
+      &::after {
+        background-image: url(./arrow.svg);
+      }
+    }
+
+    .name {
+      flex: 1;
+      border: none;
+      border-bottom: 1px solid #ccc;
+      padding: 6px 10px 5px;
+      font-size: 16px;
+      color: #444;
+    }
+
+    .close {
+      &::after {
+        background-image: url(./cross.svg);
+      }
+    }
+  }
+
+  > .content {
+    margin-top: 10px;
+    margin-right: 36px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    .location,
+    .time,
+    .duration,
+    .remark,
+    .opening {
+      display: flex;
+      align-items: center;
+
+      .label {
+        min-width: 120px;
+        font-size: 14px;
+        color: #888;
+      }
+    }
+
+    .location {
+      .value {
+        flex: 1;
+        border: none;
+        border-bottom: 1px solid #ccc;
+        padding: 6px 10px 5px;
+        font-size: 14px;
+        color: #444;
+      }
+    }
+
+    > .time {
+      display: flex;
+    }
+
+    .remark {
+      .value {
+        flex: 1;
+        min-height: 80px;
+        border: none;
+        border-right: 1px solid #eee;
+        border-bottom: 1px solid #ccc;
+        padding: 6px 10px 5px;
+        font-size: 14px;
+        color: #444;
+      }
+    }
+  }
+}

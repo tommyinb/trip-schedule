@@ -8,12 +8,20 @@ export function DeskCard({ card }: Props) {
   const [cells, setCells] = useState<Element[]>([]);
 
   useLayoutEffect(() => {
-    const times = Array.from({
-      length: card.content.duration / (60 * 60 * 1000),
-    }).map(
-      (_, index) =>
-        new Date(card.content.time.getTime() + index * 60 * 60 * 1000)
-    );
+    const times = [];
+
+    for (
+      let time = new Date(
+        card.content.time.getFullYear(),
+        card.content.time.getMonth(),
+        card.content.time.getDate(),
+        card.content.time.getHours()
+      );
+      time < new Date(card.content.time.getTime() + card.content.duration);
+      time = new Date(time.getTime() + 60 * 60 * 1000)
+    ) {
+      times.push(time);
+    }
 
     const elements = times.map((time) =>
       document.querySelector(
@@ -28,7 +36,7 @@ export function DeskCard({ card }: Props) {
     const cellRects = cells.map((cell) => cell.getBoundingClientRect());
 
     const allLefts = cellRects.map((rect) => rect.left);
-    const uniqueLefts = [...new Set(allLefts)].sort();
+    const uniqueLefts = [...new Set(allLefts)].sort((a, b) => a - b);
 
     return uniqueLefts.map((left) =>
       cellRects.filter((rect) => rect.left === left)
@@ -58,8 +66,10 @@ export function DeskCard({ card }: Props) {
       const bottomRect = sortedRects[sortedRects.length - 1];
       const bottomValue =
         bottomRect.bottom -
-        (index >= rectGroups.length - 1 && minuteValue > 0
-          ? ((60 - minuteValue) / 60) * bottomRect.height
+        (index >= rectGroups.length - 1
+          ? minuteValue > 0
+            ? ((60 - minuteValue) / 60) * bottomRect.height
+            : 0
           : 0);
 
       return {
@@ -80,9 +90,13 @@ export function DeskCard({ card }: Props) {
     }));
   }, [card.content.duration, card.content.time, deskRef, rectGroups]);
 
-  return outputRects.map((rect, index) => (
-    <DeskCardArea key={index} card={card} {...rect} />
-  ));
+  return (
+    <>
+      {outputRects.map((rect) => (
+        <DeskCardArea key={rect.left} card={card} {...rect} />
+      ))}
+    </>
+  );
 }
 
 interface Props {

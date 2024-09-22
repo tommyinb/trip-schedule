@@ -1,22 +1,42 @@
-import { useContext } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
+import { DeskContext } from "../desks/DeskContext";
 import { EditContext } from "./EditContext";
 import "./Form.css";
+import { FormState } from "./formState";
+import { Modify } from "./Modify";
+import { View } from "./View";
 
 export function Form() {
-  const { target } = useContext(EditContext);
+  const { target: editTarget } = useContext(EditContext);
+
+  const [state, setState] = useState<FormState>(FormState.View);
+
+  const [lastTarget, setLastTarget] = useState(editTarget);
+
+  useEffect(() => {
+    if (editTarget) {
+      setLastTarget(editTarget);
+      setState(FormState.View);
+    }
+  }, [editTarget]);
+
+  const outputTarget = useMemo(
+    () => editTarget ?? lastTarget,
+    [editTarget, lastTarget]
+  );
+
+  const { cards } = useContext(DeskContext);
+  const card = cards.find((card) => card.id === outputTarget?.cardId);
 
   return (
-    <div className="edits-Form">
-      <h1>Form</h1>
-
-      {target && (
+    <div className={`edits-Form ${editTarget ? "active" : ""}`}>
+      {card && (
         <>
-          <div>{target.type}</div>
-          <div>{target.card.content.name}</div>
-          <div>{target.card.content.time.toLocaleDateString()}</div>
-          <div>{target.card.content.time.toLocaleTimeString()}</div>
-          <div>{target.card.content.duration}</div>
-          <div>{target.card.content.location}</div>
+          {state === FormState.View && <View card={card} setState={setState} />}
+
+          {state === FormState.Modify && (
+            <Modify key={card.id} card={card} setState={setState} />
+          )}
         </>
       )}
     </div>

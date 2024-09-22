@@ -10,6 +10,15 @@
     height: 100%;
     display: flex;
     flex-direction: column;
+    gap: 2px;
+  }
+
+  .display,
+  .measure {
+    .time,
+    .location {
+      font-size: 12px;
+    }
   }
 
   .display {
