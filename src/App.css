@@ -1,4 +1,8 @@
 .App {
   margin: auto;
-  max-width: 1000px;
+  width: min(100%, 1000px);
+
+  > h1 {
+    text-align: center;
+  }
 }
