@@ -1,11 +1,11 @@
-import "./Legend.css";
+import "./GridLegend.css";
 import { useDateHours } from "./useDateHours";
 
-export function Legend() {
+export function GridLegend() {
   const dateHours = useDateHours();
 
   return (
-    <div className="tables-Legend">
+    <div className="tables-GridLegend">
       {dateHours.map((dateHour) => (
         <div
           key={dateHour.hour}

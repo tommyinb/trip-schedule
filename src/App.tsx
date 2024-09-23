@@ -4,20 +4,21 @@ import { DeskProvider } from "./desks/DeskProvider";
 import { Edit } from "./edits/Edit";
 import { Compute } from "./reads/Compute";
 import { ReadProvider } from "./reads/ReadProvider";
-import { Table } from "./tables/Table";
+import { Grid } from "./tables/Grid";
+import { Header } from "./trips/Header";
 import { TripProvider } from "./trips/TripProvider";
 
 function App() {
   return (
     <div className="App">
-      <h1>Trip Schedule</h1>
-
       <TripProvider>
+        <Header />
+
         <ReadProvider>
           <DeskProvider>
             <Edit>
               <Desk>
-                <Table />
+                <Grid />
               </Desk>
             </Edit>
 

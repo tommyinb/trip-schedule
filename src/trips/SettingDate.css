@@ -1,0 +1,14 @@
+.trips-SettingDate {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  .label {
+    min-width: 140px;
+  }
+
+  .start,
+  .end {
+    flex: 1 1 0;
+  }
+}

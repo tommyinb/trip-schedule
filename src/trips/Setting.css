@@ -1,0 +1,15 @@
+.trips-Setting {
+  padding: 20px;
+
+  .period {
+    margin: auto;
+    width: 500px;
+  }
+
+  .time {
+    margin-top: 5px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 500px;
+  }
+}

@@ -2,6 +2,8 @@ import { PropsWithChildren, useMemo, useState } from "react";
 import { TripContext } from "./TripContext";
 
 export function TripProvider({ children }: PropsWithChildren) {
+  const [name, setName] = useState("Trip Schedule");
+
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(() => {
     const endDate = new Date(startDate);
@@ -16,6 +18,8 @@ export function TripProvider({ children }: PropsWithChildren) {
     <TripContext.Provider
       value={useMemo(
         () => ({
+          name,
+          setName,
           startDate,
           setStartDate,
           endDate,
@@ -25,7 +29,7 @@ export function TripProvider({ children }: PropsWithChildren) {
           endHour,
           setEndHour,
         }),
-        [endDate, endHour, startDate, startHour]
+        [endDate, endHour, name, startDate, startHour]
       )}
     >
       {children}

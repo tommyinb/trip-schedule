@@ -2,6 +2,7 @@ import { useCallback, useContext, useState } from "react";
 import { Card } from "../desks/card";
 import { DeskContext } from "../desks/DeskContext";
 import { replace } from "../desks/replace";
+import { SoftInput } from "../trips/SoftInput";
 import { getDurationText } from "./getDurationText";
 import "./ModifyDuration.css";
 
@@ -28,14 +29,30 @@ export function ModifyDuration({ card }: Props) {
   );
 
   return (
-    <div className="edits-ModifyDuration">
-      {card && (
-        <>
-          <div
-            className={`left ${
-              card.content.duration > 15 * 60 * 1000 ? "active" : ""
-            }`}
-            onClick={() => {
+    <SoftInput
+      className="edits-ModifyDuration"
+      text={text}
+      onText={(text) => {
+        setText(text);
+
+        const input = matchInput(text);
+        if (!input) {
+          setInvalid(true);
+          return;
+        }
+
+        if (input > 10 * 24 * 60) {
+          setInvalid(true);
+          return;
+        }
+
+        setDuration(input * 60 * 1000);
+        setInvalid(false);
+      }}
+      invalid={invalid}
+      onLeft={
+        card.content.duration > 15 * 60 * 1000
+          ? () => {
               const duration = Math.max(
                 (Math.floor(card.content.duration / (30 * 60 * 1000)) - 1) *
                   (30 * 60 * 1000),
@@ -45,50 +62,25 @@ export function ModifyDuration({ card }: Props) {
 
               setText(getDurationText(duration));
               setInvalid(false);
-            }}
-          />
-
-          <input
-            className={`text ${invalid ? "invalid" : ""}`}
-            value={text}
-            onChange={(event) => {
-              setText(event.target.value);
-
-              const input = matchInput(event.target.value);
-              if (!input) {
-                setInvalid(true);
-                return;
-              }
-
-              if (input > 10 * 24 * 60) {
-                setInvalid(true);
-                return;
-              }
-
-              setDuration(input * 60 * 1000);
-              setInvalid(false);
-            }}
-          />
-
-          <div
-            className={`right ${
-              card.content.duration < 1000 * 60 * 60 * 1000 ? "active" : ""
-            }`}
-            onClick={() => {
+            }
+          : undefined
+      }
+      onRight={
+        card.content.duration < 1000 * 60 * 60 * 1000
+          ? () => {
               const duration = Math.min(
                 (Math.floor(card.content.duration / (30 * 60 * 1000)) + 1) *
                   (30 * 60 * 1000),
                 1000 * 60 * 60 * 1000
               );
-              setDuration(duration * 60 * 1000);
+              setDuration(duration);
 
               setText(getDurationText(duration));
               setInvalid(false);
-            }}
-          />
-        </>
-      )}
-    </div>
+            }
+          : undefined
+      }
+    />
   );
 }
 

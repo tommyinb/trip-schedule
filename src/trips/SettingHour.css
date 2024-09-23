@@ -1,0 +1,23 @@
+.trips-SettingHour {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  .label {
+    min-width: 140px;
+  }
+
+  .start,
+  .end {
+    flex: 1 1 0;
+  }
+
+  .overnight {
+    color: #444;
+    transition: 0.3s;
+
+    &:not(.active) {
+      opacity: 0;
+    }
+  }
+}

@@ -1,6 +1,9 @@
 import { createContext } from "react";
 
 export const TripContext = createContext<{
+  name: string;
+  setName: (name: string) => void;
+
   startDate: Date;
   setStartDate: (date: Date) => void;
   endDate: Date;
@@ -11,6 +14,8 @@ export const TripContext = createContext<{
   endHour: number;
   setEndHour: (hour: number) => void;
 }>({
+  name: "Trip Schedule",
+  setName: () => {},
   startDate: new Date(),
   setStartDate: () => {},
   endDate: new Date(),

@@ -4,11 +4,9 @@ import { getCloseHours } from "./getCloseHours";
 import { ItemType } from "./itemType";
 import { ReadContext } from "./ReadContext";
 import { useComputeCloseHour } from "./useComputeCloseHour";
-import { useComputeDeleted } from "./useComputeDeleted";
 import { useComputeTimeClash } from "./useComputeTimeClash";
 
 export function Compute() {
-  useComputeDeleted();
   useComputeTimeClash();
   useComputeCloseHour();
 
