@@ -1,8 +1,8 @@
-import "./GridColumn.css";
+import "./Column.css";
 import { getDateText } from "./getDateText";
 import { useDateHours } from "./useDateHours";
 
-export function GridColumn({ className, date: columnDate }: Props) {
+export function Column({ className, date: columnDate }: Props) {
   const columnDateText = getDateText(columnDate);
 
   const nextDate = new Date(columnDate);
@@ -13,7 +13,7 @@ export function GridColumn({ className, date: columnDate }: Props) {
   const dateHours = useDateHours();
 
   return (
-    <div className={`tables-GridColumn ${className}`}>
+    <div className={`tables-Column ${className}`}>
       <div className={`header ${columnDate.getDay() === 0 ? "holiday" : ""}`}>
         <div className="date">
           <span className="date">{columnDate.getDate()}</span>

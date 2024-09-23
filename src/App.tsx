@@ -4,7 +4,7 @@ import { DeskProvider } from "./desks/DeskProvider";
 import { Edit } from "./edits/Edit";
 import { Compute } from "./reads/Compute";
 import { ReadProvider } from "./reads/ReadProvider";
-import { Grid } from "./tables/Grid";
+import { Table } from "./tables/Table";
 import { Header } from "./trips/Header";
 import { TripProvider } from "./trips/TripProvider";
 
@@ -18,7 +18,7 @@ function App() {
           <DeskProvider>
             <Edit>
               <Desk>
-                <Grid />
+                <Table />
               </Desk>
             </Edit>
 

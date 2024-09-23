@@ -1,24 +1,24 @@
 import { useContext } from "react";
 import { DeskContext } from "../desks/DeskContext";
-import "./Grid.css";
-import { GridColumn } from "./GridColumn";
-import { GridLegend } from "./GridLegend";
+import { Column } from "./Column";
+import { Legend } from "./Legend";
+import "./Table.css";
 import { useDates } from "./useDates";
 
-export function Grid() {
+export function Table() {
   const dates = useDates();
 
   const { gridRef } = useContext(DeskContext);
 
   return (
-    <div className="tables-Grid" ref={gridRef}>
-      <GridLegend />
+    <div className="tables-Table" ref={gridRef}>
+      <Legend />
 
       {dates.map((date) => (
         <div key={date.toISOString()} className="column">
           <div className="line" />
 
-          <GridColumn className="column" date={date} />
+          <Column className="column" date={date} />
         </div>
       ))}
     </div>
