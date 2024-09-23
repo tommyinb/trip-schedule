@@ -32,6 +32,7 @@ export function Modify({ card, setState }: Props) {
               })
             )
           }
+          placeholder="New Event"
         />
 
         <div

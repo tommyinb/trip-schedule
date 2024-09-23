@@ -27,7 +27,7 @@ export function DeskCardArea({ card, left, top, width, height }: Props) {
   useEffect(() => {
     if (pointer.status === PointerState.Down) {
       const timer = setTimeout(() => {
-        const newId = Math.max(...cards.map((card) => card.id)) + 1;
+        const newId = Math.max(-1, ...cards.map((card) => card.id)) + 1;
 
         setPointer({
           status: PointerState.Drag,
@@ -62,6 +62,7 @@ export function DeskCardArea({ card, left, top, width, height }: Props) {
       }`}
       ref={ref}
       style={{ left, top, width, height }}
+      data-card={card.id}
       onPointerDown={(event) => {
         if (pointer.status !== PointerState.Idle) {
           return;
@@ -101,7 +102,7 @@ export function DeskCardArea({ card, left, top, width, height }: Props) {
             return;
           }
 
-          const newId = Math.max(...cards.map((card) => card.id)) + 1;
+          const newId = Math.max(-1, ...cards.map((card) => card.id)) + 1;
 
           setPointer({
             status: PointerState.Drag,

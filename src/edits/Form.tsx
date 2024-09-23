@@ -5,12 +5,32 @@ import { EditContext } from "./EditContext";
 import "./Form.css";
 import { FormState } from "./formState";
 import { Modify } from "./Modify";
+import { TargetType } from "./targetType";
 import { View } from "./View";
 
 export function Form() {
   const { target: editTarget, setTarget } = useContext(EditContext);
 
   const [state, setState] = useState<FormState>(FormState.View);
+
+  const [lastTarget, setLastTarget] = useState(editTarget);
+
+  useEffect(() => {
+    if (editTarget) {
+      setLastTarget(editTarget);
+
+      setState(
+        editTarget.type === TargetType.Create
+          ? FormState.Modify
+          : FormState.View
+      );
+    }
+  }, [editTarget]);
+
+  const outputTarget = useMemo(
+    () => editTarget ?? lastTarget,
+    [editTarget, lastTarget]
+  );
 
   useKeyDown((event) => {
     if (event.key === "Escape") {
@@ -21,20 +41,6 @@ export function Form() {
       }
     }
   });
-
-  const [lastTarget, setLastTarget] = useState(editTarget);
-
-  useEffect(() => {
-    if (editTarget) {
-      setLastTarget(editTarget);
-      setState(FormState.View);
-    }
-  }, [editTarget]);
-
-  const outputTarget = useMemo(
-    () => editTarget ?? lastTarget,
-    [editTarget, lastTarget]
-  );
 
   const { cards } = useContext(DeskContext);
   const card = cards.find((card) => card.id === outputTarget?.cardId);

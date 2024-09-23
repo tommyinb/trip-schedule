@@ -21,7 +21,9 @@ export function View({ card, setState }: Props) {
   return (
     <div className="edits-View">
       <div className="header">
-        <div className="name">{card.content.name}</div>
+        <div className={`name ${card.content.name ? "active" : ""}`}>
+          {card.content.name || "New Event"}
+        </div>
 
         <div className="modify" onClick={() => setState(FormState.Modify)} />
         <div
