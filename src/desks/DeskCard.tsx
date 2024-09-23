@@ -3,6 +3,7 @@ import { getDateText } from "../tables/getDateText";
 import { Card } from "./card";
 import { DeskCardArea } from "./DeskCardArea";
 import { DeskContext } from "./DeskContext";
+import { group } from "./group";
 
 export function DeskCard({ card }: Props) {
   const [cells, setCells] = useState<Element[]>([]);
@@ -52,13 +53,9 @@ export function DeskCard({ card }: Props) {
 
   const rectGroups = useMemo(() => {
     const cellRects = cells.map((cell) => cell.getBoundingClientRect());
+    const sortedRects = cellRects.sort((a, b) => a.left - b.left);
 
-    const allLefts = cellRects.map((rect) => rect.left);
-    const uniqueLefts = [...new Set(allLefts)].sort((a, b) => a - b);
-
-    return uniqueLefts.map((left) =>
-      cellRects.filter((rect) => rect.left === left)
-    );
+    return group(sortedRects, (rect) => rect.left);
   }, [cells]);
 
   const outputRects = useMemo(() => {

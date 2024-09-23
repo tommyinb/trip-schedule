@@ -54,6 +54,18 @@ export function Preview({ className, card }: Props) {
     const observer = new ResizeObserver(update);
     observer.observe(measureRef.current);
 
+    if (nameRef.current) {
+      observer.observe(nameRef.current);
+    }
+
+    if (timeRef.current) {
+      observer.observe(timeRef.current);
+    }
+
+    if (locationRef.current) {
+      observer.observe(locationRef.current);
+    }
+
     return () => observer.disconnect();
   }, []);
 

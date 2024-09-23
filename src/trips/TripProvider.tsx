@@ -7,7 +7,7 @@ export function TripProvider({ children }: PropsWithChildren) {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(() => {
     const endDate = new Date(startDate);
-    endDate.setDate(endDate.getDate() + 2);
+    endDate.setDate(endDate.getDate() + 3);
     return endDate;
   });
 

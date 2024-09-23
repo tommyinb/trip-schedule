@@ -10,6 +10,7 @@ import { getDateText } from "./getDateText";
 import { getDurationText } from "./getDurationText";
 import "./View.css";
 import { ViewOpening } from "./ViewOpening";
+import { ViewRead } from "./ViewRead";
 import { ViewRemark } from "./ViewRemark";
 
 export function View({ card, setState }: Props) {
@@ -75,6 +76,8 @@ export function View({ card, setState }: Props) {
           </div>
         </div>
       )}
+
+      <ViewRead cardId={card.id} />
     </div>
   );
 }

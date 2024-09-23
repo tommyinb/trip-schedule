@@ -1,0 +1,11 @@
+.reads-ViewTimeClash {
+  border-radius: 20px;
+  background-color: #d8a25e;
+  padding: 8px 20px;
+  color: #fff;
+
+  .card {
+    text-decoration: underline;
+    cursor: pointer;
+  }
+}

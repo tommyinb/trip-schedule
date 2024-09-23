@@ -1,6 +1,7 @@
 .desks-DeskCardArea {
   position: absolute;
   box-sizing: border-box;
+  border-right: 5px solid #c1fcd3cc;
   border-radius: 5px;
   background: linear-gradient(100deg, #0ccda3cc, #c1fcd3cc);
   padding: 5px 6px;
@@ -23,13 +24,22 @@
     opacity: 0.2;
   }
 
-  &.edit {
-    background: #36c2ce;
-    color: #fff;
-  }
-
   &.deleted {
     opacity: 0;
     pointer-events: none;
+  }
+
+  &.edit {
+    background: #36c2cecc;
+    color: #fff;
+    z-index: 3;
+  }
+
+  &.clash {
+    border-right-color: #d8a25e;
+  }
+
+  &.close {
+    border-right-color: #a04747;
   }
 }

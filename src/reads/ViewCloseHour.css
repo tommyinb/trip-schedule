@@ -1,0 +1,11 @@
+.reads-ViewCloseHour {
+  border-radius: 20px;
+  background-color: #a04747;
+  padding: 8px 20px;
+  color: #fff;
+
+  .card {
+    text-decoration: underline;
+    cursor: pointer;
+  }
+}

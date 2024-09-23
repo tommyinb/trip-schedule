@@ -1,6 +1,8 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useMemo, useRef, useState } from "react";
 import { EditContext } from "../edits/EditContext";
 import { TargetType } from "../edits/targetType";
+import { ItemType } from "../reads/itemType";
+import { useCardItems } from "../reads/useCardItems";
 import { Card } from "./card";
 import { CardState } from "./cardState";
 import "./DeskCardArea.css";
@@ -9,6 +11,11 @@ import { Preview } from "./Preview";
 import { replace } from "./replace";
 
 export function DeskCardArea({ card, left, top, width, height }: Props) {
+  const { target, setTarget } = useContext(EditContext);
+
+  const items = useCardItems(card.id);
+  const itemTypes = useMemo(() => items.map((item) => item.type), [items]);
+
   const ref = useRef<HTMLDivElement>(null);
 
   const { cards, setCards } = useContext(DeskContext);
@@ -46,12 +53,12 @@ export function DeskCardArea({ card, left, top, width, height }: Props) {
     }
   }, [card, cards, pointer, setCards]);
 
-  const { target, setTarget } = useContext(EditContext);
-
   return (
     <div
       className={`desks-DeskCardArea ${card.state} ${
         target?.cardId === card.id ? "edit" : ""
+      } ${itemTypes.includes(ItemType.TimeClash) ? "clash" : ""} ${
+        itemTypes.includes(ItemType.CloseHour) ? "close" : ""
       }`}
       ref={ref}
       style={{ left, top, width, height }}

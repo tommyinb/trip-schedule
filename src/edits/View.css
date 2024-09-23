@@ -1,5 +1,5 @@
 .edits-View {
-  padding: 35px 50px;
+  padding: 35px 50px 25px;
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -73,7 +73,7 @@
   }
 
   .location,
-  .time,
+  > .time,
   .duration,
   .remark,
   .openings {
@@ -101,5 +101,9 @@
       flex-direction: column;
       gap: 3px;
     }
+  }
+
+  .read {
+    margin-left: 100px;
   }
 }

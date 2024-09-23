@@ -8,7 +8,7 @@
   background-color: #ffffffee;
   backdrop-filter: blur(4px);
   transition: 0.3s;
-  z-index: 3;
+  z-index: 4;
 
   &:not(.active) {
     transform: translateY(100%);
