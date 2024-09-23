@@ -6,31 +6,49 @@ import { DeskContext } from "./DeskContext";
 
 export function DeskCard({ card }: Props) {
   const [cells, setCells] = useState<Element[]>([]);
+  const { deskRef, gridRef } = useContext(DeskContext);
 
   useLayoutEffect(() => {
-    const times = [];
+    update();
+    function update() {
+      const times = [];
 
-    for (
-      let time = new Date(
-        card.content.time.getFullYear(),
-        card.content.time.getMonth(),
-        card.content.time.getDate(),
-        card.content.time.getHours()
+      for (
+        let time = new Date(
+          card.content.time.getFullYear(),
+          card.content.time.getMonth(),
+          card.content.time.getDate(),
+          card.content.time.getHours()
+        );
+        time < new Date(card.content.time.getTime() + card.content.duration);
+        time = new Date(time.getTime() + 60 * 60 * 1000)
+      ) {
+        times.push(time);
+      }
+
+      const elements = times.map((time) =>
+        gridRef.current?.querySelector(
+          `[data-date="${getDateText(time)}"][data-hour="${time.getHours()}"]`
+        )
       );
-      time < new Date(card.content.time.getTime() + card.content.duration);
-      time = new Date(time.getTime() + 60 * 60 * 1000)
-    ) {
-      times.push(time);
+
+      setCells(
+        elements.filter((element) => element).map((element) => element!)
+      );
     }
 
-    const elements = times.map((time) =>
-      document.querySelector(
-        `[data-date="${getDateText(time)}"][data-hour="${time.getHours()}"]`
-      )
-    );
+    const observer = new ResizeObserver(update);
 
-    setCells(elements.filter((element) => element).map((element) => element!));
-  }, [card.content.duration, card.content.time]);
+    if (deskRef.current) {
+      observer.observe(deskRef.current);
+    }
+
+    if (gridRef.current) {
+      observer.observe(gridRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [card.content.duration, card.content.time, deskRef, gridRef]);
 
   const rectGroups = useMemo(() => {
     const cellRects = cells.map((cell) => cell.getBoundingClientRect());
@@ -42,8 +60,6 @@ export function DeskCard({ card }: Props) {
       cellRects.filter((rect) => rect.left === left)
     );
   }, [cells]);
-
-  const { deskRef } = useContext(DeskContext);
 
   const outputRects = useMemo(() => {
     const groupRects = rectGroups.map((rects, index) => {
