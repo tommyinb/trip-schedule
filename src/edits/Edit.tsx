@@ -8,7 +8,16 @@ export function Edit({ children }: PropsWithChildren) {
   const [target, setTarget] = useState<Target>();
 
   return (
-    <div className="edits-Edit">
+    <div
+      className="edits-Edit"
+      onKeyDown={(event) => {
+        console.log("keydown", event);
+
+        if (event.key === "Escape") {
+          setTarget(undefined);
+        }
+      }}
+    >
       <EditContext.Provider
         value={useMemo(() => ({ target, setTarget }), [target])}
       >

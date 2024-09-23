@@ -1,5 +1,6 @@
 import { useContext, useEffect, useMemo, useState } from "react";
 import { DeskContext } from "../desks/DeskContext";
+import { useKeyDown } from "../trips/useKeyDown";
 import { EditContext } from "./EditContext";
 import "./Form.css";
 import { FormState } from "./formState";
@@ -7,9 +8,19 @@ import { Modify } from "./Modify";
 import { View } from "./View";
 
 export function Form() {
-  const { target: editTarget } = useContext(EditContext);
+  const { target: editTarget, setTarget } = useContext(EditContext);
 
   const [state, setState] = useState<FormState>(FormState.View);
+
+  useKeyDown((event) => {
+    if (event.key === "Escape") {
+      if (state === FormState.Modify) {
+        setState(FormState.View);
+      } else {
+        setTarget(undefined);
+      }
+    }
+  });
 
   const [lastTarget, setLastTarget] = useState(editTarget);
 
