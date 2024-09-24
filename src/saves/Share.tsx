@@ -8,14 +8,16 @@ import "./Share.css";
 export function Share() {
   const [uploadState, setUploadState] = useState(UploadState.Uploading);
 
-  const shareId = getShareId();
+  const [shareId, setShareId] = useState(getShareId);
   useEffect(() => {
     if (!shareId) {
-      const newId = (
-        Date.now() * 1000 +
-        Math.floor(Math.random() * 1000)
-      ).toString(36);
-      history.pushState(null, "", `?shareId=${newId}`);
+      const idValue =
+        Math.floor(Math.random() * 1000) * 10000000000000 + Date.now();
+      const idText = idValue.toString(36);
+
+      history.pushState(null, "", `?shareId=${idText}`);
+
+      setShareId(idText);
     }
   }, [shareId]);
 
