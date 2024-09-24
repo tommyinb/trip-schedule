@@ -8,7 +8,7 @@ import { getDurationText } from "./getDurationText";
 import "./ModifyDuration.css";
 
 export function ModifyDuration({ card }: Props) {
-  const { id } = useContext(SaveContext);
+  const { applyId: id } = useContext(SaveContext);
 
   const [text, setText] = useState(() =>
     getDurationText(card.content.duration)

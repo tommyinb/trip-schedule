@@ -1,15 +1,7 @@
-import { FileCard } from "./fileCard";
+import { FileContent } from "./fileContent";
 
 export interface File {
-  name: string;
+  content: FileContent;
 
-  startDate: Date;
-  endDate: Date;
-
-  startHour: number;
-  endHour: number;
-
-  editable: boolean;
-
-  cards: FileCard[];
+  editTime: Date;
 }

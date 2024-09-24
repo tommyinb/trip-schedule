@@ -1,9 +1,16 @@
 import { createContext, Dispatch, SetStateAction } from "react";
+import { File } from "./file";
 
 export const SaveContext = createContext<{
-  id: number;
-  setId: Dispatch<SetStateAction<number>>;
+  file: File | undefined;
+  setFile: (file: File | undefined) => void;
+
+  applyId: number;
+  setApplyId: Dispatch<SetStateAction<number>>;
 }>({
-  id: 0,
-  setId: () => {},
+  file: undefined,
+  setFile: () => {},
+
+  applyId: 0,
+  setApplyId: () => {},
 });

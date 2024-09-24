@@ -9,7 +9,10 @@ export function SettingEditable({ className }: Props) {
     <div className={`trips-SettingEditable ${className}`}>
       <div className="label">Edit Mode</div>
 
-      <div className="content" onClick={() => setEditable(!editable)}>
+      <div
+        className={`content ${editable ? "edit" : "view"}`}
+        onClick={() => setEditable(!editable)}
+      >
         <div className="left" />
 
         <div className={`value ${editable ? "edit" : "view"}`}>

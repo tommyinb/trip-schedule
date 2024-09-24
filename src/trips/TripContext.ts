@@ -1,6 +1,10 @@
 import { createContext } from "react";
+import { HeaderState } from "./headerState";
 
 export const TripContext = createContext<{
+  headerState: HeaderState;
+  setHeaderState: (state: HeaderState) => void;
+
   name: string;
   setName: (name: string) => void;
 
@@ -17,6 +21,8 @@ export const TripContext = createContext<{
   editable: boolean;
   setEditable: (editable: boolean) => void;
 }>({
+  headerState: HeaderState.View,
+  setHeaderState: () => {},
   name: "Trip Schedule",
   setName: () => {},
   startDate: new Date(),

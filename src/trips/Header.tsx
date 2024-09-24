@@ -1,27 +1,30 @@
-import { useState } from "react";
+import { useContext } from "react";
 import "./Header.css";
-import { HeaderName } from "./HeaderName";
+import { HeaderEdit } from "./HeaderEdit";
+import { HeaderShare } from "./HeaderShare";
 import { HeaderState } from "./headerState";
-import { Setting } from "./Setting";
-import { Slider } from "./Slider";
+import { HeaderView } from "./HeaderView";
+import { TripContext } from "./TripContext";
 import { useKeyDown } from "./useKeyDown";
 
 export function Header() {
-  const [state, setState] = useState(HeaderState.View);
+  const { headerState, setHeaderState } = useContext(TripContext);
 
   useKeyDown((event) => {
     if (event.key === "Escape") {
-      setState(HeaderState.View);
+      setHeaderState(HeaderState.View);
     }
   });
 
   return (
     <div className="trips-Header">
-      <HeaderName state={state} setState={setState} />
+      {headerState === HeaderState.View && (
+        <HeaderView setState={setHeaderState} />
+      )}
 
-      <Slider active={state === HeaderState.Edit}>
-        <Setting />
-      </Slider>
+      <HeaderEdit state={headerState} setState={setHeaderState} />
+
+      <HeaderShare state={headerState} setState={setHeaderState} />
     </div>
   );
 }

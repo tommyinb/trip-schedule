@@ -8,7 +8,7 @@ import "./ModifyTime.css";
 import { TimeInput } from "./TimeInput";
 
 export function ModifyTime({ card }: Props) {
-  const { id } = useContext(SaveContext);
+  const { applyId: id } = useContext(SaveContext);
 
   const { setCards } = useContext(DeskContext);
 

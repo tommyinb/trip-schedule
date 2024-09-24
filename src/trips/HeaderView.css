@@ -1,0 +1,64 @@
+.trips-HeaderView {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+
+  .text {
+    margin-left: calc(36px + 5px + 36px + 5px);
+    padding: 2px 2px 3px;
+    font-size: 32px;
+    font-weight: bold;
+  }
+
+  .edit,
+  .view,
+  .share {
+    width: 36px;
+    height: 36px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &::after {
+      width: 24px;
+      height: 24px;
+      background-size: contain;
+      content: "";
+    }
+  }
+
+  .edit,
+  .share {
+    &:hover,
+    &:active {
+      background-color: #77e4c8;
+    }
+  }
+
+  .edit {
+    &::after {
+      background-image: url(./gear.svg);
+    }
+  }
+
+  .view {
+    background-color: #eedf7a;
+
+    &::after {
+      background-image: url(./eye.svg);
+    }
+
+    &:hover,
+    &:active {
+      background-color: #d8a25e;
+    }
+  }
+
+  .share {
+    &::after {
+      background-image: url(./plane.svg);
+    }
+  }
+}

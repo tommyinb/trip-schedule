@@ -1,0 +1,31 @@
+.saves-Share {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  .url {
+    margin-left: calc(24px + 10px);
+    border-bottom: 1px solid #ccc;
+    background: #f8f8f8;
+    padding: 5px 10px;
+    font-size: 14px;
+  }
+
+  .loading {
+    width: 24px;
+    height: 24px;
+    background-image: url(./refresh.svg);
+    animation: saves-Share-loading 1s infinite;
+    transition: 1s 0.3s;
+
+    &:not(.active) {
+      opacity: 0;
+    }
+  }
+}
+
+@keyframes saves-Share-loading {
+  100% {
+    transform: rotate(360deg);
+  }
+}

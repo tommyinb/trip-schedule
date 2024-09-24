@@ -6,14 +6,18 @@ export function parseFile(text: string): File {
 
   return {
     ...value,
-    startDate: new Date(value.startDate),
-    endDate: new Date(value.endDate),
-    cards: value.cards.map((card) => ({
-      ...card,
-      content: {
-        ...card.content,
-        time: new Date(card.content.time),
-      },
-    })),
+    content: {
+      ...value.content,
+      startDate: new Date(value.content.startDate),
+      endDate: new Date(value.content.endDate),
+      cards: value.content.cards.map((card) => ({
+        ...card,
+        content: {
+          ...card.content,
+          time: new Date(card.content.time),
+        },
+      })),
+    },
+    editTime: new Date(value.editTime),
   };
 }

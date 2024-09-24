@@ -8,7 +8,7 @@ import { DateInput } from "./DateInput";
 import "./ModifyDate.css";
 
 export function ModifyDate({ card }: Props) {
-  const { id } = useContext(SaveContext);
+  const { applyId: id } = useContext(SaveContext);
 
   const cardDate = useMemo(
     () =>

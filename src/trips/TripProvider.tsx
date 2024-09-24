@@ -1,7 +1,10 @@
 import { PropsWithChildren, useMemo, useState } from "react";
 import { TripContext } from "./TripContext";
+import { HeaderState } from "./headerState";
 
 export function TripProvider({ children }: PropsWithChildren) {
+  const [headerState, setHeaderState] = useState(HeaderState.View);
+
   const [name, setName] = useState("Trip Schedule");
 
   const [startDate, setStartDate] = useState(new Date());
@@ -20,6 +23,8 @@ export function TripProvider({ children }: PropsWithChildren) {
     <TripContext.Provider
       value={useMemo(
         () => ({
+          headerState,
+          setHeaderState,
           name,
           setName,
           startDate,
@@ -33,7 +38,7 @@ export function TripProvider({ children }: PropsWithChildren) {
           editable,
           setEditable,
         }),
-        [editable, endDate, endHour, name, startDate, startHour]
+        [editable, endDate, endHour, headerState, name, startDate, startHour]
       )}
     >
       {children}

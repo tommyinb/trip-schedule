@@ -3,6 +3,7 @@ import { EditContext } from "../edits/EditContext";
 import { TargetType } from "../edits/targetType";
 import { ItemType } from "../reads/itemType";
 import { useCardItems } from "../reads/useCardItems";
+import { HeaderState } from "../trips/headerState";
 import { TripContext } from "../trips/TripContext";
 import { Card } from "./card";
 import { CardState } from "./cardState";
@@ -27,7 +28,7 @@ export function DeskCardArea({ card, rectangle }: Props) {
     status: PointerState.Idle,
   });
 
-  const { editable } = useContext(TripContext);
+  const { editable, setHeaderState } = useContext(TripContext);
 
   useEffect(() => {
     if (!editable) {
@@ -92,6 +93,8 @@ export function DeskCardArea({ card, rectangle }: Props) {
         if (target) {
           setTarget(undefined);
         }
+
+        setHeaderState(HeaderState.View);
       }}
       onPointerMove={(event) => {
         if (pointer.status === PointerState.Idle) {

@@ -8,7 +8,7 @@ export function SettingHour({ className }: Props) {
   const { startHour, setStartHour, endHour, setEndHour, editable } =
     useContext(TripContext);
 
-  const { id } = useContext(SaveContext);
+  const { applyId: id } = useContext(SaveContext);
 
   return (
     <div

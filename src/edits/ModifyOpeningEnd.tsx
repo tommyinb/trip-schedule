@@ -8,7 +8,7 @@ import "./ModifyOpeningEnd.css";
 import { TimeInput } from "./TimeInput";
 
 export function ModifyOpeningEnd({ card, opening }: Props) {
-  const { id } = useContext(SaveContext);
+  const { applyId: id } = useContext(SaveContext);
 
   const { setCards } = useContext(DeskContext);
 

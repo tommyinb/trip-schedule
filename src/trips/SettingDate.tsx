@@ -9,7 +9,7 @@ export function SettingDate({ className }: Props) {
   const { startDate, setStartDate, endDate, setEndDate, editable } =
     useContext(TripContext);
 
-  const { id } = useContext(SaveContext);
+  const { applyId: id } = useContext(SaveContext);
 
   return (
     <div

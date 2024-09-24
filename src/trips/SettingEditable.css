@@ -11,6 +11,12 @@
     border-bottom: 1px solid #ccc;
     display: flex;
     align-items: center;
+    transition: 0.3s;
+
+    &.view {
+      border-radius: 12px;
+      background-color: #eedf7a;
+    }
 
     .left,
     .right {
@@ -52,14 +58,18 @@
         background-size: contain;
         content: "";
       }
+    }
 
-      &.edit {
+    &.edit {
+      .value {
         &::before {
           background-image: url(../edits/pen.svg);
         }
       }
+    }
 
-      &.view {
+    &.view {
+      .value {
         &::before {
           background-image: url(./eye.svg);
         }
