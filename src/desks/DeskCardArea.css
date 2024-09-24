@@ -15,6 +15,13 @@
     flex: 1;
   }
 
+  &.creating,
+  &.edit {
+    background: linear-gradient(100deg, #36c2cecc, #36c2cecc);
+    color: #fff;
+    z-index: 3;
+  }
+
   &.creating {
     transform: translate(-5px, -5px);
     opacity: 0.8;
@@ -27,12 +34,6 @@
   &.deleted {
     opacity: 0;
     pointer-events: none;
-  }
-
-  &.edit {
-    background: #36c2cecc;
-    color: #fff;
-    z-index: 3;
   }
 
   &.clash {

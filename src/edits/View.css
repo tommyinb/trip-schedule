@@ -19,6 +19,7 @@
     }
 
     .modify,
+    .revert,
     .delete,
     .close {
       width: 36px;
@@ -36,9 +37,13 @@
       }
     }
 
-    .modify {
+    .modify,
+    .revert,
+    .delete {
       margin-left: 15px;
+    }
 
+    .modify {
       &:hover,
       &:active {
         background-color: #77e4c8;
@@ -49,12 +54,27 @@
       }
     }
 
-    .delete {
-      margin-left: 15px;
-
+    .revert {
       &:hover,
       &:active {
         background-color: #eedf7a;
+      }
+
+      &::after {
+        background-image: url(./revert.svg);
+      }
+    }
+
+    .delete {
+      &:hover,
+      &:active {
+        &.table {
+          background-color: #eedf7a;
+        }
+
+        &.list {
+          background-color: #d8a25e;
+        }
       }
 
       &::after {

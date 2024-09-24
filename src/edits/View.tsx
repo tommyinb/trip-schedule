@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { Card } from "../desks/card";
 import { CardState } from "../desks/cardState";
+import { CardZone } from "../desks/cardZone";
 import { DeskContext } from "../desks/DeskContext";
 import { getTimeText } from "../desks/getTimeText";
 import { replace } from "../desks/replace";
@@ -26,13 +27,46 @@ export function View({ card, setState }: Props) {
         </div>
 
         <div className="modify" onClick={() => setState(FormState.Modify)} />
+
+        {card.place.zone === CardZone.List && (
+          <div
+            className="revert"
+            onClick={() => {
+              setCards((cards) =>
+                replace(cards, card, {
+                  ...card,
+                  place: { zone: CardZone.Table },
+                })
+              );
+
+              setTarget(undefined);
+            }}
+          />
+        )}
+
         <div
-          className="delete"
+          className={`delete ${card.place.zone}`}
           onClick={() => {
             setCards((cards) =>
               replace(cards, card, {
                 ...card,
-                state: CardState.Deleted,
+                ...(card.place.zone === CardZone.Table
+                  ? {
+                      place: {
+                        zone: CardZone.List,
+                        index:
+                          Math.max(
+                            -1,
+                            ...cards
+                              .map((card) => card.place)
+                              .filter((place) => place.zone === CardZone.List)
+                              .map((place) => place.index)
+                          ) + 1,
+                      },
+                    }
+                  : {
+                      state: CardState.Deleted,
+                    }),
               })
             );
 

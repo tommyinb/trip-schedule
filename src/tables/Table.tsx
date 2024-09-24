@@ -8,10 +8,10 @@ import { useDates } from "./useDates";
 export function Table() {
   const dates = useDates();
 
-  const { gridRef } = useContext(DeskContext);
+  const { tableRef } = useContext(DeskContext);
 
   return (
-    <div className="tables-Table" ref={gridRef}>
+    <div className="tables-Table" ref={tableRef}>
       <Legend />
 
       {dates.map((date) => (

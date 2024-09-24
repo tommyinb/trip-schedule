@@ -2,6 +2,7 @@ import "./App.css";
 import { Desk } from "./desks/Desk";
 import { DeskProvider } from "./desks/DeskProvider";
 import { Edit } from "./edits/Edit";
+import { List } from "./lists/List";
 import { Compute } from "./reads/Compute";
 import { ReadProvider } from "./reads/ReadProvider";
 import { SaveProvider } from "./saves/SaveProvider";
@@ -22,6 +23,8 @@ function App() {
               <Edit>
                 <Desk>
                   <Table />
+
+                  <List />
                 </Desk>
               </Edit>
 

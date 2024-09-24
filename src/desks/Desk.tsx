@@ -3,6 +3,7 @@ import { EditContext } from "../edits/EditContext";
 import { TargetType } from "../edits/targetType";
 import { Card } from "./card";
 import { CardState } from "./cardState";
+import { CardZone } from "./cardZone";
 import "./Desk.css";
 import { DeskCard } from "./DeskCard";
 import { DeskContext } from "./DeskContext";
@@ -60,6 +61,7 @@ export function Desk({ children }: PropsWithChildren) {
         const newCard: Card = {
           id: Math.max(-1, ...cards.map((card) => card.id)) + 1,
           state: CardState.Idle,
+          place: { zone: CardZone.Table },
           content: {
             name: "",
             location: "",

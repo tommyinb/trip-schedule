@@ -8,9 +8,10 @@ import { CardState } from "./cardState";
 import "./DeskCardArea.css";
 import { DeskContext } from "./DeskContext";
 import { Preview } from "./Preview";
+import { Rectangle } from "./rectangle";
 import { replace } from "./replace";
 
-export function DeskCardArea({ card, left, top, width, height }: Props) {
+export function DeskCardArea({ card, rectangle }: Props) {
   const { target, setTarget } = useContext(EditContext);
 
   const items = useCardItems(card.id);
@@ -47,7 +48,7 @@ export function DeskCardArea({ card, left, top, width, height }: Props) {
             state: CardState.Creating,
           },
         ]);
-      }, 500);
+      }, 400);
 
       return () => clearTimeout(timer);
     }
@@ -61,7 +62,7 @@ export function DeskCardArea({ card, left, top, width, height }: Props) {
         itemTypes.includes(ItemType.CloseHour) ? "close" : ""
       }`}
       ref={ref}
-      style={{ left, top, width, height }}
+      style={rectangle}
       data-card={card.id}
       onPointerDown={(event) => {
         if (pointer.status !== PointerState.Idle) {
@@ -93,47 +94,23 @@ export function DeskCardArea({ card, left, top, width, height }: Props) {
           return;
         }
 
-        let fromCard: Card;
         if (pointer.status === PointerState.Down) {
           if (
-            Math.abs(event.clientX - pointer.clientX) < 50 &&
-            Math.abs(event.clientY - pointer.clientY) < 50
+            Math.abs(event.clientX - pointer.clientX) > 10 ||
+            Math.abs(event.clientY - pointer.clientY) > 10
           ) {
-            return;
+            setPointer({ status: PointerState.Idle });
+
+            ref.current?.releasePointerCapture(event.pointerId);
           }
 
-          const newId = Math.max(-1, ...cards.map((card) => card.id)) + 1;
+          return;
+        }
 
-          setPointer({
-            status: PointerState.Drag,
-            pointerId: pointer.pointerId,
-            offsetY: pointer.offsetY,
-            newCardId: newId,
-          });
+        const fromCard = cards.find((card) => card.id === pointer.newCardId);
 
-          fromCard = {
-            ...card,
-            id: newId,
-            state: CardState.Creating,
-          };
-
-          setCards([
-            ...replace(cards, card, {
-              ...card,
-              state: CardState.Dragging,
-            }),
-            fromCard,
-          ]);
-        } else {
-          const pointerCard = cards.find(
-            (card) => card.id === pointer.newCardId
-          );
-
-          if (!pointerCard) {
-            return;
-          }
-
-          fromCard = pointerCard;
+        if (!fromCard) {
+          return;
         }
 
         const cells = document.querySelectorAll("[data-date][data-hour]");
@@ -259,10 +236,7 @@ export function DeskCardArea({ card, left, top, width, height }: Props) {
 interface Props {
   card: Card;
 
-  left: number;
-  top: number;
-  width: number;
-  height: number;
+  rectangle: Rectangle;
 }
 
 enum PointerState {
