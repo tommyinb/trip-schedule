@@ -61,13 +61,28 @@ export function Share() {
 
   return (
     <div className="saves-Share">
-      {shareId && <div className="url">{location.toString()}</div>}
-
       <div
         className={`loading ${
           uploadState === UploadState.Uploading ? "active" : ""
         }`}
       />
+
+      {shareId && (
+        <div
+          className="url"
+          onClick={async () => {
+            try {
+              navigator.clipboard.writeText(location.toString());
+            } catch (error) {
+              console.error(error);
+            }
+          }}
+        >
+          {location.toString()}
+        </div>
+      )}
+
+      <div className="copy" />
     </div>
   );
 }
