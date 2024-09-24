@@ -1,5 +1,6 @@
 import { useContext, useEffect, useMemo } from "react";
 import { CardState } from "../desks/cardState";
+import { CardZone } from "../desks/cardZone";
 import { DeskContext } from "../desks/DeskContext";
 import { findTimeClash } from "./findTimeClash";
 import { ItemType } from "./itemType";
@@ -13,6 +14,7 @@ export function useComputeTimeClash() {
     () =>
       cards
         .filter((card) => card.state === CardState.Idle)
+        .filter((card) => card.place.zone === CardZone.Table)
         .sort((a, b) => a.content.time.getTime() - b.content.time.getTime()),
     [cards]
   );

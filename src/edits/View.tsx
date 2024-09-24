@@ -58,6 +58,7 @@ export function View({ card, setState }: Props) {
                           Math.max(
                             -1,
                             ...cards
+                              .filter((card) => card.state === CardState.Idle)
                               .map((card) => card.place)
                               .filter((place) => place.zone === CardZone.List)
                               .map((place) => place.index)

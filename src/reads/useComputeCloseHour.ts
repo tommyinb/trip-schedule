@@ -1,5 +1,6 @@
 import { useContext, useEffect, useMemo } from "react";
 import { CardState } from "../desks/cardState";
+import { CardZone } from "../desks/cardZone";
 import { DeskContext } from "../desks/DeskContext";
 import { CloseHourItem } from "./closeHourItem";
 import { getCloseHours } from "./getCloseHours";
@@ -13,6 +14,7 @@ export function useComputeCloseHour() {
     () =>
       cards
         .filter((card) => card.state === CardState.Idle)
+        .filter((card) => card.place.zone === CardZone.Table)
         .filter((card) => card.content.openings.length > 0)
         .filter((card) => getCloseHours(card.content).length > 0),
     [cards]

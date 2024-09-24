@@ -5,6 +5,7 @@ import { ItemType } from "../reads/itemType";
 import { useCardItems } from "../reads/useCardItems";
 import { Card } from "./card";
 import { CardState } from "./cardState";
+import { CardZone } from "./cardZone";
 import "./DeskCardArea.css";
 import { DeskContext } from "./DeskContext";
 import { Preview } from "./Preview";
@@ -19,7 +20,7 @@ export function DeskCardArea({ card, rectangle }: Props) {
 
   const ref = useRef<HTMLDivElement>(null);
 
-  const { cards, setCards } = useContext(DeskContext);
+  const { tableRef, listRef, cards, setCards } = useContext(DeskContext);
 
   const [pointer, setPointer] = useState<Pointer>({
     status: PointerState.Idle,
@@ -103,18 +104,18 @@ export function DeskCardArea({ card, rectangle }: Props) {
 
             ref.current?.releasePointerCapture(event.pointerId);
           }
-
           return;
         }
 
-        const fromCard = cards.find((card) => card.id === pointer.newCardId);
-
-        if (!fromCard) {
+        const pointerCard = cards.find((card) => card.id === pointer.newCardId);
+        if (!pointerCard) {
           return;
         }
 
-        const cells = document.querySelectorAll("[data-date][data-hour]");
-        const cell = [...cells].find((cell) => {
+        const cells = tableRef.current?.querySelectorAll(
+          "[data-date][data-hour]"
+        );
+        const cell = [...(cells ?? [])].find((cell) => {
           const rect = cell.getBoundingClientRect();
           return (
             event.clientX >= rect.left &&
@@ -124,30 +125,64 @@ export function DeskCardArea({ card, rectangle }: Props) {
           );
         });
 
-        if (!cell) {
-          return;
+        if (cell) {
+          const dateText = cell.getAttribute("data-date");
+          const dateValue = new Date(dateText!);
+
+          const hourText = cell.getAttribute("data-hour");
+          const hourValue = Number(hourText!);
+
+          setCards((cards) =>
+            replace(cards, pointerCard, {
+              ...pointerCard,
+              place: { zone: CardZone.Table },
+              content: {
+                ...pointerCard.content,
+                time: new Date(
+                  dateValue.getFullYear(),
+                  dateValue.getMonth(),
+                  dateValue.getDate(),
+                  hourValue
+                ),
+              },
+            })
+          );
+        } else {
+          const items = listRef.current?.querySelectorAll("[data-index]");
+          const item = [...(items ?? [])].find((item) => {
+            const rect = item.getBoundingClientRect();
+            return (
+              event.clientX >= rect.left &&
+              event.clientX < rect.right &&
+              event.clientY - pointer.offsetY >= rect.top &&
+              event.clientY - pointer.offsetY < rect.bottom
+            );
+          });
+
+          if (item) {
+            const queryIndex = Number(item.getAttribute("data-index"));
+
+            const cardIndex =
+              Math.max(
+                -1,
+                ...cards
+                  .filter((card) => card.state === CardState.Idle)
+                  .map((card) => card.place)
+                  .filter((place) => place.zone === CardZone.List)
+                  .map((place) => place.index)
+              ) + 1;
+
+            setCards((cards) =>
+              replace(cards, pointerCard, {
+                ...pointerCard,
+                place: {
+                  zone: CardZone.List,
+                  index: Math.min(queryIndex, cardIndex),
+                },
+              })
+            );
+          }
         }
-
-        const dateText = cell.getAttribute("data-date");
-        const dateValue = new Date(dateText!);
-
-        const hourText = cell.getAttribute("data-hour");
-        const hourValue = Number(hourText!);
-
-        const toCard = {
-          ...fromCard,
-          content: {
-            ...fromCard.content,
-            time: new Date(
-              dateValue.getFullYear(),
-              dateValue.getMonth(),
-              dateValue.getDate(),
-              hourValue
-            ),
-          },
-        };
-
-        setCards((cards) => replace(cards, fromCard, toCard));
       }}
       onPointerUp={(event) => {
         if (pointer.status === PointerState.Idle) {
@@ -175,19 +210,47 @@ export function DeskCardArea({ card, rectangle }: Props) {
             (card) => card.id === pointer.newCardId
           );
           if (pointerCard) {
-            setCards(
-              replace(
-                replace(cards, card, {
-                  ...card,
-                  state: CardState.Deleted,
-                }),
-                pointerCard,
-                {
-                  ...pointerCard,
-                  state: CardState.Idle,
-                }
-              )
+            const replacedCards = replace(
+              replace(cards, card, {
+                ...card,
+                state: CardState.Deleted,
+              }),
+              pointerCard,
+              {
+                ...pointerCard,
+                state: CardState.Idle,
+                place:
+                  pointerCard.place.zone === CardZone.List
+                    ? {
+                        zone: CardZone.List,
+                        index:
+                          pointerCard.place.index +
+                          (card.place.zone === CardZone.List &&
+                          card.place.index < pointerCard.place.index
+                            ? 0.5
+                            : -0.5),
+                      }
+                    : pointerCard.place,
+              }
             );
+
+            const listCards = replacedCards
+              .filter((card) => card.state === CardState.Idle)
+              .filter((card) => card.place.zone === CardZone.List)
+              .sort(
+                (a, b) =>
+                  (a.place.zone === CardZone.List ? a.place.index : 10000) -
+                  (b.place.zone === CardZone.List ? b.place.index : 10000)
+              );
+
+            const outputCards = replacedCards.map((card) => {
+              const index = listCards.indexOf(card);
+              return index >= 0
+                ? { ...card, place: { zone: CardZone.List, index } }
+                : card;
+            });
+
+            setCards(outputCards);
           }
         }
       }}
@@ -215,12 +278,12 @@ export function DeskCardArea({ card, rectangle }: Props) {
               replace(
                 replace(cards, card, {
                   ...card,
-                  state: CardState.Deleted,
+                  state: CardState.Idle,
                 }),
                 pointerCard,
                 {
                   ...pointerCard,
-                  state: CardState.Idle,
+                  state: CardState.Deleted,
                 }
               )
             );
