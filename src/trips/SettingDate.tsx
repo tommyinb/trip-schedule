@@ -6,13 +6,15 @@ import "./SettingDate.css";
 import { TripContext } from "./TripContext";
 
 export function SettingDate({ className }: Props) {
-  const { startDate, setStartDate, endDate, setEndDate } =
+  const { startDate, setStartDate, endDate, setEndDate, editable } =
     useContext(TripContext);
 
   const { id } = useContext(SaveContext);
 
   return (
-    <div className={`trips-SettingDate ${className}`}>
+    <div
+      className={`trips-SettingDate ${className} ${editable ? "active" : ""}`}
+    >
       <div className="label">Schedule Period</div>
 
       <DateInput

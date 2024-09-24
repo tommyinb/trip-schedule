@@ -3,6 +3,10 @@
   align-items: center;
   gap: 10px;
 
+  &:not(.active) {
+    opacity: 0.4;
+  }
+
   .label {
     min-width: 140px;
   }

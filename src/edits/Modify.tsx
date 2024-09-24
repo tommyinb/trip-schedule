@@ -53,23 +53,21 @@ export function Modify({ card, setState }: Props) {
       </div>
 
       <div className="content">
-        {card.content.location && (
-          <div className="location">
-            <div className="label">Location</div>
-            <input
-              className="value"
-              value={card.content.location}
-              onChange={(event) =>
-                setCards((cards) =>
-                  replace(cards, card, {
-                    ...card,
-                    content: { ...card.content, location: event.target.value },
-                  })
-                )
-              }
-            />
-          </div>
-        )}
+        <div className="location">
+          <div className="label">Location</div>
+          <input
+            className="value"
+            value={card.content.location}
+            onChange={(event) =>
+              setCards((cards) =>
+                replace(cards, card, {
+                  ...card,
+                  content: { ...card.content, location: event.target.value },
+                })
+              )
+            }
+          />
+        </div>
 
         <div className="time">
           <div className="label">Start Time</div>

@@ -37,9 +37,9 @@ export function ViewTimeClash({ cardId, item }: Props) {
 
   return (
     <div className="reads-ViewTimeClash">
-      Clashes with another event{" "}
+      Clashes with another {toCard?.content.name && "event "}
       <span className="card" onClick={setToTarget}>
-        {toCard?.content.name}
+        {toCard?.content.name || "event"}
       </span>{" "}
       at {getTimeText(clash?.fromTime ?? new Date())} -{" "}
       {getTimeText(clash?.toTime ?? new Date())}

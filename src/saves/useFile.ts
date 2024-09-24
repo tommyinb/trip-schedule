@@ -16,6 +16,8 @@ export function useFile(): [file: File, applyFile: (file: File) => void] {
     setStartHour,
     endHour,
     setEndHour,
+    editable,
+    setEditable,
   } = useContext(TripContext);
 
   const { cards, setCards } = useContext(DeskContext);
@@ -27,12 +29,13 @@ export function useFile(): [file: File, applyFile: (file: File) => void] {
       endDate,
       startHour,
       endHour,
+      editable,
       cards: cards.filter(
         (card) =>
           card.state === CardState.Idle || card.state === CardState.Creating
       ),
     }),
-    [cards, endDate, endHour, name, startDate, startHour]
+    [cards, editable, endDate, endHour, name, startDate, startHour]
   );
 
   const applyFile = useCallback(
@@ -45,6 +48,8 @@ export function useFile(): [file: File, applyFile: (file: File) => void] {
       setStartHour(file.startHour);
       setEndHour(file.endHour);
 
+      setEditable(file.editable);
+
       setCards(
         file.cards.map((card) => ({
           ...card,
@@ -52,7 +57,15 @@ export function useFile(): [file: File, applyFile: (file: File) => void] {
         }))
       );
     },
-    [setCards, setEndDate, setEndHour, setName, setStartDate, setStartHour]
+    [
+      setCards,
+      setEditable,
+      setEndDate,
+      setEndHour,
+      setName,
+      setStartDate,
+      setStartHour,
+    ]
   );
 
   return [file, applyFile];

@@ -1,0 +1,73 @@
+.trips-SettingEditable {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  .label {
+    min-width: 140px;
+  }
+
+  .content {
+    border-bottom: 1px solid #ccc;
+    display: flex;
+    align-items: center;
+
+    .left,
+    .right {
+      width: 20px;
+      height: 20px;
+      border-radius: 3px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: 0.3s;
+
+      &:hover,
+      &:active {
+        background-color: #77e4c8;
+      }
+
+      &::after {
+        width: 14px;
+        height: 14px;
+        background-image: url(../edits/arrow.svg);
+        background-size: contain;
+        content: "";
+        transition: 0.3s;
+      }
+    }
+
+    .value {
+      width: 100px;
+      padding: 6px 10px 5px;
+      display: flex;
+      align-items: center;
+      font-size: 14px;
+      user-select: none;
+
+      &::before {
+        margin-right: 10px;
+        width: 14px;
+        height: 14px;
+        background-size: contain;
+        content: "";
+      }
+
+      &.edit {
+        &::before {
+          background-image: url(../edits/pen.svg);
+        }
+      }
+
+      &.view {
+        &::before {
+          background-image: url(./eye.svg);
+        }
+      }
+    }
+
+    .right {
+      transform: rotate(180deg);
+    }
+  }
+}

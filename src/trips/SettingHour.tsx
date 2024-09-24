@@ -5,13 +5,15 @@ import "./SettingHour.css";
 import { TripContext } from "./TripContext";
 
 export function SettingHour({ className }: Props) {
-  const { startHour, setStartHour, endHour, setEndHour } =
+  const { startHour, setStartHour, endHour, setEndHour, editable } =
     useContext(TripContext);
 
   const { id } = useContext(SaveContext);
 
   return (
-    <div className={`trips-SettingHour ${className}`}>
+    <div
+      className={`trips-SettingHour ${className} ${editable ? "active" : ""}`}
+    >
       <div className="label">Activity Hours</div>
 
       <HourInput

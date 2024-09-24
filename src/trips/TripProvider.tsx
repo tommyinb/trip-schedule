@@ -14,6 +14,8 @@ export function TripProvider({ children }: PropsWithChildren) {
   const [startHour, setStartHour] = useState(6);
   const [endHour, setEndHour] = useState(5);
 
+  const [editable, setEditable] = useState(true);
+
   return (
     <TripContext.Provider
       value={useMemo(
@@ -28,19 +30,10 @@ export function TripProvider({ children }: PropsWithChildren) {
           setStartHour,
           endHour,
           setEndHour,
+          editable,
+          setEditable,
         }),
-        [
-          endDate,
-          endHour,
-          name,
-          setEndDate,
-          setEndHour,
-          setName,
-          setStartDate,
-          setStartHour,
-          startDate,
-          startHour,
-        ]
+        [editable, endDate, endHour, name, startDate, startHour]
       )}
     >
       {children}

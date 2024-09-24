@@ -5,6 +5,7 @@ import { CardZone } from "../desks/cardZone";
 import { DeskContext } from "../desks/DeskContext";
 import { getTimeText } from "../desks/getTimeText";
 import { replace } from "../desks/replace";
+import { TripContext } from "../trips/TripContext";
 import { EditContext } from "./EditContext";
 import { FormState } from "./formState";
 import { getDateText } from "./getDateText";
@@ -15,6 +16,8 @@ import { ViewRead } from "./ViewRead";
 import { ViewRemark } from "./ViewRemark";
 
 export function View({ card, setState }: Props) {
+  const { editable } = useContext(TripContext);
+
   const { setCards } = useContext(DeskContext);
 
   const { setTarget } = useContext(EditContext);
@@ -26,54 +29,65 @@ export function View({ card, setState }: Props) {
           {card.content.name || "New Event"}
         </div>
 
-        <div className="modify" onClick={() => setState(FormState.Modify)} />
+        {editable && (
+          <>
+            <div
+              className="modify"
+              onClick={() => setState(FormState.Modify)}
+            />
 
-        {card.place.zone === CardZone.List && (
-          <div
-            className="revert"
-            onClick={() => {
-              setCards((cards) =>
-                replace(cards, card, {
-                  ...card,
-                  place: { zone: CardZone.Table },
-                })
-              );
+            {card.place.zone === CardZone.List && (
+              <div
+                className="revert"
+                onClick={() => {
+                  setCards((cards) =>
+                    replace(cards, card, {
+                      ...card,
+                      place: { zone: CardZone.Table },
+                    })
+                  );
 
-              setTarget(undefined);
-            }}
-          />
+                  setTarget(undefined);
+                }}
+              />
+            )}
+
+            <div
+              className={`delete ${card.place.zone}`}
+              onClick={() => {
+                setCards((cards) =>
+                  replace(cards, card, {
+                    ...card,
+                    ...(card.place.zone === CardZone.Table
+                      ? {
+                          place: {
+                            zone: CardZone.List,
+                            index:
+                              Math.max(
+                                -1,
+                                ...cards
+                                  .filter(
+                                    (card) => card.state === CardState.Idle
+                                  )
+                                  .map((card) => card.place)
+                                  .filter(
+                                    (place) => place.zone === CardZone.List
+                                  )
+                                  .map((place) => place.index)
+                              ) + 1,
+                          },
+                        }
+                      : {
+                          state: CardState.Deleted,
+                        }),
+                  })
+                );
+
+                setTarget(undefined);
+              }}
+            />
+          </>
         )}
-
-        <div
-          className={`delete ${card.place.zone}`}
-          onClick={() => {
-            setCards((cards) =>
-              replace(cards, card, {
-                ...card,
-                ...(card.place.zone === CardZone.Table
-                  ? {
-                      place: {
-                        zone: CardZone.List,
-                        index:
-                          Math.max(
-                            -1,
-                            ...cards
-                              .filter((card) => card.state === CardState.Idle)
-                              .map((card) => card.place)
-                              .filter((place) => place.zone === CardZone.List)
-                              .map((place) => place.index)
-                          ) + 1,
-                      },
-                    }
-                  : {
-                      state: CardState.Deleted,
-                    }),
-              })
-            );
-
-            setTarget(undefined);
-          }}
-        />
 
         <div className="close" onClick={() => setTarget(undefined)} />
       </div>

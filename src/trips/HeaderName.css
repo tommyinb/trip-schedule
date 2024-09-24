@@ -48,6 +48,29 @@
         background-image: url(./gear.svg);
       }
     }
+
+    .viewing {
+      width: 36px;
+      height: 36px;
+      border-radius: 18px;
+      background-color: #eedf7a;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      &::after {
+        width: 24px;
+        height: 24px;
+        background-image: url(./eye.svg);
+        background-size: contain;
+        content: "";
+      }
+
+      &:hover,
+      &:active {
+        background-color: #d8a25e;
+      }
+    }
   }
 
   .edit {
@@ -55,8 +78,13 @@
       width: 500px;
       border: none;
       border-bottom: 1px solid #444;
+      background-color: transparent;
       text-align: center;
       color: #444;
+
+      &:disabled {
+        opacity: 0.4;
+      }
     }
 
     .toggle {

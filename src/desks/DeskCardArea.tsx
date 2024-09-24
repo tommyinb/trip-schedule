@@ -3,6 +3,7 @@ import { EditContext } from "../edits/EditContext";
 import { TargetType } from "../edits/targetType";
 import { ItemType } from "../reads/itemType";
 import { useCardItems } from "../reads/useCardItems";
+import { TripContext } from "../trips/TripContext";
 import { Card } from "./card";
 import { CardState } from "./cardState";
 import { CardZone } from "./cardZone";
@@ -26,7 +27,13 @@ export function DeskCardArea({ card, rectangle }: Props) {
     status: PointerState.Idle,
   });
 
+  const { editable } = useContext(TripContext);
+
   useEffect(() => {
+    if (!editable) {
+      return;
+    }
+
     if (pointer.status === PointerState.Down) {
       const timer = setTimeout(() => {
         const newId = Math.max(-1, ...cards.map((card) => card.id)) + 1;
@@ -53,7 +60,7 @@ export function DeskCardArea({ card, rectangle }: Props) {
 
       return () => clearTimeout(timer);
     }
-  }, [card, cards, pointer, setCards]);
+  }, [card, cards, editable, pointer, setCards]);
 
   return (
     <div

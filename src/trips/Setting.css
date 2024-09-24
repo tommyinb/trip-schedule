@@ -1,15 +1,13 @@
 .trips-Setting {
   padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
 
-  .period {
-    margin: auto;
-    width: 500px;
-  }
-
-  .time {
-    margin-top: 5px;
-    margin-left: auto;
-    margin-right: auto;
+  .period,
+  .time,
+  .editable {
     width: 500px;
   }
 }

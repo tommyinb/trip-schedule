@@ -9,5 +9,7 @@ export interface File {
   startHour: number;
   endHour: number;
 
+  editable: boolean;
+
   cards: FileCard[];
 }

@@ -13,6 +13,9 @@ export const TripContext = createContext<{
   setStartHour: (hour: number) => void;
   endHour: number;
   setEndHour: (hour: number) => void;
+
+  editable: boolean;
+  setEditable: (editable: boolean) => void;
 }>({
   name: "Trip Schedule",
   setName: () => {},
@@ -24,4 +27,6 @@ export const TripContext = createContext<{
   setStartHour: () => {},
   endHour: 5,
   setEndHour: () => {},
+  editable: true,
+  setEditable: () => {},
 });

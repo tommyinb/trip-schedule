@@ -1,5 +1,6 @@
 import "./Setting.css";
 import { SettingDate } from "./SettingDate";
+import { SettingEditable } from "./SettingEditable";
 import { SettingHour } from "./SettingHour";
 
 export function Setting() {
@@ -8,6 +9,8 @@ export function Setting() {
       <SettingDate className="period" />
 
       <SettingHour className="time" />
+
+      <SettingEditable className="editable" />
     </div>
   );
 }
