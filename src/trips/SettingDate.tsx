@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { DateInput } from "../edits/DateInput";
+import { SaveContext } from "../saves/SaveContext";
 import { addDays } from "./addDays";
 import "./SettingDate.css";
 import { TripContext } from "./TripContext";
@@ -8,11 +9,14 @@ export function SettingDate({ className }: Props) {
   const { startDate, setStartDate, endDate, setEndDate } =
     useContext(TripContext);
 
+  const { id } = useContext(SaveContext);
+
   return (
     <div className={`trips-SettingDate ${className}`}>
       <div className="label">Schedule Period</div>
 
       <DateInput
+        key={`start-${id}`}
         className="start"
         value={startDate}
         trySetValue={(value) => {
@@ -30,6 +34,7 @@ export function SettingDate({ className }: Props) {
       <div>-</div>
 
       <DateInput
+        key={`end-${id}`}
         className="end"
         value={endDate}
         trySetValue={(value) => {

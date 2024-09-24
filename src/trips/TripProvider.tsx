@@ -29,7 +29,18 @@ export function TripProvider({ children }: PropsWithChildren) {
           endHour,
           setEndHour,
         }),
-        [endDate, endHour, name, startDate, startHour]
+        [
+          endDate,
+          endHour,
+          name,
+          setEndDate,
+          setEndHour,
+          setName,
+          setStartDate,
+          setStartHour,
+          startDate,
+          startHour,
+        ]
       )}
     >
       {children}

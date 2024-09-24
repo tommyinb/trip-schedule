@@ -60,7 +60,7 @@ export function DeskProvider({ children }: PropsWithChildren) {
           cards,
           setCards,
         }),
-        [cards]
+        [cards, setCards]
       )}
     >
       {children}

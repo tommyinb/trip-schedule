@@ -1,4 +1,5 @@
 import { useContext } from "react";
+import { SaveContext } from "../saves/SaveContext";
 import { HourInput } from "./HourInput";
 import "./SettingHour.css";
 import { TripContext } from "./TripContext";
@@ -7,11 +8,14 @@ export function SettingHour({ className }: Props) {
   const { startHour, setStartHour, endHour, setEndHour } =
     useContext(TripContext);
 
+  const { id } = useContext(SaveContext);
+
   return (
     <div className={`trips-SettingHour ${className}`}>
       <div className="label">Activity Hours</div>
 
       <HourInput
+        key={`start-${id}`}
         className="start"
         value={startHour}
         trySetValue={(value) => {
@@ -29,6 +33,7 @@ export function SettingHour({ className }: Props) {
       <div>-</div>
 
       <HourInput
+        key={`end-${id}`}
         className="end"
         value={endHour}
         trySetValue={(value) => {

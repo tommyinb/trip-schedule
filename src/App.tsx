@@ -4,6 +4,8 @@ import { DeskProvider } from "./desks/DeskProvider";
 import { Edit } from "./edits/Edit";
 import { Compute } from "./reads/Compute";
 import { ReadProvider } from "./reads/ReadProvider";
+import { SaveProvider } from "./saves/SaveProvider";
+import { Storage } from "./saves/Storage";
 import { Table } from "./tables/Table";
 import { Header } from "./trips/Header";
 import { TripProvider } from "./trips/TripProvider";
@@ -11,21 +13,25 @@ import { TripProvider } from "./trips/TripProvider";
 function App() {
   return (
     <div className="App">
-      <TripProvider>
-        <Header />
+      <SaveProvider>
+        <TripProvider>
+          <Header />
 
-        <ReadProvider>
-          <DeskProvider>
-            <Edit>
-              <Desk>
-                <Table />
-              </Desk>
-            </Edit>
+          <ReadProvider>
+            <DeskProvider>
+              <Edit>
+                <Desk>
+                  <Table />
+                </Desk>
+              </Edit>
 
-            <Compute />
-          </DeskProvider>
-        </ReadProvider>
-      </TripProvider>
+              <Compute />
+
+              <Storage />
+            </DeskProvider>
+          </ReadProvider>
+        </TripProvider>
+      </SaveProvider>
     </div>
   );
 }

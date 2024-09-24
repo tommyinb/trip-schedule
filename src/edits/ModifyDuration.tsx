@@ -2,11 +2,14 @@ import { useCallback, useContext, useState } from "react";
 import { Card } from "../desks/card";
 import { DeskContext } from "../desks/DeskContext";
 import { replace } from "../desks/replace";
+import { SaveContext } from "../saves/SaveContext";
 import { SoftInput } from "../trips/SoftInput";
 import { getDurationText } from "./getDurationText";
 import "./ModifyDuration.css";
 
 export function ModifyDuration({ card }: Props) {
+  const { id } = useContext(SaveContext);
+
   const [text, setText] = useState(() =>
     getDurationText(card.content.duration)
   );
@@ -30,6 +33,7 @@ export function ModifyDuration({ card }: Props) {
 
   return (
     <SoftInput
+      key={id}
       className="edits-ModifyDuration"
       text={text}
       onText={(text) => {

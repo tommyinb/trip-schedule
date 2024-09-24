@@ -3,14 +3,18 @@ import { Card } from "../desks/card";
 import { CardOpening } from "../desks/cardOpening";
 import { DeskContext } from "../desks/DeskContext";
 import { replace } from "../desks/replace";
+import { SaveContext } from "../saves/SaveContext";
 import "./ModifyOpeningStart.css";
 import { TimeInput } from "./TimeInput";
 
 export function ModifyOpeningStart({ card, opening }: Props) {
+  const { id } = useContext(SaveContext);
+
   const { setCards } = useContext(DeskContext);
 
   return (
     <TimeInput
+      key={id}
       className="edits-ModifyOpeningStart"
       value={{
         hour: opening.startHour,

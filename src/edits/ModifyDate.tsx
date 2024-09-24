@@ -2,11 +2,14 @@ import { useContext, useMemo } from "react";
 import { Card } from "../desks/card";
 import { DeskContext } from "../desks/DeskContext";
 import { replace } from "../desks/replace";
+import { SaveContext } from "../saves/SaveContext";
 import { useDates } from "../tables/useDates";
 import { DateInput } from "./DateInput";
 import "./ModifyDate.css";
 
 export function ModifyDate({ card }: Props) {
+  const { id } = useContext(SaveContext);
+
   const cardDate = useMemo(
     () =>
       new Date(
@@ -31,46 +34,46 @@ export function ModifyDate({ card }: Props) {
   const { setCards } = useContext(DeskContext);
 
   return (
-    <div className="edits-ModifyDate">
-      <DateInput
-        value={cardDate}
-        trySetValue={(value) => {
-          const validDate = dates.find(
-            (date) =>
-              date.getFullYear() === value.getFullYear() &&
-              date.getMonth() === value.getMonth() &&
-              date.getDate() === value.getDate()
-          );
+    <DateInput
+      key={id}
+      className="edits-ModifyDate"
+      value={cardDate}
+      trySetValue={(value) => {
+        const validDate = dates.find(
+          (date) =>
+            date.getFullYear() === value.getFullYear() &&
+            date.getMonth() === value.getMonth() &&
+            date.getDate() === value.getDate()
+        );
 
-          if (!validDate) {
-            return false;
-          }
-
-          setCards((cards) =>
-            replace(cards, card, {
-              ...card,
-              content: {
-                ...card.content,
-                time: new Date(
-                  validDate.getFullYear(),
-                  validDate.getMonth(),
-                  validDate.getDate(),
-                  card.content.time.getHours(),
-                  card.content.time.getMinutes(),
-                  card.content.time.getSeconds(),
-                  card.content.time.getMilliseconds()
-                ),
-              },
-            })
-          );
-          return true;
-        }}
-        leftValue={
-          leftDates.length > 0 ? leftDates[leftDates.length - 1] : undefined
+        if (!validDate) {
+          return false;
         }
-        rightValue={rightDates.length > 0 ? rightDates[0] : undefined}
-      />
-    </div>
+
+        setCards((cards) =>
+          replace(cards, card, {
+            ...card,
+            content: {
+              ...card.content,
+              time: new Date(
+                validDate.getFullYear(),
+                validDate.getMonth(),
+                validDate.getDate(),
+                card.content.time.getHours(),
+                card.content.time.getMinutes(),
+                card.content.time.getSeconds(),
+                card.content.time.getMilliseconds()
+              ),
+            },
+          })
+        );
+        return true;
+      }}
+      leftValue={
+        leftDates.length > 0 ? leftDates[leftDates.length - 1] : undefined
+      }
+      rightValue={rightDates.length > 0 ? rightDates[0] : undefined}
+    />
   );
 }
 

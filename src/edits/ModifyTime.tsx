@@ -2,11 +2,14 @@ import { useContext } from "react";
 import { Card } from "../desks/card";
 import { DeskContext } from "../desks/DeskContext";
 import { replace } from "../desks/replace";
+import { SaveContext } from "../saves/SaveContext";
 import { TripContext } from "../trips/TripContext";
 import "./ModifyTime.css";
 import { TimeInput } from "./TimeInput";
 
 export function ModifyTime({ card }: Props) {
+  const { id } = useContext(SaveContext);
+
   const { setCards } = useContext(DeskContext);
 
   const { startHour, endHour } = useContext(TripContext);
@@ -16,6 +19,7 @@ export function ModifyTime({ card }: Props) {
 
   return (
     <TimeInput
+      key={id}
       className="edits-ModifyTime"
       value={{
         hour: card.content.time.getHours(),
