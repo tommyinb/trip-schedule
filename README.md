@@ -1,4 +1,4 @@
-#Trip Schedule
+# Trip Schedule
 
 This is a little web app for making schedule for travel trips
 
