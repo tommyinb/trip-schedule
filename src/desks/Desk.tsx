@@ -7,8 +7,9 @@ import { Card } from "./card";
 import { CardState } from "./cardState";
 import { CardZone } from "./cardZone";
 import "./Desk.css";
-import { DeskCard } from "./DeskCard";
 import { DeskContext } from "./DeskContext";
+import { DeskListCard } from "./DeskListCard";
+import { DeskTableCard } from "./DeskTableCard";
 
 export function Desk() {
   const { tableContainerRef, listContainerRef, cards, setCards } =
@@ -114,7 +115,7 @@ export function Desk() {
           <Table />
 
           {tableCards.map((card) => (
-            <DeskCard key={card.id} card={card} />
+            <DeskTableCard key={card.id} card={card} />
           ))}
         </div>
       </div>
@@ -123,7 +124,7 @@ export function Desk() {
         <List />
 
         {listCards.map((card) => (
-          <DeskCard key={card.id} card={card} />
+          <DeskListCard key={card.id} card={card} />
         ))}
       </div>
     </div>
