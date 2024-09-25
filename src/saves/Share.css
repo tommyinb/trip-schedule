@@ -3,8 +3,8 @@
   align-items: center;
   gap: 10px;
 
-  .copy,
-  .loading {
+  .loading,
+  .copy {
     width: 36px;
     height: 36px;
     display: flex;
@@ -39,6 +39,11 @@
     font-size: 14px;
     transition: 0.3s;
 
+    &:not(.active) {
+      color: #ddd;
+      pointer-events: none;
+    }
+
     &:has(+ .copy:active) {
       background-color: #77e4c8;
     }
@@ -49,6 +54,11 @@
     height: 36px;
     border-radius: 12px;
     transition: 0.3s;
+
+    &:not(.active) {
+      opacity: 0.3;
+      pointer-events: none;
+    }
 
     &::after {
       background-image: url(./copy.svg);

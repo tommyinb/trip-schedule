@@ -1,24 +1,45 @@
 import { ref, uploadBytes } from "firebase/storage";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
+import { findUrlValue } from "./findUrlValue";
 import { storage } from "./firestore";
-import { getShareId } from "./getShareId";
+import { getFilePath, prefixRaise } from "./getFilePath";
 import { SaveContext } from "./SaveContext";
 import "./Share.css";
+
+export const shareKey = "shareId";
 
 export function Share() {
   const [uploadState, setUploadState] = useState(UploadState.Uploading);
 
-  const [shareId, setShareId] = useState(getShareId);
+  const [shareId, setShareId] = useState<string>();
   useEffect(() => {
-    if (!shareId) {
-      const idValue =
-        Math.floor(Math.random() * 1000) * 10000000000000 + Date.now();
+    if (shareId) {
+      return;
+    }
+
+    const urlId = findUrlValue(shareKey);
+    if (urlId) {
+      try {
+        getFilePath(urlId);
+
+        setShareId(urlId);
+        return;
+      } catch {
+        console.error(`invalid shareId ${urlId}`);
+      }
+    }
+
+    (function newId() {
+      const prefix = Math.floor(Math.random() * 1000);
+      const time = Date.now();
+
+      const idValue = prefix * prefixRaise + time;
       const idText = idValue.toString(36);
 
       history.pushState(null, "", `?shareId=${idText}`);
 
       setShareId(idText);
-    }
+    })();
   }, [shareId]);
 
   const { file } = useContext(SaveContext);
@@ -34,11 +55,12 @@ export function Share() {
     setUploadState(UploadState.Uploading);
 
     const fileText = JSON.stringify(file);
+    const filePath = getFilePath(shareId);
 
     const cancellation = { cancelled: false };
     (async function () {
       const blob = new Blob([fileText], { type: "application/json" });
-      const storageRef = ref(storage, `shares/${shareId}.json`);
+      const storageRef = ref(storage, filePath);
 
       const success = await (async function () {
         try {
@@ -61,6 +83,12 @@ export function Share() {
     };
   }, [file, shareId]);
 
+  const shareUrl = useMemo(
+    () =>
+      `${location.protocol}//${location.host}${location.pathname}?shareId=${shareId}`,
+    [shareId]
+  );
+
   return (
     <div className="saves-Share">
       <div
@@ -69,22 +97,33 @@ export function Share() {
         }`}
       />
 
-      {shareId && (
-        <div
-          className="url"
-          onClick={async () => {
-            try {
-              navigator.clipboard.writeText(location.toString());
-            } catch (error) {
-              console.error(error);
-            }
-          }}
-        >
-          {location.toString()}
-        </div>
-      )}
+      <div
+        className={`url ${
+          uploadState === UploadState.Uploaded ? "active" : ""
+        }`}
+        onClick={async () => {
+          try {
+            navigator.clipboard.writeText(shareUrl);
+          } catch (error) {
+            console.error(error);
+          }
+        }}
+      >
+        {shareUrl}
+      </div>
 
-      <div className="copy" />
+      <div
+        className={`copy ${
+          uploadState === UploadState.Uploaded ? "active" : ""
+        }`}
+        onClick={async () => {
+          try {
+            navigator.clipboard.writeText(shareUrl);
+          } catch (error) {
+            console.error(error);
+          }
+        }}
+      />
     </div>
   );
 }

@@ -1,11 +1,15 @@
 import { getDownloadURL, ref } from "firebase/storage";
 import { useContext, useEffect } from "react";
+import { findUrlValue } from "./findUrlValue";
 import { storage } from "./firestore";
-import { getShareId } from "./getShareId";
+import { getFilePath } from "./getFilePath";
 import { parseFile } from "./parseFile";
-import { storageKey } from "./Save";
+import { saveKey } from "./Save";
 import { SaveContext } from "./SaveContext";
+import { shareKey } from "./Share";
 import { useApplyFileContent } from "./useApplyFileContent";
+
+const loadKey = "loadId";
 
 export function Load() {
   const { applyId, setApplyId } = useContext(SaveContext);
@@ -16,49 +20,71 @@ export function Load() {
       return;
     }
 
-    const shareId = getShareId();
-    if (shareId) {
-      const cancellation = { canceled: false };
-      (async function () {
-        const text = await (async function () {
+    const cancellation = { canceled: false };
+    (async function () {
+      const text = await (async function () {
+        const loadId = findUrlValue(loadKey);
+        const shareId = findUrlValue(shareKey);
+
+        const loads = [
+          ...(loadId
+            ? [() => loadGlobalStorage(loadId), () => loadLocalStorage(loadId)]
+            : []),
+          ...(shareId
+            ? [
+                () => loadGlobalStorage(shareId),
+                () => loadLocalStorage(shareId),
+              ]
+            : []),
+          () => loadLocalStorage(),
+        ];
+
+        async function loadGlobalStorage(id: string) {
           try {
-            const storageRef = ref(storage, `shares/${shareId}.json`);
+            const filePath = getFilePath(id);
+
+            const storageRef = ref(storage, filePath);
             const url = await getDownloadURL(storageRef);
 
             const response = await fetch(url);
             return await response.text();
-          } catch {
-            return localStorage.getItem(`${storageKey}.${shareId}`);
+          } catch (error) {
+            console.error(`failed to load ${id}`, error);
+            return undefined;
           }
-        })();
-
-        if (cancellation.canceled) {
-          return;
         }
 
-        setApplyId((id) => (id ?? 0) + 1);
-
-        if (!text) {
-          return;
+        function loadLocalStorage(id?: string) {
+          return localStorage.getItem(id ? `${saveKey}.${id}` : saveKey);
         }
 
-        const file = parseFile(text);
-        applyContent(file.content);
+        for (const load of loads) {
+          const text = await load();
+          if (text) {
+            return text;
+          }
+        }
+
+        return undefined;
       })();
-      return () => {
-        cancellation.canceled = true;
-      };
-    } else {
-      setApplyId((id) => (id ?? 0) + 1);
 
-      const text = localStorage.getItem(storageKey);
+      if (cancellation.canceled) {
+        return;
+      }
+
       if (!text) {
+        setApplyId((id) => (id ?? 0) + 1);
         return;
       }
 
       const file = parseFile(text);
       applyContent(file.content);
-    }
+
+      setApplyId((id) => (id ?? 0) + 1);
+    })();
+    return () => {
+      cancellation.canceled = true;
+    };
   }, [applyContent, applyId, setApplyId]);
 
   return <></>;

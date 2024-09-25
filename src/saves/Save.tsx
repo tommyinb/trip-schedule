@@ -1,9 +1,10 @@
 import { useContext, useEffect } from "react";
-import { getShareId } from "./getShareId";
+import { findUrlValue } from "./findUrlValue";
 import { SaveContext } from "./SaveContext";
+import { shareKey } from "./Share";
 import { useFileContent } from "./useFileContent";
 
-export const storageKey = "saves-Save";
+export const saveKey = "saves-Save";
 
 export function Save() {
   const { file, setFile, applyId } = useContext(SaveContext);
@@ -23,8 +24,8 @@ export function Save() {
       return;
     }
 
-    const shareId = getShareId();
-    const outputKey = shareId ? `${storageKey}.${shareId}` : storageKey;
+    const shareId = findUrlValue(shareKey);
+    const outputKey = shareId ? `${saveKey}.${shareId}` : saveKey;
 
     const text = JSON.stringify(file);
 
