@@ -1,10 +1,9 @@
 .edits-Form {
   position: fixed;
-  left: auto;
-  right: auto;
+  left: calc((100% - min(100%, 800px)) / 2);
   bottom: 0;
   box-sizing: border-box;
-  width: min(100%, 1000px);
+  width: min(100%, 800px);
   background-color: #ffffffee;
   backdrop-filter: blur(4px);
   transition: 0.3s;

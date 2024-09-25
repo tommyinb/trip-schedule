@@ -5,7 +5,7 @@ import { DeskContext } from "../desks/DeskContext";
 import "./List.css";
 
 export function List() {
-  const { listRef, cards } = useContext(DeskContext);
+  const { listContentRef: listRef, cards } = useContext(DeskContext);
 
   const listCards = useMemo(
     () =>

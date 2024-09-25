@@ -4,4 +4,26 @@
   flex-direction: column;
   align-items: center;
   gap: 30px;
+
+  > .table,
+  > .list {
+    position: relative;
+  }
+
+  > .table {
+    max-width: 100%;
+    overflow-x: scroll;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    > .content {
+      width: min-content;
+      padding-left: 30px;
+      padding-right: 30px;
+    }
+  }
 }

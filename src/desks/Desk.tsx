@@ -1,6 +1,8 @@
-import { PropsWithChildren, useContext } from "react";
+import { useContext, useMemo } from "react";
 import { EditContext } from "../edits/EditContext";
 import { TargetType } from "../edits/targetType";
+import { List } from "../lists/List";
+import { Table } from "../tables/Table";
 import { Card } from "./card";
 import { CardState } from "./cardState";
 import { CardZone } from "./cardZone";
@@ -8,91 +10,122 @@ import "./Desk.css";
 import { DeskCard } from "./DeskCard";
 import { DeskContext } from "./DeskContext";
 
-export function Desk({ children }: PropsWithChildren) {
-  const { deskRef, cards, setCards } = useContext(DeskContext);
+export function Desk() {
+  const { tableContainerRef, listContainerRef, cards, setCards } =
+    useContext(DeskContext);
 
   const { target, setTarget } = useContext(EditContext);
 
+  const activeCards = useMemo(
+    () => cards.filter((card) => card.state !== CardState.Deleted),
+    [cards]
+  );
+
+  const tableCards = useMemo(
+    () => activeCards.filter((card) => card.place.zone === CardZone.Table),
+    [activeCards]
+  );
+  const listCards = useMemo(
+    () => activeCards.filter((card) => card.place.zone === CardZone.List),
+    [activeCards]
+  );
+
   return (
-    <div
-      className="desks-Desk"
-      ref={deskRef}
-      onDoubleClick={(event) => {
-        if (!deskRef.current) {
-          return;
-        }
+    <div className="desks-Desk">
+      <div
+        className="table"
+        ref={tableContainerRef}
+        onDoubleClick={(event) => {
+          if (!tableContainerRef.current) {
+            return;
+          }
 
-        const allCards = deskRef.current.querySelectorAll("[data-card]");
-        const clickedCards = [...allCards].filter((card) => {
-          const rect = card.getBoundingClientRect();
-          return (
-            event.clientX >= rect.left &&
-            event.clientX <= rect.right &&
-            event.clientY >= rect.top &&
-            event.clientY <= rect.bottom
+          const allCards =
+            tableContainerRef.current.querySelectorAll("[data-card]");
+          const clickedCards = [...allCards].filter((card) => {
+            const rect = card.getBoundingClientRect();
+            return (
+              event.clientX >= rect.left &&
+              event.clientX <= rect.right &&
+              event.clientY >= rect.top &&
+              event.clientY <= rect.bottom
+            );
+          });
+
+          if (clickedCards.length > 0) {
+            return;
+          }
+
+          const allCells = tableContainerRef.current.querySelectorAll(
+            "[data-date][data-hour]"
           );
-        });
+          const clickedCell = [...allCells].find((cell) => {
+            const rect = cell.getBoundingClientRect();
+            return (
+              event.clientX >= rect.left &&
+              event.clientX <= rect.right &&
+              event.clientY >= rect.top &&
+              event.clientY <= rect.bottom
+            );
+          });
 
-        if (clickedCards.length > 0) {
-          return;
-        }
+          if (!clickedCell) {
+            return;
+          }
 
-        const allCells = document.querySelectorAll("[data-date][data-hour]");
-        const clickedCell = [...allCells].find((cell) => {
-          const rect = cell.getBoundingClientRect();
-          return (
-            event.clientX >= rect.left &&
-            event.clientX <= rect.right &&
-            event.clientY >= rect.top &&
-            event.clientY <= rect.bottom
-          );
-        });
+          const dateText = clickedCell.getAttribute("data-date");
+          const dateValue = new Date(dateText ?? "");
 
-        if (!clickedCell) {
-          return;
-        }
+          const hourText = clickedCell.getAttribute("data-hour");
+          const hourValue = parseInt(hourText ?? "");
 
-        const dateText = clickedCell.getAttribute("data-date");
-        const dateValue = new Date(dateText ?? "");
+          const newCard: Card = {
+            id: Math.max(-1, ...cards.map((card) => card.id)) + 1,
+            state: CardState.Idle,
+            place: { zone: CardZone.Table },
+            content: {
+              name: "",
+              location: "",
+              time: new Date(
+                dateValue.getFullYear(),
+                dateValue.getMonth(),
+                dateValue.getDate(),
+                hourValue,
+                0,
+                0,
+                0
+              ),
+              duration: 1 * 60 * 60 * 1000,
+              remark: "",
+              openings: [],
+            },
+          };
 
-        const hourText = clickedCell.getAttribute("data-hour");
-        const hourValue = parseInt(hourText ?? "");
+          setCards([...cards, newCard]);
 
-        const newCard: Card = {
-          id: Math.max(-1, ...cards.map((card) => card.id)) + 1,
-          state: CardState.Idle,
-          place: { zone: CardZone.Table },
-          content: {
-            name: "",
-            location: "",
-            time: new Date(
-              dateValue.getFullYear(),
-              dateValue.getMonth(),
-              dateValue.getDate(),
-              hourValue,
-              0,
-              0
-            ),
-            duration: 1 * 60 * 60 * 1000,
-            remark: "",
-            openings: [],
-          },
-        };
+          setTarget({
+            targetId: (target?.targetId ?? -1) + 1,
+            type: TargetType.Create,
+            cardId: newCard.id,
+          });
+        }}
+      >
+        <div className="content">
+          <Table />
 
-        setCards([...cards, newCard]);
+          {tableCards.map((card) => (
+            <DeskCard key={card.id} card={card} />
+          ))}
+        </div>
+      </div>
 
-        setTarget({
-          targetId: (target?.targetId ?? -1) + 1,
-          type: TargetType.Create,
-          cardId: newCard.id,
-        });
-      }}
-    >
-      {children}
+      <div className="list" ref={listContainerRef}>
+        <List />
 
-      {cards.map((card) => (
-        <DeskCard key={card.id} card={card} />
-      ))}
+        {listCards.map((card) => (
+          <DeskCard key={card.id} card={card} />
+        ))}
+      </div>
     </div>
   );
 }

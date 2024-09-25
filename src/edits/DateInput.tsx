@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { SoftInput } from "../trips/SoftInput";
+import { getDatePart } from "./getDatePart";
 import { getDateText } from "./getDateText";
 
 export function DateInput({
@@ -31,11 +32,7 @@ export function DateInput({
           return;
         }
 
-        const outputDate = new Date(
-          inputDate.getFullYear(),
-          inputDate.getMonth(),
-          inputDate.getDate()
-        );
+        const outputDate = getDatePart(inputDate);
 
         if (!trySetValue(outputDate)) {
           setInvalid(true);

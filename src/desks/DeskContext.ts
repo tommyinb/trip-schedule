@@ -2,16 +2,20 @@ import { createContext, Dispatch, RefObject, SetStateAction } from "react";
 import { Card } from "./card";
 
 export const DeskContext = createContext<{
-  deskRef: RefObject<HTMLDivElement>;
-  tableRef: RefObject<HTMLDivElement>;
-  listRef: RefObject<HTMLDivElement>;
+  tableContainerRef: RefObject<HTMLDivElement>;
+  tableContentRef: RefObject<HTMLDivElement>;
+
+  listContainerRef: RefObject<HTMLDivElement>;
+  listContentRef: RefObject<HTMLDivElement>;
 
   cards: Card[];
   setCards: Dispatch<SetStateAction<Card[]>>;
 }>({
-  deskRef: { current: null },
-  tableRef: { current: null },
-  listRef: { current: null },
+  tableContainerRef: { current: null },
+  tableContentRef: { current: null },
+
+  listContainerRef: { current: null },
+  listContentRef: { current: null },
 
   cards: [],
   setCards: () => {},

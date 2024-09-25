@@ -36,7 +36,9 @@ export function ModifyTime({ card }: Props) {
                 card.content.time.getMonth(),
                 card.content.time.getDate(),
                 value.hour,
-                value.minute
+                value.minute,
+                0,
+                0
               ),
             },
           })

@@ -8,7 +8,7 @@ import { useDates } from "./useDates";
 export function Table() {
   const dates = useDates();
 
-  const { tableRef } = useContext(DeskContext);
+  const { tableContentRef: tableRef } = useContext(DeskContext);
 
   return (
     <div className="tables-Table" ref={tableRef}>

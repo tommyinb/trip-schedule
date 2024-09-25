@@ -22,7 +22,12 @@ export function DeskCardArea({ card, rectangle }: Props) {
 
   const ref = useRef<HTMLDivElement>(null);
 
-  const { tableRef, listRef, cards, setCards } = useContext(DeskContext);
+  const {
+    tableContentRef: tableRef,
+    listContentRef: listRef,
+    cards,
+    setCards,
+  } = useContext(DeskContext);
 
   const [pointer, setPointer] = useState<Pointer>({
     status: PointerState.Idle,
@@ -152,7 +157,10 @@ export function DeskCardArea({ card, rectangle }: Props) {
                   dateValue.getFullYear(),
                   dateValue.getMonth(),
                   dateValue.getDate(),
-                  hourValue
+                  hourValue,
+                  0,
+                  0,
+                  0
                 ),
               },
             })

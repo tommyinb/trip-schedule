@@ -44,6 +44,8 @@ export function SettingDate({ className }: Props) {
             return false;
           }
 
+          console.log("What", value);
+
           setEndDate(value);
           return true;
         }}

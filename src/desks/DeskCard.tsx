@@ -3,7 +3,6 @@ import {
   useCallback,
   useContext,
   useLayoutEffect,
-  useMemo,
   useState,
 } from "react";
 import { getDateText } from "../tables/getDateText";
@@ -15,55 +14,78 @@ import { group } from "./group";
 import { Rectangle } from "./rectangle";
 
 export function DeskCard({ card }: Props) {
-  const { deskRef, tableRef, listRef } = useContext(DeskContext);
+  const {
+    tableContainerRef,
+    tableContentRef,
+    listContainerRef,
+    listContentRef,
+  } = useContext(DeskContext);
 
-  const [inputRectangles, setInputRectangles] = useState<Rectangle[]>([]);
+  const [outputRectangles, setOutputRectangles] = useState<Rectangle[]>([]);
   const updateRectangles = useCallback(() => {
     if (card.place.zone === CardZone.Table) {
-      const tableRectangles = getTableRectangles(card, tableRef);
-      setInputRectangles(tableRectangles);
+      const tableRectangles = getTableRectangles(card, tableContentRef);
+
+      const containerRect = tableContainerRef.current?.getBoundingClientRect();
+
+      setOutputRectangles(
+        tableRectangles.map((rect) => ({
+          left:
+            rect.left -
+            (containerRect?.left ?? 0) +
+            (tableContainerRef.current?.scrollLeft ?? 0),
+          top:
+            rect.top -
+            (containerRect?.top ?? 0) +
+            (tableContainerRef.current?.scrollTop ?? 0),
+          width: rect.width,
+          height: rect.height,
+        }))
+      );
     } else {
-      const listRectangle = getListRectangle(card.place.index, listRef);
-      if (!listRectangle) {
-        return;
+      const listRectangle = getListRectangle(card.place.index, listContentRef);
+      if (listRectangle) {
+        const containerRef = listContainerRef.current?.getBoundingClientRect();
+
+        setOutputRectangles([
+          {
+            left: listRectangle.left - (containerRef?.left ?? 0),
+            top: listRectangle.top - (containerRef?.top ?? 0),
+            width: listRectangle.width,
+            height: listRectangle.height,
+          },
+        ]);
       }
-
-      setInputRectangles([listRectangle]);
     }
-  }, [card, listRef, tableRef]);
-
-  const outputRectangles = useMemo(() => {
-    if (!deskRef.current) {
-      return [];
-    }
-
-    const deskRect = deskRef.current.getBoundingClientRect();
-
-    return inputRectangles.map((rect) => ({
-      left: rect.left - deskRect.left,
-      top: rect.top - deskRect.top,
-      width: rect.width,
-      height: rect.height,
-    }));
-  }, [deskRef, inputRectangles]);
+  }, [
+    card,
+    listContainerRef,
+    listContentRef,
+    tableContainerRef,
+    tableContentRef,
+  ]);
 
   useLayoutEffect(() => {
     updateRectangles();
 
     const observer = new ResizeObserver(updateRectangles);
 
-    if (deskRef.current) {
-      observer.observe(deskRef.current);
+    if (tableContentRef.current) {
+      observer.observe(tableContentRef.current);
     }
-    if (tableRef.current) {
-      observer.observe(tableRef.current);
-    }
-    if (listRef.current) {
-      observer.observe(listRef.current);
+    if (listContainerRef.current) {
+      observer.observe(listContainerRef.current);
     }
 
-    return () => observer.disconnect();
-  }, [deskRef, listRef, tableRef, updateRectangles]);
+    const tableContainerRefElement = tableContainerRef.current;
+    tableContainerRefElement?.addEventListener("scroll", updateRectangles);
+
+    return () => {
+      observer.disconnect();
+
+      tableContainerRefElement?.removeEventListener("scroll", updateRectangles);
+    };
+  }, [listContainerRef, tableContainerRef, tableContentRef, updateRectangles]);
 
   return (
     <>

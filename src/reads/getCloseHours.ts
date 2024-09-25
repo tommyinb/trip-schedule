@@ -1,19 +1,12 @@
 import { CardContent } from "../desks/cardContent";
+import { getDatePart } from "../edits/getDatePart";
 
 export function getCloseHours(content: CardContent) {
   const startTime = new Date(content.time);
-  const startDate = new Date(
-    startTime.getFullYear(),
-    startTime.getMonth(),
-    startTime.getDate()
-  );
+  const startDate = getDatePart(startTime);
 
   const endTime = new Date(content.time.getTime() + content.duration);
-  const endDate = new Date(
-    endTime.getFullYear(),
-    endTime.getMonth(),
-    endTime.getDate()
-  );
+  const endDate = getDatePart(endTime);
 
   const allDates: Date[] = [];
   for (

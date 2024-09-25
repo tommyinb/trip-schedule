@@ -15,7 +15,11 @@ export function ModifyDate({ card }: Props) {
       new Date(
         card.content.time.getFullYear(),
         card.content.time.getMonth(),
-        card.content.time.getDate()
+        card.content.time.getDate(),
+        0,
+        0,
+        0,
+        0
       ),
     [card.content.time]
   );

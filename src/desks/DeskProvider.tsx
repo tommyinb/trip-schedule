@@ -3,10 +3,11 @@ import { Card } from "./card";
 import { DeskContext } from "./DeskContext";
 
 export function DeskProvider({ children }: PropsWithChildren) {
-  const deskRef = useRef<HTMLDivElement>(null);
+  const tableContainerRef = useRef<HTMLDivElement>(null);
+  const tableContentRef = useRef<HTMLDivElement>(null);
 
-  const tableRef = useRef<HTMLDivElement>(null);
-  const listRef = useRef<HTMLDivElement>(null);
+  const listContainerRef = useRef<HTMLDivElement>(null);
+  const listContentRef = useRef<HTMLDivElement>(null);
 
   const [cards, setCards] = useState<Card[]>([]);
 
@@ -14,13 +15,14 @@ export function DeskProvider({ children }: PropsWithChildren) {
     <DeskContext.Provider
       value={useMemo(
         () => ({
-          deskRef,
-          listRef,
-          tableRef,
+          tableContainerRef,
+          tableContentRef,
+          listContainerRef,
+          listContentRef,
           cards,
           setCards,
         }),
-        [cards, setCards]
+        [cards]
       )}
     >
       {children}
