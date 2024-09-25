@@ -4,13 +4,27 @@
 
   .weekday {
     height: 24px;
-    min-width: 45px;
     background-color: #e8e8e8;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 14px;
     cursor: default;
+
+    @media (max-width: 600px) {
+      box-sizing: border-box;
+      max-width: 25px;
+      padding-left: 10px;
+      overflow: hidden;
+    }
+
+    @media (min-width: 600px) {
+      min-width: 35px;
+    }
+
+    @media (min-width: 700px) {
+      min-width: 40px;
+    }
 
     &.active {
       background-color: #77e4c8;

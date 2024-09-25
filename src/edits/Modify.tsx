@@ -71,8 +71,10 @@ export function Modify({ card, setState }: Props) {
 
         <div className="time">
           <div className="label">Start Time</div>
-          <ModifyDate card={card} />
-          <ModifyTime card={card} />
+          <div className="value">
+            <ModifyDate card={card} />
+            <ModifyTime card={card} />
+          </div>
         </div>
 
         <div className="duration">

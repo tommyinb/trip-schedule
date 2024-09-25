@@ -1,0 +1,121 @@
+.edits-ViewHeader {
+  display: flex;
+  gap: 25px;
+
+  @media (min-width: 600px) {
+    align-items: center;
+  }
+
+  .content {
+    display: flex;
+
+    @media (min-width: 600px) {
+      align-items: center;
+      gap: 15px;
+    }
+
+    @media (max-width: 600px) {
+      flex-direction: column-reverse;
+      gap: 10px;
+    }
+
+    .name {
+      flex: 1;
+      max-height: 100px;
+      font-size: 20px;
+      font-weight: bold;
+      color: #888;
+
+      &.active {
+        color: #36c2ce;
+      }
+    }
+
+    .control {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+
+      .modify,
+      .revert,
+      .delete {
+        width: 36px;
+        height: 36px;
+        border-radius: 12px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &::after {
+          width: 20px;
+          height: 20px;
+          background-size: cover;
+          content: "";
+        }
+      }
+
+      .modify {
+        &:hover,
+        &:active {
+          background-color: #77e4c8;
+        }
+
+        &::after {
+          background-image: url(./pen.svg);
+        }
+      }
+
+      .revert {
+        &:hover,
+        &:active {
+          background-color: #eedf7a;
+        }
+
+        &::after {
+          background-image: url(./revert.svg);
+        }
+      }
+
+      .delete {
+        &:hover,
+        &:active {
+          &.table {
+            background-color: #eedf7a;
+          }
+
+          &.list {
+            background-color: #d8a25e;
+          }
+        }
+
+        &::after {
+          background-image: url(./trash.svg);
+        }
+      }
+    }
+  }
+
+  .close {
+    flex-shrink: 0;
+    margin-left: auto;
+    width: 36px;
+    height: 36px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &::after {
+      width: 20px;
+      height: 20px;
+      background-image: url(./cross.svg);
+      background-size: cover;
+      content: "";
+    }
+
+    &:hover,
+    &:active {
+      background-color: #77e4c8;
+    }
+  }
+}

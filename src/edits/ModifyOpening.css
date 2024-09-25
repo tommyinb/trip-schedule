@@ -1,27 +1,48 @@
 .edits-ModifyOpening {
   display: flex;
   align-items: center;
-  gap: 10px;
 
-  .delete {
-    width: 28px;
-    height: 28px;
-    border-radius: 14px;
+  @media (max-width: 1000px) {
+    flex-direction: column;
+  }
+
+  @media (min-width: 900px) {
+    gap: 10px;
+  }
+
+  .days {
     display: flex;
-    justify-content: center;
     align-items: center;
+    gap: 10px;
 
-    &::after {
-      width: 14px;
-      height: 14px;
-      background-image: url(./cross.svg);
-      background-size: contain;
-      content: "";
+    .delete {
+      width: 28px;
+      height: 28px;
+      border-radius: 14px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      &::after {
+        width: 14px;
+        height: 14px;
+        background-image: url(./cross.svg);
+        background-size: contain;
+        content: "";
+      }
+
+      &:hover,
+      &:active {
+        background-color: #77e4c8;
+      }
     }
+  }
 
-    &:hover,
-    &:active {
-      background-color: #77e4c8;
+  .time {
+    display: flex;
+
+    @media (max-width: 600px) {
+      margin-left: 20px;
     }
   }
 }

@@ -1,28 +1,9 @@
 .edits-ModifyOpenings {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 30px;
-
-  .add {
-    width: 80px;
-    height: 28px;
-    border-radius: 14px;
-    background-color: #77e4c8;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #444;
-    cursor: default;
-
-    &::before {
-      margin-right: 4px;
-      width: 14px;
-      height: 14px;
-      background-image: url(./plus.svg);
-      background-size: contain;
-      content: "";
-    }
-  }
+  column-gap: 30px;
+  row-gap: 5px;
 
   .content {
     display: flex;

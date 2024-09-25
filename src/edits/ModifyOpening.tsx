@@ -14,22 +14,24 @@ export function ModifyOpening({ card, opening }: Props) {
 
   return (
     <div className="edits-ModifyOpening">
-      <div
-        className="delete"
-        onClick={() =>
-          setCards((cards) =>
-            replace(cards, card, {
-              ...card,
-              content: {
-                ...card.content,
-                openings: without(card.content.openings, opening),
-              },
-            })
-          )
-        }
-      />
+      <div className="days">
+        <div
+          className="delete"
+          onClick={() =>
+            setCards((cards) =>
+              replace(cards, card, {
+                ...card,
+                content: {
+                  ...card.content,
+                  openings: without(card.content.openings, opening),
+                },
+              })
+            )
+          }
+        />
 
-      <ModifyOpeningWeekday card={card} opening={opening} />
+        <ModifyOpeningWeekday card={card} opening={opening} />
+      </div>
 
       <div className="time">
         <ModifyOpeningStart card={card} opening={opening} />-

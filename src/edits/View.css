@@ -1,133 +1,55 @@
 .edits-View {
-  padding: 35px 50px 25px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
 
-  .header {
-    display: flex;
-    align-items: center;
-
-    .name {
-      font-size: 20px;
-      font-weight: bold;
-      color: #888;
-
-      &.active {
-        color: #36c2ce;
-      }
-    }
-
-    .modify,
-    .revert,
-    .delete,
-    .close {
-      width: 36px;
-      height: 36px;
-      border-radius: 12px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-
-      &::after {
-        width: 20px;
-        height: 20px;
-        background-size: cover;
-        content: "";
-      }
-    }
-
-    .modify,
-    .revert,
-    .delete {
-      margin-left: 15px;
-    }
-
-    .modify {
-      &:hover,
-      &:active {
-        background-color: #77e4c8;
-      }
-
-      &::after {
-        background-image: url(./pen.svg);
-      }
-    }
-
-    .revert {
-      &:hover,
-      &:active {
-        background-color: #eedf7a;
-      }
-
-      &::after {
-        background-image: url(./revert.svg);
-      }
-    }
-
-    .delete {
-      &:hover,
-      &:active {
-        &.table {
-          background-color: #eedf7a;
-        }
-
-        &.list {
-          background-color: #d8a25e;
-        }
-      }
-
-      &::after {
-        background-image: url(./trash.svg);
-      }
-    }
-
-    .close {
-      margin-left: auto;
-
-      &:hover,
-      &:active {
-        background-color: #77e4c8;
-      }
-
-      &::after {
-        background-image: url(./cross.svg);
-      }
-    }
+  @media (min-width: 600px) {
+    padding: 35px 50px 25px;
+    gap: 16px;
   }
 
-  .location,
-  > .time,
-  .duration,
-  .remark,
-  .openings {
-    display: flex;
-    align-items: center;
-
-    .label {
-      min-width: 100px;
-      font-size: 14px;
-      color: #444;
-    }
+  @media (max-width: 600px) {
+    padding: 15px 15px 20px 25px;
+    gap: 20px;
   }
 
-  > .time {
+  .content {
     display: flex;
+    flex-direction: column;
+    gap: 16px;
 
-    .time {
-      margin-left: 10px;
-    }
-  }
-
-  > .openings {
+    .location,
+    > .time,
+    .duration,
+    .remark,
     .openings {
       display: flex;
-      flex-direction: column;
-      gap: 3px;
-    }
-  }
+      align-items: center;
 
-  .read {
-    margin-left: 100px;
+      .label {
+        min-width: min(100px, 40%);
+        font-size: 14px;
+        color: #444;
+      }
+    }
+
+    > .time {
+      display: flex;
+
+      .time {
+        margin-left: 10px;
+      }
+    }
+
+    > .openings {
+      .openings {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+      }
+    }
+
+    .read {
+      margin-left: 100px;
+    }
   }
 }
