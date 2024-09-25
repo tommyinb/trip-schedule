@@ -128,6 +128,13 @@
         padding: 6px 10px 5px;
         font-size: 14px;
         color: #444;
+        overflow: scroll;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+
+        &::-webkit-scrollbar {
+          display: none;
+        }
       }
     }
   }

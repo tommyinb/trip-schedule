@@ -12,7 +12,7 @@
     gap: 20px;
   }
 
-  .content {
+  > .content {
     display: flex;
     flex-direction: column;
     gap: 16px;
@@ -32,6 +32,20 @@
       }
     }
 
+    .location {
+      .value {
+        flex: 1;
+        max-height: 70px;
+        overflow: scroll;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+
+        &::-webkit-scrollbar {
+          display: none;
+        }
+      }
+    }
+
     > .time {
       display: flex;
 
@@ -40,11 +54,26 @@
       }
     }
 
+    .remark {
+      .value {
+        flex: 1;
+      }
+    }
+
     > .openings {
-      .openings {
+      .value {
+        flex: 1;
+        max-height: 110px;
         display: flex;
         flex-direction: column;
         gap: 3px;
+        overflow: scroll;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+
+        &::-webkit-scrollbar {
+          display: none;
+        }
       }
     }
 

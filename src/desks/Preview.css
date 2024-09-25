@@ -8,13 +8,17 @@
     left: 0;
     width: 100%;
     height: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
   }
 
   .display,
   .measure {
+    .time,
+    .name,
+    .location {
+      padding-top: 1px;
+      padding-bottom: 1px;
+    }
+
     .time,
     .location {
       font-size: 12px;
@@ -23,6 +27,7 @@
 
   .display {
     justify-content: center;
+    overflow: hidden;
   }
 
   .measure {

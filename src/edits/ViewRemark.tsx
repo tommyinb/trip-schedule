@@ -1,9 +1,9 @@
 import { useMemo } from "react";
 import "./ViewRemark.css";
 
-export function ViewRemark({ remark }: Props) {
+export function ViewRemark({ className, remark }: Props) {
   return (
-    <div className="edits-ViewRemark">
+    <div className={`edits-ViewRemark ${className}`}>
       {useMemo(() => {
         const urlRegex = /(https?:\/\/[^\s]+)/g;
         const parts = remark.split(urlRegex);
@@ -28,5 +28,6 @@ export function ViewRemark({ remark }: Props) {
 }
 
 interface Props {
+  className: string;
   remark: string;
 }

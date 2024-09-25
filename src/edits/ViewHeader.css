@@ -21,10 +21,17 @@
 
     .name {
       flex: 1;
-      max-height: 100px;
+      max-height: 90px;
       font-size: 20px;
       font-weight: bold;
       color: #888;
+      overflow: scroll;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
 
       &.active {
         color: #36c2ce;

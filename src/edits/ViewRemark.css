@@ -1,3 +1,11 @@
 .edits-ViewRemark {
+  max-height: 220px;
   white-space: pre-wrap;
+  overflow: scroll;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }

@@ -28,6 +28,12 @@ export function Preview({ className, card }: Props) {
       return;
     }
 
+    const paris = [
+      { ref: nameRef, set: setNameVisible },
+      { ref: timeRef, set: setTimeVisible },
+      { ref: locationRef, set: setLocationVisible },
+    ];
+
     update();
     function update() {
       const measureRect = measureRef.current?.getBoundingClientRect();
@@ -35,35 +41,27 @@ export function Preview({ className, card }: Props) {
         return;
       }
 
-      const nameRect = nameRef.current?.getBoundingClientRect();
-      if (nameRect) {
-        setNameVisible(nameRect.bottom <= measureRect.bottom);
-      }
+      let remainingHeight = measureRect.height;
 
-      const timeRect = timeRef.current?.getBoundingClientRect();
-      if (timeRect) {
-        setTimeVisible(timeRect.bottom <= measureRect.bottom);
-      }
+      for (const { ref, set } of paris) {
+        if (ref.current) {
+          const rect = ref.current.getBoundingClientRect();
+          if (rect.height < remainingHeight || remainingHeight > 50) {
+            set(true);
 
-      const locationRect = locationRef.current?.getBoundingClientRect();
-      if (locationRect) {
-        setLocationVisible(locationRect.bottom <= measureRect.bottom);
+            remainingHeight -= rect.height;
+          }
+        }
       }
     }
 
     const observer = new ResizeObserver(update);
     observer.observe(measureRef.current);
 
-    if (nameRef.current) {
-      observer.observe(nameRef.current);
-    }
-
-    if (timeRef.current) {
-      observer.observe(timeRef.current);
-    }
-
-    if (locationRef.current) {
-      observer.observe(locationRef.current);
+    for (const { ref } of paris) {
+      if (ref.current) {
+        observer.observe(ref.current);
+      }
     }
 
     return () => observer.disconnect();
@@ -82,16 +80,16 @@ export function Preview({ className, card }: Props) {
       </div>
 
       <div className="measure" ref={measureRef}>
+        <div className="time" ref={timeRef}>
+          {timeText}
+        </div>
+
         <div className="name" ref={nameRef}>
           {card.content.name}
         </div>
 
         <div className="location" ref={locationRef}>
           {card.content.location}
-        </div>
-
-        <div className="time" ref={timeRef}>
-          {timeText}
         </div>
       </div>
     </div>

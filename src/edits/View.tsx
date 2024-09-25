@@ -18,7 +18,7 @@ export function View({ card, setState }: Props) {
         {card.content.location && (
           <div className="location">
             <div className="label">Location</div>
-            <div>{card.content.location}</div>
+            <div className="value">{card.content.location}</div>
           </div>
         )}
 
@@ -36,14 +36,14 @@ export function View({ card, setState }: Props) {
         {card.content.remark && (
           <div className="remark">
             <div className="label">Remark</div>
-            <ViewRemark remark={card.content.remark} />
+            <ViewRemark className="value" remark={card.content.remark} />
           </div>
         )}
 
         {card.content.openings.length > 0 && (
           <div className="openings">
             <div className="label">Openings</div>
-            <div className="openings">
+            <div className="value">
               {card.content.openings.map((opening, index) => (
                 <ViewOpening key={index} opening={opening} />
               ))}
