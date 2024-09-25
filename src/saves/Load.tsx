@@ -22,22 +22,42 @@ export function Load() {
 
     const cancellation = { canceled: false };
     (async function () {
-      const text = await (async function () {
+      const file = await (async function () {
         const loadId = findUrlValue(loadKey);
         const shareId = findUrlValue(shareKey);
 
-        const loads = [
-          ...(loadId
-            ? [() => loadGlobalStorage(loadId), () => loadLocalStorage(loadId)]
-            : []),
-          ...(shareId
-            ? [
-                () => loadGlobalStorage(shareId),
-                () => loadLocalStorage(shareId),
-              ]
-            : []),
-          () => loadLocalStorage(),
-        ];
+        if (loadId) {
+          const loadFile = loadStorage(loadId);
+          if (loadFile) {
+            return loadFile;
+          }
+        }
+
+        if (shareId) {
+          const shareFile = loadStorage(shareId);
+          if (shareFile) {
+            return shareFile;
+          }
+        }
+
+        async function loadStorage(id: string) {
+          const globalFile = await loadGlobalStorage(id);
+          const localFile = loadLocalStorage(`${saveKey}.${id}`);
+
+          if (globalFile && localFile) {
+            return localFile.editTime >= globalFile.editTime
+              ? localFile
+              : globalFile;
+          }
+
+          if (globalFile) {
+            return globalFile;
+          }
+
+          if (localFile) {
+            return localFile;
+          }
+        }
 
         async function loadGlobalStorage(id: string) {
           try {
@@ -47,22 +67,32 @@ export function Load() {
             const url = await getDownloadURL(storageRef);
 
             const response = await fetch(url);
-            return await response.text();
+            const text = await response.text();
+
+            return parseFile(text);
           } catch (error) {
-            console.error(`failed to load ${id}`, error);
+            console.error(`failed to load ${id} from global storage`, error);
             return undefined;
           }
         }
 
-        function loadLocalStorage(id?: string) {
-          return localStorage.getItem(id ? `${saveKey}.${id}` : saveKey);
+        function loadLocalStorage(key: string) {
+          const text = localStorage.getItem(key);
+          if (!text) {
+            return undefined;
+          }
+
+          try {
+            return parseFile(text);
+          } catch (error) {
+            console.error(`failed to load ${key} from local storage`, error);
+            return undefined;
+          }
         }
 
-        for (const load of loads) {
-          const text = await load();
-          if (text) {
-            return text;
-          }
+        const localFile = loadLocalStorage(saveKey);
+        if (localFile) {
+          return localFile;
         }
 
         return undefined;
@@ -72,13 +102,9 @@ export function Load() {
         return;
       }
 
-      if (!text) {
-        setApplyId((id) => (id ?? 0) + 1);
-        return;
+      if (file) {
+        applyContent(file.content);
       }
-
-      const file = parseFile(text);
-      applyContent(file.content);
 
       setApplyId((id) => (id ?? 0) + 1);
     })();
