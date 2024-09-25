@@ -1,9 +1,9 @@
 .desks-Desk {
   position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 30px;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto auto;
+  row-gap: 30px;
 
   > .table,
   > .list {
@@ -11,6 +11,7 @@
   }
 
   > .table {
+    justify-self: center;
     max-width: 100%;
     overflow-x: scroll;
     scrollbar-width: none;
@@ -24,6 +25,20 @@
       width: min-content;
       padding-left: 30px;
       padding-right: 30px;
+    }
+  }
+
+  .list {
+    border-top: 1px dashed #ccc;
+
+    @media (max-width: 600px) {
+      padding: 10px 10px 30px;
+    }
+
+    @media (min-width: 600px) {
+      justify-self: center;
+      width: min(770px, 100vw);
+      padding: 20px 10px;
     }
   }
 }

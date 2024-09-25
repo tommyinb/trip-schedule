@@ -11,7 +11,7 @@ export function HeaderView({ setState }: Props) {
 
   return (
     <div className="trips-HeaderView">
-      <div className="text">{name}</div>
+      <div className="name">{name}</div>
 
       {editable ? (
         <div

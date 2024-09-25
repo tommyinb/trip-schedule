@@ -1,4 +1,4 @@
-import { useContext, useMemo } from "react";
+import { useContext, useEffect, useMemo } from "react";
 import { EditContext } from "../edits/EditContext";
 import { TargetType } from "../edits/targetType";
 import { List } from "../lists/List";
@@ -30,6 +30,31 @@ export function Desk() {
     () => activeCards.filter((card) => card.place.zone === CardZone.List),
     [activeCards]
   );
+
+  const draggingCards = useMemo(
+    () => activeCards.filter((card) => card.state === CardState.Dragging),
+    [activeCards]
+  );
+
+  useEffect(() => {
+    const callback = (event: Event) => {
+      if (draggingCards.length > 0) {
+        event.preventDefault();
+      }
+    };
+
+    window.addEventListener("touchmove", callback, { passive: false });
+
+    const tableContainerElement = tableContainerRef.current;
+    tableContainerElement?.addEventListener("touchmove", callback, {
+      passive: false,
+    });
+
+    return () => {
+      window.removeEventListener("touchmove", callback);
+      tableContainerElement?.removeEventListener("touchmove", callback);
+    };
+  }, [draggingCards.length, tableContainerRef]);
 
   return (
     <div className="desks-Desk">

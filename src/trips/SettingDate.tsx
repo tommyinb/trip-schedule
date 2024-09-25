@@ -17,41 +17,43 @@ export function SettingDate({ className }: Props) {
     >
       <div className="label">Schedule Period</div>
 
-      <DateInput
-        key={`start-${id}`}
-        className="start"
-        value={startDate}
-        trySetValue={(value) => {
-          if (value > endDate) {
-            return false;
-          }
+      <div className="content">
+        <DateInput
+          key={`start-${id}`}
+          className="start"
+          value={startDate}
+          trySetValue={(value) => {
+            if (value > endDate) {
+              return false;
+            }
 
-          setStartDate(value);
-          return true;
-        }}
-        leftValue={addDays(startDate, -1)}
-        rightValue={startDate < endDate ? addDays(startDate, 1) : undefined}
-      />
+            setStartDate(value);
+            return true;
+          }}
+          leftValue={addDays(startDate, -1)}
+          rightValue={startDate < endDate ? addDays(startDate, 1) : undefined}
+        />
 
-      <div>-</div>
+        <div>-</div>
 
-      <DateInput
-        key={`end-${id}`}
-        className="end"
-        value={endDate}
-        trySetValue={(value) => {
-          if (value < startDate) {
-            return false;
-          }
+        <DateInput
+          key={`end-${id}`}
+          className="end"
+          value={endDate}
+          trySetValue={(value) => {
+            if (value < startDate) {
+              return false;
+            }
 
-          console.log("What", value);
+            console.log("What", value);
 
-          setEndDate(value);
-          return true;
-        }}
-        leftValue={endDate > startDate ? addDays(endDate, -1) : undefined}
-        rightValue={addDays(endDate, 1)}
-      />
+            setEndDate(value);
+            return true;
+          }}
+          leftValue={endDate > startDate ? addDays(endDate, -1) : undefined}
+          rightValue={addDays(endDate, 1)}
+        />
+      </div>
     </div>
   );
 }

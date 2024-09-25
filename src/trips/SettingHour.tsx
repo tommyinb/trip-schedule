@@ -16,42 +16,46 @@ export function SettingHour({ className }: Props) {
     >
       <div className="label">Activity Hours</div>
 
-      <HourInput
-        key={`start-${id}`}
-        className="start"
-        value={startHour}
-        trySetValue={(value) => {
-          setStartHour(value);
-          return true;
-        }}
-        leftValue={
-          ((startHour - 1 === endHour ? endHour - 1 : startHour - 1) + 24) % 24
-        }
-        rightValue={
-          (startHour + 1 === endHour ? endHour + 1 : startHour + 1) % 24
-        }
-      />
+      <div className="content">
+        <HourInput
+          key={`start-${id}`}
+          className="start"
+          value={startHour}
+          trySetValue={(value) => {
+            setStartHour(value);
+            return true;
+          }}
+          leftValue={
+            ((startHour - 1 === endHour ? endHour - 1 : startHour - 1) + 24) %
+            24
+          }
+          rightValue={
+            (startHour + 1 === endHour ? endHour + 1 : startHour + 1) % 24
+          }
+        />
 
-      <div>-</div>
+        <div>-</div>
 
-      <HourInput
-        key={`end-${id}`}
-        className="end"
-        value={endHour}
-        trySetValue={(value) => {
-          setEndHour(value);
-          return true;
-        }}
-        leftValue={
-          ((endHour - 1 === startHour ? startHour - 1 : endHour - 1) + 24) % 24
-        }
-        rightValue={
-          (endHour + 1 === startHour ? startHour + 1 : endHour + 1) % 24
-        }
-      />
+        <HourInput
+          key={`end-${id}`}
+          className="end"
+          value={endHour}
+          trySetValue={(value) => {
+            setEndHour(value);
+            return true;
+          }}
+          leftValue={
+            ((endHour - 1 === startHour ? startHour - 1 : endHour - 1) + 24) %
+            24
+          }
+          rightValue={
+            (endHour + 1 === startHour ? startHour + 1 : endHour + 1) % 24
+          }
+        />
 
-      <div className={`overnight ${endHour < startHour ? "active" : ""}`}>
-        overnight
+        <div className={`overnight ${endHour < startHour ? "active" : ""}`}>
+          overnight
+        </div>
       </div>
     </div>
   );

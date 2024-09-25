@@ -1,27 +1,56 @@
 .trips-SettingHour {
   display: flex;
-  align-items: center;
-  gap: 10px;
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+  }
+
+  @media (min-width: 600px) {
+    align-items: center;
+    gap: 10px;
+  }
 
   &:not(.active) {
     opacity: 0.4;
   }
 
   .label {
-    min-width: 140px;
+    @media (min-width: 600px) {
+      min-width: 140px;
+    }
+
+    @media (max-width: 600px) {
+      font-size: 14px;
+      color: #888;
+    }
   }
 
-  .start,
-  .end {
-    flex: 1 1 0;
-  }
+  .content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 
-  .overnight {
-    color: #444;
-    transition: 0.3s;
+    @media (min-width: 600px) {
+      flex: 1;
+    }
 
-    &:not(.active) {
-      opacity: 0;
+    @media (max-width: 600px) {
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+
+    .start,
+    .end {
+      flex: 1 1 0;
+    }
+
+    .overnight {
+      color: #444;
+      transition: 0.3s;
+
+      &:not(.active) {
+        opacity: 0;
+      }
     }
   }
 }

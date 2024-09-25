@@ -1,10 +1,25 @@
 .trips-SettingEditable {
   display: flex;
-  align-items: center;
-  gap: 10px;
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  @media (min-width: 600px) {
+    align-items: center;
+    gap: 10px;
+  }
 
   .label {
-    min-width: 140px;
+    @media (min-width: 600px) {
+      min-width: 140px;
+    }
+
+    @media (max-width: 600px) {
+      font-size: 14px;
+      color: #888;
+    }
   }
 
   .content {
@@ -12,6 +27,10 @@
     display: flex;
     align-items: center;
     transition: 0.3s;
+
+    @media (max-width: 600px) {
+      margin-left: 10px;
+    }
 
     &.view {
       border-radius: 12px;
