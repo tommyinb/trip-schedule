@@ -6,7 +6,6 @@ import "./Preview.css";
 export function Preview({ className, card }: Props) {
   const measureRef = useRef<HTMLDivElement>(null);
 
-  const [nameVisible, setNameVisible] = useState(false);
   const nameRef = useRef<HTMLDivElement>(null);
 
   const timeText = useMemo(
@@ -29,7 +28,6 @@ export function Preview({ className, card }: Props) {
     }
 
     const paris = [
-      { ref: nameRef, set: setNameVisible },
       { ref: timeRef, set: setTimeVisible },
       { ref: locationRef, set: setLocationVisible },
     ];
@@ -42,6 +40,11 @@ export function Preview({ className, card }: Props) {
       }
 
       let remainingHeight = measureRect.height;
+
+      const nameRect = nameRef.current?.getBoundingClientRect();
+      if (nameRect) {
+        remainingHeight -= nameRect.height;
+      }
 
       for (const { ref, set } of paris) {
         if (ref.current) {
@@ -72,7 +75,7 @@ export function Preview({ className, card }: Props) {
       <div className="display">
         {timeVisible && <div className="time">{timeText}</div>}
 
-        {nameVisible && <div className="name">{card.content.name}</div>}
+        {<div className="name">{card.content.name}</div>}
 
         {locationVisible && (
           <div className="location">{card.content.location}</div>
@@ -80,12 +83,12 @@ export function Preview({ className, card }: Props) {
       </div>
 
       <div className="measure" ref={measureRef}>
-        <div className="time" ref={timeRef}>
-          {timeText}
-        </div>
-
         <div className="name" ref={nameRef}>
           {card.content.name}
+        </div>
+
+        <div className="time" ref={timeRef}>
+          {timeText}
         </div>
 
         <div className="location" ref={locationRef}>
