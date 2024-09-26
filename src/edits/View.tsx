@@ -18,7 +18,16 @@ export function View({ card, setState }: Props) {
         {card.content.location && (
           <div className="location">
             <div className="label">Location</div>
-            <div className="value">{card.content.location}</div>
+            <a
+              className="value"
+              href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+                card.content.location
+              )}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {card.content.location}
+            </a>
           </div>
         )}
 
