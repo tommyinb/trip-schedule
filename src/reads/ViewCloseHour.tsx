@@ -30,9 +30,9 @@ export function ViewCloseHour({ cardId }: Props) {
               .map(
                 (close) =>
                   `${getTimeText(
-                    close.fromHour,
+                    close.fromHour % 24,
                     close.fromMinute
-                  )} - ${getTimeText(close.toHour, close.toMinute)}`
+                  )} - ${getTimeText(close.toHour % 24, close.toMinute)}`
               )
               .join(", ")} on ${getDateText(closeGroup[0].date)}`
         )

@@ -25,18 +25,46 @@ export function getCloseHours(content: CardContent) {
         fromMinute:
           date.getTime() === startDate.getTime() ? startTime.getMinutes() : 0,
 
-        toHour: date.getTime() === endDate.getTime() ? endTime.getHours() : 23,
+        toHour: date.getTime() === endDate.getTime() ? endTime.getHours() : 24,
         toMinute:
-          date.getTime() === endDate.getTime() ? endTime.getMinutes() : 59,
+          date.getTime() === endDate.getTime() ? endTime.getMinutes() : 0,
       },
     ];
 
     const openings = content.openings
-      .filter(
-        (opening) =>
-          opening.startHour * 60 + opening.startMinute <
-          opening.endHour * 60 + opening.startMinute
-      )
+      .flatMap((opening) => {
+        const startValue = opening.startHour * 60 + opening.startMinute;
+        const endValue = opening.endHour * 60 + opening.endMinute;
+
+        if (endValue > startValue) {
+          return [opening];
+        } else if (startValue > endValue) {
+          return [
+            {
+              startHour: opening.startHour,
+              startMinute: opening.startMinute,
+              endHour: 24,
+              endMinute: 0,
+              weekdays: opening.weekdays,
+            },
+            ...(endValue > 0
+              ? [
+                  {
+                    startHour: 0,
+                    startMinute: 0,
+                    endHour: opening.endHour,
+                    endMinute: opening.endMinute,
+                    weekdays: opening.weekdays.map(
+                      (weekday) => (weekday + 1) % 7
+                    ),
+                  },
+                ]
+              : []),
+          ];
+        } else {
+          return [];
+        }
+      })
       .filter((opening) => opening.weekdays.includes(date.getDay()));
 
     for (const dayOpening of openings) {
@@ -98,9 +126,15 @@ export function getCloseHours(content: CardContent) {
       });
     }
 
-    return closeHours.map((closeHour) => ({
-      date,
-      ...closeHour,
-    }));
+    return closeHours
+      .filter(
+        (closeHour) =>
+          closeHour.fromHour * 60 + closeHour.fromMinute !==
+          closeHour.toHour * 60 + closeHour.toMinute
+      )
+      .map((closeHour) => ({
+        date,
+        ...closeHour,
+      }));
   });
 }

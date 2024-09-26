@@ -35,22 +35,14 @@ export function ModifyOpeningStart({ card, opening }: Props) {
           })
         )
       }
-      leftValue={
-        opening.startHour > 0 || opening.startMinute > 0
-          ? {
-              hour: opening.startHour > 0 ? opening.startHour - 1 : 0,
-              minute: opening.startHour > 0 ? opening.startMinute : 0,
-            }
-          : undefined
-      }
-      rightValue={
-        opening.startHour * 60 + opening.startMinute < 23 * 60 + 59
-          ? {
-              hour: opening.startHour < 23 ? opening.startHour + 1 : 0,
-              minute: opening.startHour < 23 ? opening.startMinute : 59,
-            }
-          : undefined
-      }
+      leftValue={{
+        hour: (opening.startHour - 1 + 24) % 24,
+        minute: opening.startMinute,
+      }}
+      rightValue={{
+        hour: (opening.startHour + 1) % 24,
+        minute: opening.startMinute,
+      }}
     />
   );
 }

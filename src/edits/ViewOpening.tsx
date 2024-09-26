@@ -7,9 +7,7 @@ export function ViewOpening({ opening }: Props) {
     <div className="edits-ViewOpening">
       <div className="time">
         <div>{getTimeText(opening.startHour, opening.startMinute)}</div>
-
         <div>-</div>
-
         <div>{getTimeText(opening.endHour, opening.endMinute)}</div>
       </div>
 

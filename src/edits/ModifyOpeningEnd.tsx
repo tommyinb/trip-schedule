@@ -35,22 +35,14 @@ export function ModifyOpeningEnd({ card, opening }: Props) {
           })
         )
       }
-      leftValue={
-        opening.endHour > 0 || opening.endMinute > 0
-          ? {
-              hour: opening.endHour > 0 ? opening.endHour - 1 : 0,
-              minute: opening.endHour > 0 ? opening.endMinute : 0,
-            }
-          : undefined
-      }
-      rightValue={
-        opening.endHour * 60 + opening.endMinute < 23 * 60 + 59
-          ? {
-              hour: opening.endHour < 23 ? opening.endHour + 1 : 0,
-              minute: opening.endHour < 23 ? opening.endMinute : 59,
-            }
-          : undefined
-      }
+      leftValue={{
+        hour: (opening.endHour - 1 + 24) % 24,
+        minute: opening.endMinute,
+      }}
+      rightValue={{
+        hour: (opening.endHour + 1) % 24,
+        minute: opening.endMinute,
+      }}
     />
   );
 }
