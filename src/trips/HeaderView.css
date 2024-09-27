@@ -4,6 +4,11 @@
   align-items: center;
   gap: 5px;
 
+  @media (max-width: 600px) {
+    margin-left: 20px;
+    margin-right: 8px;
+  }
+
   .name {
     padding: 2px 2px 3px;
     font-size: 32px;
@@ -14,7 +19,6 @@
     }
 
     @media (max-width: 600px) {
-      margin-left: 20px;
       flex: 1;
     }
   }

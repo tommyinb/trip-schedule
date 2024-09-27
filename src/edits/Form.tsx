@@ -46,7 +46,11 @@ export function Form({ formRef }: Props) {
   const card = cards.find((card) => card.id === outputTarget?.cardId);
 
   return (
-    <div className={`edits-Form ${editTarget ? "active" : ""}`} ref={formRef}>
+    <div
+      className={`edits-Form ${editTarget ? "active" : ""}`}
+      ref={formRef}
+      tabIndex={1}
+    >
       {card && (
         <>
           {state === FormState.View && <View card={card} setState={setState} />}
