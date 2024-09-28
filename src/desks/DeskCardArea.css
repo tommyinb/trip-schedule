@@ -1,9 +1,9 @@
 .desks-DeskCardArea {
   position: absolute;
   box-sizing: border-box;
-  border-right: 5px solid #c1fcd3cc;
+  border-right-width: 5px;
+  border-right-style: solid;
   border-radius: 5px;
-  background: linear-gradient(100deg, #0ccda3cc, #c1fcd3cc);
   padding: 5px 6px;
   display: flex;
   flex-direction: column;
@@ -11,13 +11,47 @@
   transition: 0.3s;
   user-select: none;
 
+  &.green {
+    border-right: 5px solid #c1fcd3cc;
+    background: linear-gradient(100deg, #0ccda3cc, #c1fcd3cc);
+  }
+
+  &.blue {
+    border-right: 5px solid #c1f8fccc;
+    background: linear-gradient(100deg, #0cc7cdcc, #c1f8fccc);
+  }
+
+  &.yellow {
+    border-right: 5px solid #fceec1cc;
+    background: linear-gradient(100deg, #cdba0ccc, #fceec1cc);
+  }
+
+  &.purple {
+    border-right: 5px solid #fcc1eacc;
+    background: linear-gradient(100deg, #df4ec6cc, #fcc1eacc);
+  }
+
+  &.brown {
+    border-right: 5px solid #fcd9c1cc;
+    background: linear-gradient(100deg, #cd690ccc, #fcd9c1cc);
+  }
+
+  &.red {
+    border-right: 5px solid #fcc1c1cc;
+    background: linear-gradient(100deg, #ff0000cc, #fcc1c1cc);
+  }
+
+  &.gray {
+    border-right: 5px solid #e1e4e1cc;
+    background: linear-gradient(100deg, #9ca7a4cc, #e1e4e1cc);
+  }
+
   .preview {
     flex: 1;
   }
 
   &.creating,
   &.edit {
-    background: linear-gradient(100deg, #36c2cecc, #36c2cecc);
     color: #fff;
     z-index: 3;
   }

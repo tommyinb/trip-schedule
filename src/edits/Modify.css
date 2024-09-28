@@ -78,6 +78,7 @@
     .location,
     .time,
     .duration,
+    .color,
     .remark,
     .opening {
       display: flex;

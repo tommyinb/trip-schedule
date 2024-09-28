@@ -1,3 +1,4 @@
+import { CardColor } from "./cardColor";
 import { CardOpening } from "./cardOpening";
 
 export interface CardContent {
@@ -6,6 +7,8 @@ export interface CardContent {
 
   time: Date;
   duration: number;
+
+  color: CardColor;
 
   remark: string;
 

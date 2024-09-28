@@ -4,6 +4,7 @@ import { TargetType } from "../edits/targetType";
 import { List } from "../lists/List";
 import { Table } from "../tables/Table";
 import { Card } from "./card";
+import { CardColor } from "./cardColor";
 import { CardState } from "./cardState";
 import { CardZone } from "./cardZone";
 import "./Desk.css";
@@ -122,6 +123,7 @@ export function Desk() {
                 0
               ),
               duration: 1 * 60 * 60 * 1000,
+              color: CardColor.Green,
               remark: "",
               openings: [],
             },

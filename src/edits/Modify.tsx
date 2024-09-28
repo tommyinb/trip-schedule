@@ -6,6 +6,7 @@ import { replace } from "../desks/replace";
 import { EditContext } from "./EditContext";
 import { FormState } from "./formState";
 import "./Modify.css";
+import { ModifyColor } from "./ModifyColor";
 import { ModifyDate } from "./ModifyDate";
 import { ModifyDuration } from "./ModifyDuration";
 import { ModifyOpenings } from "./ModifyOpenings";
@@ -80,6 +81,11 @@ export function Modify({ card, setState }: Props) {
         <div className="duration">
           <div className="label">Duration</div>
           <ModifyDuration card={card} />
+        </div>
+
+        <div className="color">
+          <div className="label">Color</div>
+          <ModifyColor card={card} />
         </div>
 
         <div className="remark">

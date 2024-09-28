@@ -70,7 +70,7 @@ export function DeskCardArea({ card, rectangle }: Props) {
 
   return (
     <div
-      className={`desks-DeskCardArea ${card.state} ${
+      className={`desks-DeskCardArea ${card.content.color} ${card.state} ${
         target?.cardId === card.id ? "edit" : ""
       } ${itemTypes.includes(ItemType.TimeClash) ? "clash" : ""} ${
         itemTypes.includes(ItemType.CloseHour) ? "close" : ""
