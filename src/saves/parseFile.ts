@@ -1,3 +1,4 @@
+import { CardColor } from "../desks/cardColor";
 import { File } from "./file";
 import { Json } from "./Json";
 
@@ -15,6 +16,7 @@ export function parseFile(text: string): File {
         content: {
           ...card.content,
           time: new Date(card.content.time),
+          color: card.content.color ?? CardColor.Green,
         },
       })),
     },
