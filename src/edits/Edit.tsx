@@ -29,8 +29,13 @@ export function Edit() {
   }, []);
 
   return (
-    <div className="edits-Edit" style={{ height: target ? formHeight : 0 }}>
+    <div className="edits-Edit" style={{ minHeight: target ? formHeight : 0 }}>
       <Form formRef={formRef} />
+
+      <div className="footer">
+        Trip Schedule by{" "}
+        <a href="https://github.com/tommyinb/trip-schedule">Tommy</a>
+      </div>
     </div>
   );
 }

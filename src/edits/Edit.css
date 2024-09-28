@@ -1,3 +1,11 @@
 .edits-Edit {
+  box-sizing: border-box;
   transition: 0.3s;
+
+  .footer {
+    background-color: #f8f8f8;
+    padding: 10px 10px;
+    text-align: center;
+    color: #ddd;
+  }
 }
