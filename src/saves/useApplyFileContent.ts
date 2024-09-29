@@ -1,6 +1,7 @@
 import { useCallback, useContext } from "react";
 import { CardState } from "../desks/cardState";
 import { DeskContext } from "../desks/DeskContext";
+import { setTitle } from "../trips/setTitle";
 import { TripContext } from "../trips/TripContext";
 import { FileContent } from "./fileContent";
 
@@ -19,10 +20,7 @@ export function useApplyFileContent() {
   return useCallback(
     (content: FileContent) => {
       setName(content.name);
-
-      document.title = "Trip Schedule".includes(content.name)
-        ? "Trip Schedule"
-        : `${content.name} - Trip Schedule`;
+      setTitle(content.name);
 
       setStartDate(new Date(content.startDate));
       setEndDate(new Date(content.endDate));

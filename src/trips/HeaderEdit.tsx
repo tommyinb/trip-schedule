@@ -2,6 +2,7 @@ import { useContext } from "react";
 import "./HeaderEdit.css";
 import { HeaderState } from "./headerState";
 import { Setting } from "./Setting";
+import { setTitle } from "./setTitle";
 import { Slider } from "./Slider";
 import { TripContext } from "./TripContext";
 
@@ -16,13 +17,9 @@ export function HeaderEdit({ state, setState }: Props) {
             className="text"
             value={name}
             onChange={(e) => {
-              const { value } = e.target;
+              setName(e.target.value);
 
-              setName(value);
-
-              document.title = "Trip Schedule".includes(value)
-                ? "Trip Schedule"
-                : `${value} - Trip Schedule`;
+              setTitle(e.target.value);
             }}
             disabled={!editable}
           />
