@@ -38,12 +38,6 @@
       }
     }
 
-    .submit {
-      &::after {
-        background-image: url(../trips/tick.svg);
-      }
-    }
-
     .name {
       flex: 1;
       border: none;
@@ -52,6 +46,12 @@
       padding: 6px 10px 5px;
       font-size: 20px;
       color: #444;
+    }
+
+    .submit {
+      &::after {
+        background-image: url(../trips/tick.svg);
+      }
     }
 
     .close {
