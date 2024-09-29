@@ -1,0 +1,24 @@
+.desks-DeskCreate {
+  position: absolute;
+  border-radius: 5px;
+  background-color: #6de2ec;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 22px;
+  color: #fff;
+  user-select: none;
+  animation: desks-DeskCreate-show 0.3s forwards;
+}
+
+@keyframes desks-DeskCreate-show {
+  0% {
+    opacity: 0.5;
+    transform: scale(0.95, 0.9);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1, 1);
+  }
+}

@@ -49,7 +49,7 @@ export function Form({ formRef }: Props) {
     <div
       className={`edits-Form ${editTarget ? "active" : ""}`}
       ref={formRef}
-      tabIndex={1}
+      tabIndex={2}
     >
       {card && (
         <>

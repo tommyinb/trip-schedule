@@ -2,6 +2,7 @@ import { useContext, useEffect, useMemo } from "react";
 import { EditContext } from "../edits/EditContext";
 import { TargetType } from "../edits/targetType";
 import { List } from "../lists/List";
+import { getDateText } from "../tables/getDateText";
 import { Table } from "../tables/Table";
 import { Card } from "./card";
 import { CardColor } from "./cardColor";
@@ -9,12 +10,19 @@ import { CardState } from "./cardState";
 import { CardZone } from "./cardZone";
 import "./Desk.css";
 import { DeskContext } from "./DeskContext";
+import { DeskCreate } from "./DeskCreate";
 import { DeskListCard } from "./DeskListCard";
 import { DeskTableCard } from "./DeskTableCard";
 
 export function Desk() {
-  const { tableContainerRef, listContainerRef, cards, setCards } =
-    useContext(DeskContext);
+  const {
+    tableContainerRef,
+    listContainerRef,
+    createPrompt,
+    setCreatePrompt,
+    cards,
+    setCards,
+  } = useContext(DeskContext);
 
   const { target, setTarget } = useContext(EditContext);
 
@@ -57,54 +65,71 @@ export function Desk() {
     };
   }, [draggingCards.length, tableContainerRef]);
 
+  const findClickedTime = (clientX: number, clientY: number) => {
+    const allCards = tableContainerRef.current?.querySelectorAll("[data-card]");
+    const clickedCards = [...(allCards ?? [])].filter((card) => {
+      const rect = card.getBoundingClientRect();
+      return (
+        clientX >= rect.left &&
+        clientX <= rect.right &&
+        clientY >= rect.top &&
+        clientY <= rect.bottom
+      );
+    });
+
+    if (clickedCards.length > 0) {
+      return undefined;
+    }
+
+    const allCells = tableContainerRef.current?.querySelectorAll(
+      "[data-date][data-hour]"
+    );
+    const clickedCell = [...(allCells ?? [])].find((cell) => {
+      const rect = cell.getBoundingClientRect();
+      return (
+        clientX >= rect.left &&
+        clientX <= rect.right &&
+        clientY >= rect.top &&
+        clientY <= rect.bottom
+      );
+    });
+
+    if (!clickedCell) {
+      return undefined;
+    }
+
+    const dateText = clickedCell.getAttribute("data-date");
+    const dateValue = new Date(dateText ?? "");
+
+    const hourText = clickedCell.getAttribute("data-hour");
+    const hourValue = parseInt(hourText ?? "");
+
+    return {
+      date: dateValue,
+      hour: hourValue,
+    };
+  };
+
   return (
     <div className="desks-Desk">
       <div
         className="table"
         ref={tableContainerRef}
+        onClick={(event) => {
+          const clickedTime = findClickedTime(event.clientX, event.clientY);
+          if (clickedTime) {
+            setCreatePrompt({
+              date: clickedTime.date,
+              hour: clickedTime.hour,
+            });
+          }
+        }}
         onDoubleClick={(event) => {
-          if (!tableContainerRef.current) {
+          const clickedTime = findClickedTime(event.clientX, event.clientY);
+
+          if (!clickedTime) {
             return;
           }
-
-          const allCards =
-            tableContainerRef.current.querySelectorAll("[data-card]");
-          const clickedCards = [...allCards].filter((card) => {
-            const rect = card.getBoundingClientRect();
-            return (
-              event.clientX >= rect.left &&
-              event.clientX <= rect.right &&
-              event.clientY >= rect.top &&
-              event.clientY <= rect.bottom
-            );
-          });
-
-          if (clickedCards.length > 0) {
-            return;
-          }
-
-          const allCells = tableContainerRef.current.querySelectorAll(
-            "[data-date][data-hour]"
-          );
-          const clickedCell = [...allCells].find((cell) => {
-            const rect = cell.getBoundingClientRect();
-            return (
-              event.clientX >= rect.left &&
-              event.clientX <= rect.right &&
-              event.clientY >= rect.top &&
-              event.clientY <= rect.bottom
-            );
-          });
-
-          if (!clickedCell) {
-            return;
-          }
-
-          const dateText = clickedCell.getAttribute("data-date");
-          const dateValue = new Date(dateText ?? "");
-
-          const hourText = clickedCell.getAttribute("data-hour");
-          const hourValue = parseInt(hourText ?? "");
 
           const newCard: Card = {
             id: Math.max(-1, ...cards.map((card) => card.id)) + 1,
@@ -114,10 +139,10 @@ export function Desk() {
               name: "",
               location: "",
               time: new Date(
-                dateValue.getFullYear(),
-                dateValue.getMonth(),
-                dateValue.getDate(),
-                hourValue,
+                clickedTime.date.getFullYear(),
+                clickedTime.date.getMonth(),
+                clickedTime.date.getDate(),
+                clickedTime.hour,
                 0,
                 0,
                 0
@@ -136,6 +161,8 @@ export function Desk() {
             type: TargetType.Create,
             cardId: newCard.id,
           });
+
+          setCreatePrompt(undefined);
         }}
       >
         <div className="content">
@@ -144,6 +171,12 @@ export function Desk() {
           {tableCards.map((card) => (
             <DeskTableCard key={card.id} card={card} />
           ))}
+
+          {createPrompt && (
+            <DeskCreate
+              key={`${getDateText(createPrompt.date)}-${createPrompt.hour}`}
+            />
+          )}
         </div>
       </div>
 

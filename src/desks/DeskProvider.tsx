@@ -1,5 +1,6 @@
 import { PropsWithChildren, useMemo, useRef, useState } from "react";
 import { Card } from "./card";
+import { CreatePrompt } from "./createPrompt";
 import { DeskContext } from "./DeskContext";
 
 export function DeskProvider({ children }: PropsWithChildren) {
@@ -8,6 +9,8 @@ export function DeskProvider({ children }: PropsWithChildren) {
 
   const listContainerRef = useRef<HTMLDivElement>(null);
   const listContentRef = useRef<HTMLDivElement>(null);
+
+  const [createPrompt, setCreatePrompt] = useState<CreatePrompt | undefined>();
 
   const [cards, setCards] = useState<Card[]>([]);
 
@@ -19,10 +22,12 @@ export function DeskProvider({ children }: PropsWithChildren) {
           tableContentRef,
           listContainerRef,
           listContentRef,
+          createPrompt,
+          setCreatePrompt,
           cards,
           setCards,
         }),
-        [cards]
+        [cards, createPrompt]
       )}
     >
       {children}

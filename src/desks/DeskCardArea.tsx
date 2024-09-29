@@ -23,8 +23,10 @@ export function DeskCardArea({ card, rectangle }: Props) {
   const ref = useRef<HTMLDivElement>(null);
 
   const {
-    tableContentRef: tableRef,
-    listContentRef: listRef,
+    tableContentRef,
+    listContentRef,
+    createPrompt,
+    setCreatePrompt,
     cards,
     setCards,
   } = useContext(DeskContext);
@@ -99,6 +101,10 @@ export function DeskCardArea({ card, rectangle }: Props) {
           setTarget(undefined);
         }
 
+        if (createPrompt) {
+          setCreatePrompt(undefined);
+        }
+
         setHeaderState(HeaderState.View);
       }}
       onPointerMove={(event) => {
@@ -127,7 +133,7 @@ export function DeskCardArea({ card, rectangle }: Props) {
           return;
         }
 
-        const cells = tableRef.current?.querySelectorAll(
+        const cells = tableContentRef.current?.querySelectorAll(
           "[data-date][data-hour]"
         );
         const cell = [...(cells ?? [])].find((cell) => {
@@ -166,7 +172,8 @@ export function DeskCardArea({ card, rectangle }: Props) {
             })
           );
         } else {
-          const items = listRef.current?.querySelectorAll("[data-index]");
+          const items =
+            listContentRef.current?.querySelectorAll("[data-index]");
           const item = [...(items ?? [])].find((item) => {
             const rect = item.getBoundingClientRect();
             return (
