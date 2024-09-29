@@ -15,7 +15,15 @@ export function HeaderEdit({ state, setState }: Props) {
           <input
             className="text"
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e) => {
+              const { value } = e.target;
+
+              setName(value);
+
+              document.title = "Trip Schedule".includes(value)
+                ? "Trip Schedule"
+                : `${value} - Trip Schedule`;
+            }}
             disabled={!editable}
           />
 

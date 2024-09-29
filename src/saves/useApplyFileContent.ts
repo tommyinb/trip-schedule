@@ -20,6 +20,10 @@ export function useApplyFileContent() {
     (content: FileContent) => {
       setName(content.name);
 
+      document.title = "Trip Schedule".includes(content.name)
+        ? "Trip Schedule"
+        : `${content.name} - Trip Schedule`;
+
       setStartDate(new Date(content.startDate));
       setEndDate(new Date(content.endDate));
 
