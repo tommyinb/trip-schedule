@@ -1,6 +1,7 @@
 import { useContext, useEffect, useMemo, useRef, useState } from "react";
 import { EditContext } from "../edits/EditContext";
 import { TargetType } from "../edits/targetType";
+import { renewCardIndexes } from "../lists/renewCardIndexes";
 import { ItemType } from "../reads/itemType";
 import { useCardItems } from "../reads/useCardItems";
 import { HeaderState } from "../trips/headerState";
@@ -259,21 +260,7 @@ export function DeskCardArea({ card, rectangle }: Props) {
               }
             );
 
-            const listCards = replacedCards
-              .filter((card) => card.state === CardState.Idle)
-              .filter((card) => card.place.zone === CardZone.List)
-              .sort(
-                (a, b) =>
-                  (a.place.zone === CardZone.List ? a.place.index : 10000) -
-                  (b.place.zone === CardZone.List ? b.place.index : 10000)
-              );
-
-            const outputCards = replacedCards.map((card) => {
-              const index = listCards.indexOf(card);
-              return index >= 0
-                ? { ...card, place: { zone: CardZone.List, index } }
-                : card;
-            });
+            const outputCards = renewCardIndexes(replacedCards);
 
             setCards(outputCards);
           }

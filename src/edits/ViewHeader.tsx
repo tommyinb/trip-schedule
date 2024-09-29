@@ -4,6 +4,7 @@ import { CardState } from "../desks/cardState";
 import { CardZone } from "../desks/cardZone";
 import { DeskContext } from "../desks/DeskContext";
 import { replace } from "../desks/replace";
+import { renewCardIndexes } from "../lists/renewCardIndexes";
 import { TripContext } from "../trips/TripContext";
 import { EditContext } from "./EditContext";
 import { FormState } from "./formState";
@@ -50,8 +51,8 @@ export function ViewHeader({ card, setState }: Props) {
               <div
                 className={`delete ${card.place.zone}`}
                 onClick={() => {
-                  setCards((cards) =>
-                    replace(cards, card, {
+                  setCards((cards) => {
+                    const replacedCards = replace(cards, card, {
                       ...card,
                       ...(card.place.zone === CardZone.Table
                         ? {
@@ -75,8 +76,10 @@ export function ViewHeader({ card, setState }: Props) {
                         : {
                             state: CardState.Deleted,
                           }),
-                    })
-                  );
+                    });
+
+                    return renewCardIndexes(replacedCards);
+                  });
 
                   setTarget(undefined);
                 }}
