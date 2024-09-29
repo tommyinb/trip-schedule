@@ -55,7 +55,7 @@
       &::after {
         width: 14px;
         height: 14px;
-        background-image: url(../edits/arrow.svg);
+        background-image: url(./arrow.svg);
         background-size: contain;
         content: "";
         transition: 0.3s;
