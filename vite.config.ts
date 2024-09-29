@@ -11,6 +11,7 @@ export default defineConfig({
       manifest: {
         name: "Trip Schedule",
         short_name: "Trip Schedule",
+        theme_color: "white",
         icons: [
           {
             src: "/trip-schedule/icon.png",
