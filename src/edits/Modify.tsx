@@ -1,6 +1,5 @@
 import { useContext } from "react";
 import { Card } from "../desks/card";
-import { CardState } from "../desks/cardState";
 import { DeskContext } from "../desks/DeskContext";
 import { replace } from "../desks/replace";
 import { EditContext } from "./EditContext";
@@ -20,8 +19,6 @@ export function Modify({ card, setState }: Props) {
   return (
     <div className="edits-Modify">
       <div className="header">
-        <div className="back" onClick={() => setState(FormState.View)} />
-
         <input
           className="name"
           value={card.content.name}
@@ -37,17 +34,8 @@ export function Modify({ card, setState }: Props) {
         />
 
         <div
-          className="delete"
-          onClick={() => {
-            setCards((cards) =>
-              replace(cards, card, {
-                ...card,
-                state: CardState.Deleted,
-              })
-            );
-
-            setTarget(undefined);
-          }}
+          className="submit"
+          onClick={() => setState(FormState.View)}
         />
 
         <div className="close" onClick={() => setTarget(undefined)} />

@@ -16,7 +16,7 @@
     display: flex;
     align-items: center;
 
-    .back,
+    .submit,
     .close {
       width: 36px;
       height: 36px;
@@ -38,9 +38,9 @@
       }
     }
 
-    .back {
+    .submit {
       &::after {
-        background-image: url(./arrow.svg);
+        background-image: url(../trips/tick.svg);
       }
     }
 
