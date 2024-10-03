@@ -5,29 +5,29 @@ import { HeaderState } from "./headerState";
 import { Slider } from "./Slider";
 import { TripContext } from "./TripContext";
 
-export function HeaderShare({ state, setState }: Props) {
-  const { name } = useContext(TripContext);
+export function HeaderShare() {
+  const { headerState, setHeaderState, name } = useContext(TripContext);
 
   return (
     <div className="trips-HeaderShare">
-      {state === HeaderState.Share && (
+      {headerState === HeaderState.Share && (
         <div className="name">
           <div className={`text ${name ? "active" : ""}`}>
             {name || "New Trip"}
           </div>
 
-          <div className="view" onClick={() => setState(HeaderState.View)} />
+          <div
+            className="view"
+            onClick={() => setHeaderState(HeaderState.View)}
+          />
         </div>
       )}
 
-      <Slider active={state === HeaderState.Share}>
-        <div className="share">{state === HeaderState.Share && <Share />}</div>
+      <Slider active={headerState === HeaderState.Share}>
+        <div className="share">
+          {headerState === HeaderState.Share && <Share />}
+        </div>
       </Slider>
     </div>
   );
-}
-
-interface Props {
-  state: HeaderState;
-  setState: (state: HeaderState) => void;
 }

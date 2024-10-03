@@ -1,28 +1,24 @@
 .trips-HeaderView {
-  display: flex;
+  display: grid;
   justify-content: center;
   align-items: center;
   gap: 5px;
 
+  @media (min-width: 600px) {
+    grid-template: "loading name edit share" auto / auto auto auto auto;
+  }
+
   @media (max-width: 600px) {
     margin-left: 20px;
     margin-right: 8px;
+    grid-template: "name edit share" auto / 1fr auto auto;
   }
 
-  .name {
-    padding: 2px 2px 3px;
-    font-size: 32px;
-    font-weight: bold;
-
-    @media (min-width: 600px) {
-      margin-left: calc(36px + 5px + 36px + 5px);
-    }
-
-    @media (max-width: 600px) {
-      flex: 1;
-    }
+  &:not(.active) {
+    pointer-events: none;
   }
 
+  .loading,
   .edit,
   .view,
   .share {
@@ -41,6 +37,44 @@
     }
   }
 
+  .loading {
+    transition: 0.7s;
+    animation: trips-HeaderView-loading 1s infinite;
+
+    @media (min-width: 600px) {
+      grid-area: loading;
+      margin-left: calc(36px + 5px);
+    }
+
+    @media (max-width: 600px) {
+      grid-area: name;
+      justify-self: flex-end;
+    }
+
+    &.active {
+      transition-delay: 1s;
+    }
+
+    &:not(.active) {
+      opacity: 0;
+    }
+
+    &::after {
+      background-image: url(../saves/refresh.svg);
+    }
+  }
+
+  .name {
+    grid-area: name;
+    padding: 2px 2px 3px;
+    font-size: 32px;
+    font-weight: bold;
+
+    @media (max-width: 600px) {
+      flex: 1;
+    }
+  }
+
   .edit,
   .share {
     &:hover,
@@ -50,12 +84,15 @@
   }
 
   .edit {
+    grid-area: edit;
+
     &::after {
       background-image: url(./gear.svg);
     }
   }
 
   .view {
+    grid-area: edit;
     background-color: #eedf7a;
 
     &::after {
@@ -69,8 +106,20 @@
   }
 
   .share {
+    grid-area: share;
+
     &::after {
       background-image: url(./plane.svg);
     }
+  }
+}
+
+@keyframes trips-HeaderView-loading {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
   }
 }

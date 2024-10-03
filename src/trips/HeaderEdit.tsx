@@ -6,12 +6,13 @@ import { setTitle } from "./setTitle";
 import { Slider } from "./Slider";
 import { TripContext } from "./TripContext";
 
-export function HeaderEdit({ state, setState }: Props) {
-  const { name, setName, editable } = useContext(TripContext);
+export function HeaderEdit() {
+  const { headerState, setHeaderState, name, setName, editable } =
+    useContext(TripContext);
 
   return (
     <div className="trips-HeaderEdit">
-      {state === HeaderState.Edit && (
+      {headerState === HeaderState.Edit && (
         <div className="name">
           <input
             className="text"
@@ -24,18 +25,16 @@ export function HeaderEdit({ state, setState }: Props) {
             disabled={!editable}
           />
 
-          <div className="view" onClick={() => setState(HeaderState.View)} />
+          <div
+            className="view"
+            onClick={() => setHeaderState(HeaderState.View)}
+          />
         </div>
       )}
 
-      <Slider active={state === HeaderState.Edit}>
+      <Slider active={headerState === HeaderState.Edit}>
         <Setting />
       </Slider>
     </div>
   );
-}
-
-interface Props {
-  state: HeaderState;
-  setState: (state: HeaderState) => void;
 }

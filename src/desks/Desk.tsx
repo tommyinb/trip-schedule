@@ -2,6 +2,7 @@ import { useContext, useEffect, useMemo } from "react";
 import { EditContext } from "../edits/EditContext";
 import { TargetType } from "../edits/targetType";
 import { List } from "../lists/List";
+import { SaveContext } from "../saves/SaveContext";
 import { getDateText } from "../tables/getDateText";
 import { Table } from "../tables/Table";
 import { Card } from "./card";
@@ -110,8 +111,10 @@ export function Desk() {
     };
   };
 
+  const { applyId } = useContext(SaveContext);
+
   return (
-    <div className="desks-Desk">
+    <div className={`desks-Desk ${applyId ? "active" : ""}`}>
       <div
         className="table"
         ref={tableContainerRef}
