@@ -53,6 +53,8 @@ export function Preview({ className, card }: Props) {
             set(true);
 
             remainingHeight -= rect.height;
+          } else {
+            set(false);
           }
         }
       }
@@ -60,6 +62,10 @@ export function Preview({ className, card }: Props) {
 
     const observer = new ResizeObserver(update);
     observer.observe(measureRef.current);
+
+    if (nameRef.current) {
+      observer.observe(nameRef.current);
+    }
 
     for (const { ref } of paris) {
       if (ref.current) {
