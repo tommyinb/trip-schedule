@@ -5,6 +5,7 @@ import { List } from "../lists/List";
 import { SaveContext } from "../saves/SaveContext";
 import { getDateText } from "../tables/getDateText";
 import { Table } from "../tables/Table";
+import { TripContext } from "../trips/TripContext";
 import { Card } from "./card";
 import { CardColor } from "./cardColor";
 import { CardState } from "./cardState";
@@ -66,6 +67,8 @@ export function Desk() {
     };
   }, [draggingCards.length, tableContainerRef]);
 
+  const { editable } = useContext(TripContext);
+
   const findClickedTime = (clientX: number, clientY: number) => {
     const allCards = tableContainerRef.current?.querySelectorAll("[data-card]");
     const clickedCards = [...(allCards ?? [])].filter((card) => {
@@ -119,17 +122,26 @@ export function Desk() {
         className="table"
         ref={tableContainerRef}
         onClick={(event) => {
-          const clickedTime = findClickedTime(event.clientX, event.clientY);
-          if (clickedTime) {
-            setCreatePrompt({
-              date: clickedTime.date,
-              hour: clickedTime.hour,
-            });
+          if (!editable) {
+            return;
           }
+
+          const clickedTime = findClickedTime(event.clientX, event.clientY);
+          if (!clickedTime) {
+            return;
+          }
+
+          setCreatePrompt({
+            date: clickedTime.date,
+            hour: clickedTime.hour,
+          });
         }}
         onDoubleClick={(event) => {
-          const clickedTime = findClickedTime(event.clientX, event.clientY);
+          if (!editable) {
+            return;
+          }
 
+          const clickedTime = findClickedTime(event.clientX, event.clientY);
           if (!clickedTime) {
             return;
           }
