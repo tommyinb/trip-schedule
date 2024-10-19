@@ -17,4 +17,10 @@
       visibility: visible;
     }
   }
+
+  @media print {
+    &:not(.active) {
+      display: none;
+    }
+  }
 }

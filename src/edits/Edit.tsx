@@ -33,8 +33,13 @@ export function Edit() {
       <Form formRef={formRef} />
 
       <div className="footer">
-        Trip Schedule by{" "}
-        <a href="https://github.com/tommyinb/trip-schedule">Tommy</a>
+        <a className="link" href={location.href}>
+          Trip Schedule
+        </a>{" "}
+        by{" "}
+        <a className="link" href="https://github.com/tommyinb/trip-schedule">
+          Tommy
+        </a>
       </div>
     </div>
   );

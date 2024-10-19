@@ -20,6 +20,7 @@
     overflow-x: scroll;
     scrollbar-width: none;
     -ms-overflow-style: none;
+    page-break-after: always;
 
     &::-webkit-scrollbar {
       display: none;

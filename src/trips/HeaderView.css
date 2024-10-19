@@ -75,6 +75,14 @@
     }
   }
 
+  @media print {
+    .edit,
+    .view,
+    .share {
+      visibility: hidden;
+    }
+  }
+
   .edit,
   .share {
     &:hover,
