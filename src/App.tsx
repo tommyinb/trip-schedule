@@ -1,3 +1,4 @@
+import "./App.css";
 import { Desk } from "./desks/Desk";
 import { DeskProvider } from "./desks/DeskProvider";
 import { Edit } from "./edits/Edit";
@@ -12,24 +13,26 @@ import { TripProvider } from "./trips/TripProvider";
 
 function App() {
   return (
-    <SaveProvider>
-      <TripProvider>
-        <ReadProvider>
-          <DeskProvider>
-            <EditProvider>
-              <Header />
-              <Desk />
-              <Edit />
+    <div className="App">
+      <SaveProvider>
+        <TripProvider>
+          <ReadProvider>
+            <DeskProvider>
+              <EditProvider>
+                <Header />
+                <Desk />
+                <Edit />
 
-              <Compute />
+                <Compute />
 
-              <Load />
-              <Save />
-            </EditProvider>
-          </DeskProvider>
-        </ReadProvider>
-      </TripProvider>
-    </SaveProvider>
+                <Load />
+                <Save />
+              </EditProvider>
+            </DeskProvider>
+          </ReadProvider>
+        </TripProvider>
+      </SaveProvider>
+    </div>
   );
 }
 

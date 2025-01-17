@@ -29,8 +29,9 @@ export function Edit() {
   }, []);
 
   return (
-    <div className="edits-Edit" style={{ minHeight: target ? formHeight : 0 }}>
+    <div className="edits-Edit">
       <Form formRef={formRef} />
+      <div className="space" style={{ height: target ? formHeight : 0 }} />
 
       <div className="footer">
         <a className="link" href={location.href}>
