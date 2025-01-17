@@ -28,21 +28,21 @@
     position: absolute;
     left: 0;
     bottom: 0;
-    width: 323px;
-    height: 578px;
+    width: 320px;
+    height: 576px;
     background-image: url("./guy.png");
     background-size: contain;
     background-repeat: no-repeat;
 
     @media (max-height: 800px) {
-      width: 162px;
-      height: 289px;
+      width: 160px;
+      height: 288px;
     }
   }
 
   .text {
     position: absolute;
-    left: 123px;
+    left: 120px;
     bottom: 490px;
     margin-right: 20px;
     box-sizing: border-box;
@@ -55,7 +55,7 @@
     color: #333;
 
     @media (max-height: 800px) {
-      left: 61px;
+      left: 60px;
       bottom: 245px;
     }
 
