@@ -11,6 +11,7 @@ export const DeskContext = createContext<{
 
   createPrompt: CreatePrompt | undefined;
   setCreatePrompt: (createPrompt: CreatePrompt | undefined) => void;
+  createPromptRef: RefObject<HTMLDivElement>;
 
   cards: Card[];
   setCards: Dispatch<SetStateAction<Card[]>>;
@@ -23,6 +24,7 @@ export const DeskContext = createContext<{
 
   createPrompt: undefined,
   setCreatePrompt: () => {},
+  createPromptRef: { current: null },
 
   cards: [],
   setCards: () => {},

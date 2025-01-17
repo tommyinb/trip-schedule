@@ -3,6 +3,7 @@ import { Desk } from "./desks/Desk";
 import { DeskProvider } from "./desks/DeskProvider";
 import { Edit } from "./edits/Edit";
 import { EditProvider } from "./edits/EditProvider";
+import { Guide } from "./guides/Guide";
 import { Compute } from "./reads/Compute";
 import { ReadProvider } from "./reads/ReadProvider";
 import { Load } from "./saves/Load";
@@ -22,6 +23,8 @@ function App() {
                 <Header />
                 <Desk />
                 <Edit />
+
+                <Guide />
 
                 <Compute />
 
