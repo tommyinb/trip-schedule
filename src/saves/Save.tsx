@@ -1,4 +1,5 @@
 import { useContext, useEffect } from "react";
+import { exampleId } from "./exampleId";
 import { findUrlValue } from "./findUrlValue";
 import { SaveContext } from "./SaveContext";
 import { shareKey } from "./Share";
@@ -25,7 +26,8 @@ export function Save() {
     }
 
     const shareId = findUrlValue(shareKey);
-    const outputKey = shareId ? `${saveKey}.${shareId}` : saveKey;
+    const outputKey =
+      shareId && shareId !== exampleId ? `${saveKey}.${shareId}` : saveKey;
 
     const text = JSON.stringify(file);
 

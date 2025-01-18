@@ -1,31 +1,41 @@
 import { getDownloadURL, ref } from "firebase/storage";
-import { useContext, useEffect } from "react";
+import { lazy, Suspense, useContext, useEffect, useMemo } from "react";
+import { exampleId } from "./exampleId";
+import { File } from "./file";
 import { findUrlValue } from "./findUrlValue";
 import { storage } from "./firestore";
 import { getFilePath } from "./getFilePath";
-import { parseFile } from "./parseFile";
+import { Json } from "./Json";
+import { retypeFile } from "./retypeFile";
 import { saveKey } from "./Save";
 import { SaveContext } from "./SaveContext";
 import { shareKey } from "./Share";
 import { useApplyFileContent } from "./useApplyFileContent";
+const Example = lazy(() => import("./Example"));
 
-const loadKey = "loadId";
+export const loadKey = "loadId";
 
 export function Load() {
-  const { applyId, setApplyId } = useContext(SaveContext);
+  const loadId = useMemo(() => findUrlValue(loadKey), []);
+  const shareId = useMemo(() => findUrlValue(shareKey), []);
 
+  const exampled = loadId === exampleId || shareId === exampleId;
+
+  const { applyId, setApplyId } = useContext(SaveContext);
   const applyContent = useApplyFileContent();
+
   useEffect(() => {
     if (applyId) {
+      return;
+    }
+
+    if (exampled) {
       return;
     }
 
     const cancellation = { canceled: false };
     (async function () {
       const file = await (async function () {
-        const loadId = findUrlValue(loadKey);
-        const shareId = findUrlValue(shareKey);
-
         if (loadId) {
           const loadFile = loadStorage(loadId);
           if (loadFile) {
@@ -69,7 +79,8 @@ export function Load() {
             const response = await fetch(url);
             const text = await response.text();
 
-            return parseFile(text);
+            const json = JSON.parse(text) as Json<File>;
+            return retypeFile(json);
           } catch (error) {
             console.error(`failed to load ${id} from global storage`, error);
             return undefined;
@@ -83,7 +94,8 @@ export function Load() {
           }
 
           try {
-            return parseFile(text);
+            const json = JSON.parse(text) as Json<File>;
+            return retypeFile(json);
           } catch (error) {
             console.error(`failed to load ${key} from local storage`, error);
             return undefined;
@@ -111,7 +123,15 @@ export function Load() {
     return () => {
       cancellation.canceled = true;
     };
-  }, [applyContent, applyId, setApplyId]);
+  }, [applyContent, applyId, exampled, loadId, setApplyId, shareId]);
 
-  return <></>;
+  return (
+    <>
+      {exampled && (
+        <Suspense>
+          <Example />
+        </Suspense>
+      )}
+    </>
+  );
 }

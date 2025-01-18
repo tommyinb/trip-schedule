@@ -1,5 +1,6 @@
 import { ref, uploadBytes } from "firebase/storage";
 import { useContext, useEffect, useMemo, useState } from "react";
+import { exampleId } from "./exampleId";
 import { findUrlValue } from "./findUrlValue";
 import { storage } from "./firestore";
 import { getFilePath, prefixRaise } from "./getFilePath";
@@ -18,7 +19,7 @@ export function Share() {
     }
 
     const urlId = findUrlValue(shareKey);
-    if (urlId) {
+    if (urlId && urlId !== exampleId) {
       try {
         getFilePath(urlId);
 
@@ -29,17 +30,15 @@ export function Share() {
       }
     }
 
-    (function newId() {
-      const prefix = Math.floor(Math.random() * 1000);
-      const time = Date.now();
+    const prefix = Math.floor(Math.random() * 1000);
+    const time = Date.now();
 
-      const idValue = prefix * prefixRaise + time;
-      const idText = idValue.toString(36);
+    const idValue = prefix * prefixRaise + time;
+    const idText = idValue.toString(36);
 
-      history.pushState(null, "", `?shareId=${idText}`);
+    history.pushState(null, "", `?shareId=${idText}`);
 
-      setShareId(idText);
-    })();
+    setShareId(idText);
   }, [shareId]);
 
   const { file } = useContext(SaveContext);

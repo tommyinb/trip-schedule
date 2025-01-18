@@ -2,16 +2,14 @@ import { CardColor } from "../desks/cardColor";
 import { File } from "./file";
 import { Json } from "./Json";
 
-export function parseFile(text: string): File {
-  const value = JSON.parse(text) as Json<File>;
-
+export function retypeFile(json: Json<File>): File {
   return {
-    ...value,
+    ...json,
     content: {
-      ...value.content,
-      startDate: new Date(value.content.startDate),
-      endDate: new Date(value.content.endDate),
-      cards: value.content.cards.map((card) => ({
+      ...json.content,
+      startDate: new Date(json.content.startDate),
+      endDate: new Date(json.content.endDate),
+      cards: json.content.cards.map((card) => ({
         ...card,
         content: {
           ...card.content,
@@ -20,6 +18,6 @@ export function parseFile(text: string): File {
         },
       })),
     },
-    editTime: new Date(value.editTime),
+    editTime: new Date(json.editTime),
   };
 }

@@ -1,0 +1,393 @@
+{
+  "content": {
+    "name": "Bangkok Trip",
+    "startDate": "2024-10-06T20:30:00.473Z",
+    "endDate": "2024-10-09T20:30:00.473Z",
+    "startHour": 11,
+    "endHour": 3,
+    "editable": true,
+    "cards": [
+      {
+        "id": 0,
+        "state": "idle",
+        "place": { "zone": "table" },
+        "content": {
+          "name": "Suvarnabhumi Airport",
+          "location": "Suvarnabhumi Airport, 999, Nong Prue, Bang Phli District, Samut Prakan 10540, Thailand",
+          "time": "2024-10-07T07:20:00.000Z",
+          "duration": 5400000,
+          "remark": "241007 13:25 HKT - 15:20 ICT\nUO700\nfrom HK Airport T1\nto Bangkok BKK Airport",
+          "openings": [],
+          "color": "yellow"
+        }
+      },
+      {
+        "id": 1,
+        "state": "idle",
+        "place": { "zone": "table" },
+        "content": {
+          "name": "Maison Hotel Bangkok",
+          "location": "Maison Hotel Bangkok, 18 Sukhumvit 2&4 Alley, Bangkok, 10110 Thailand",
+          "time": "2024-10-07T09:00:00.000Z",
+          "duration": 3600000,
+          "remark": "",
+          "openings": [],
+          "color": "yellow"
+        }
+      },
+      {
+        "id": 28,
+        "state": "idle",
+        "place": { "zone": "table" },
+        "content": {
+          "name": "Mungkorn seafood BBQ Buffet Phrakanong",
+          "location": "Mungkorn seafood BBQ Buffet Phrakanong, 36 Soi Pridi Banomyong 5, Phra Khanong Nuea, Watthana, Bangkok 10110泰國",
+          "time": "2024-10-07T10:30:00.000Z",
+          "duration": 10800000,
+          "remark": "฿499/ppl +฿59 飲品放題 +฿99 蒸鍋\nhttps://youtu.be/TVAP-QvsPxM?si=T3ncQI150Sag9QJi",
+          "openings": [
+            {
+              "weekdays": [0, 1, 2, 3, 4, 5, 6],
+              "startHour": 15,
+              "startMinute": 0,
+              "endHour": 23,
+              "endMinute": 0
+            }
+          ],
+          "color": "brown"
+        }
+      },
+      {
+        "id": 31,
+        "state": "idle",
+        "place": { "zone": "table" },
+        "content": {
+          "name": "Nana Plaza",
+          "location": "Nana Plaza, Bangkok",
+          "time": "2024-10-07T16:00:00.000Z",
+          "duration": 12600000,
+          "remark": "- Butterflies 3/F https://raknoi.com/10902/\n- Rainbow 4 2/F https://raknoi.com/4518/\n- Biillboard 歐美風\n- Spanky 睇表演\n\n伏店\n- Red Dragon 坑錢\n- Strap's 完工人妖 https://raknoi.com/10547/",
+          "openings": [
+            {
+              "weekdays": [0, 1, 2, 3, 4, 5, 6],
+              "startHour": 21,
+              "startMinute": 0,
+              "endHour": 3,
+              "endMinute": 30
+            }
+          ],
+          "color": "blue"
+        }
+      },
+      {
+        "id": 60,
+        "state": "idle",
+        "place": { "zone": "table" },
+        "content": {
+          "name": "Don Mueang International Airport",
+          "location": "Don Mueang International Airport, 222 Vibhavadi Rangsit Rd, Sanam Bin, Don Mueang, Bangkok 10210, Thailand",
+          "time": "2024-10-10T09:00:00.000Z",
+          "duration": 9000000,
+          "remark": "241010 19:05 ICT - 22:55 HKT\nUO793\nfrom Airport DMK",
+          "openings": [],
+          "color": "yellow"
+        }
+      },
+      {
+        "id": 90,
+        "state": "idle",
+        "place": { "zone": "list", "index": 0 },
+        "content": {
+          "name": "Health Land Asoke 按摩",
+          "location": "Health Land Asoke, 55, 100 Pi Sayam Samakhom Alley, Khlong Toei Nuea, Watthana, Bangkok 10110, Thailand",
+          "time": "2024-10-08T09:00:00.000Z",
+          "duration": 9000000,
+          "remark": "฿650/120min 超平, 可預約\nhttps://www.healthlandspa.com/en/spa-&-massage/Treatments\nhttps://www.cosmopolitan.com.hk/beauty/must-try-thailand-massage-and-spa",
+          "openings": [
+            {
+              "weekdays": [0, 1, 2, 3, 4, 5, 6],
+              "startHour": 9,
+              "startMinute": 0,
+              "endHour": 23,
+              "endMinute": 0
+            }
+          ],
+          "color": "green"
+        }
+      },
+      {
+        "id": 92,
+        "state": "idle",
+        "place": { "zone": "table" },
+        "content": {
+          "name": "Ratchanawi Bang Na Shooting Range",
+          "location": "Ratchanawi Bang Na Shooting Range, Bang Na, Bangkok",
+          "time": "2024-10-08T05:00:00.000Z",
+          "duration": 7200000,
+          "color": "green",
+          "remark": "https://www.kkday.com/zh-hk/product/151114-bangkok-ratchanawi-bang-na-shooting-range-experience-thailand\nHK$852: 9mm（25發）+MP15.22（25發）+霰彈槍（10發）\n要提早預約\n\nhttps://youtu.be/uD2PSFYs2SM?si=qx6bd40p6681yVNH&t=330",
+          "openings": [
+            {
+              "weekdays": [0, 2, 3, 4, 5, 6],
+              "startHour": 9,
+              "startMinute": 0,
+              "endHour": 16,
+              "endMinute": 0
+            }
+          ]
+        }
+      },
+      {
+        "id": 111,
+        "state": "idle",
+        "place": { "zone": "table" },
+        "content": {
+          "name": "Wonderland Bangkok 大麻店",
+          "location": "Wonderland Bangkok, Soi Sukhumvit 5, Khwaeng Khlong Toei Nuea, Watthana, Bangkok ",
+          "time": "2024-10-07T15:00:00.000Z",
+          "duration": 3600000,
+          "remark": "",
+          "openings": [
+            {
+              "weekdays": [0, 1, 2, 3, 4, 5, 6],
+              "startHour": 10,
+              "startMinute": 0,
+              "endHour": 2,
+              "endMinute": 30
+            }
+          ],
+          "color": "green"
+        }
+      },
+      {
+        "id": 114,
+        "state": "idle",
+        "place": { "zone": "table" },
+        "content": {
+          "name": "Urban Retreat 按摩",
+          "location": "Urban Retreat, 348, 1 Sukhumvit Rd, Khlong Toei Nuea, Watthana, Bangkok 10110, Thailand",
+          "time": "2024-10-08T10:00:00.000Z",
+          "duration": 9000000,
+          "remark": "฿1200/120min, 可預約\nhttps://urbanretreatspa.net/#ABOUT-section\nhttps://www.wewyn.com/asset/images/imageStock/myImages/5771/WEBMENU01_816456.jpg\nhttps://www.cosmopolitan.com.hk/beauty/must-try-thailand-massage-and-spa",
+          "openings": [
+            {
+              "weekdays": [0, 1, 2, 3, 4, 5, 6],
+              "startHour": 10,
+              "startMinute": 0,
+              "endHour": 22,
+              "endMinute": 0
+            }
+          ],
+          "color": "green"
+        }
+      },
+      {
+        "id": 115,
+        "state": "idle",
+        "place": { "zone": "table" },
+        "content": {
+          "name": "TERRA Thonglor 10 蒲吧",
+          "location": "TERRA Thonglor 10, Bangkok",
+          "time": "2024-10-08T14:00:00.000Z",
+          "duration": 7200000,
+          "remark": "https://youtu.be/FDa7N_rRer0?si=XW6sgxocUjnk9ws3&t=161",
+          "openings": [
+            {
+              "weekdays": [0, 1, 2, 3, 4, 5, 6],
+              "startHour": 17,
+              "startMinute": 0,
+              "endHour": 2,
+              "endMinute": 0
+            }
+          ],
+          "color": "blue"
+        }
+      },
+      {
+        "id": 116,
+        "state": "idle",
+        "place": { "zone": "table" },
+        "content": {
+          "name": "Endo Sushi",
+          "location": "Endo Sushi, The Taste Thong Lo, Khlong Tan Nuea, Watthana, Bangkok",
+          "time": "2024-10-08T12:30:00.000Z",
+          "duration": 5400000,
+          "remark": "",
+          "openings": [
+            {
+              "weekdays": [0, 2, 3, 4, 5, 6],
+              "startHour": 11,
+              "startMinute": 30,
+              "endHour": 14,
+              "endMinute": 0
+            },
+            {
+              "weekdays": [0, 2, 3, 4, 5, 6],
+              "startHour": 17,
+              "startMinute": 0,
+              "endHour": 22,
+              "endMinute": 0
+            }
+          ],
+          "color": "brown"
+        }
+      },
+      {
+        "id": 125,
+        "state": "idle",
+        "place": { "zone": "table" },
+        "content": {
+          "name": "Baan Kuay Tiew Ruathong 船麵",
+          "location": "Baan Kuay Tiew Ruathong , 1/7 Ratchawithi Rd, Samsen Nai, Phaya Thai, Bangkok",
+          "time": "2024-10-09T07:00:00.000Z",
+          "duration": 3600000,
+          "remark": "https://youtu.be/X8P46zhGYGg?si=CMvN1rQy-ytlzNfp&t=144\nhttps://youtu.be/y5_u5KQuF_M?si=xSf5dVrie1jhZtnJ&t=74\n\nFeature 牛船麵, 豬肉麵, 炸豬皮\n兩個人約食10 - 12碗細麵",
+          "openings": [
+            {
+              "weekdays": [0, 2, 3, 4, 5, 6],
+              "startHour": 9,
+              "startMinute": 0,
+              "endHour": 20,
+              "endMinute": 30
+            }
+          ],
+          "color": "brown"
+        }
+      },
+      {
+        "id": 127,
+        "state": "idle",
+        "place": { "zone": "list", "index": 1 },
+        "content": {
+          "name": "Sena Club 日本街KTV",
+          "location": "Sena Club, 23, 15-16 Thaniya Rd, Suriya Wong, Bang Rak, Bangkok",
+          "time": "2024-10-09T19:00:00.000Z",
+          "duration": 7200000,
+          "remark": "https://youtu.be/mu0IIe25_i0?si=x0WO-d6AMq4S73GO&t=282\nhttps://raknoi.com/230236/",
+          "openings": [
+            {
+              "weekdays": [0, 1, 2, 3, 4, 5, 6],
+              "startHour": 19,
+              "startMinute": 0,
+              "endHour": 1,
+              "endMinute": 0
+            }
+          ],
+          "color": "blue"
+        }
+      },
+      {
+        "id": 129,
+        "state": "idle",
+        "place": { "zone": "table" },
+        "content": {
+          "name": "Sam Lor 創意泰式",
+          "location": "1076 Charoen Krung Road, Bangrak, Bang Rak, Bangkok 10500, Thailand",
+          "time": "2024-10-09T13:00:00.000Z",
+          "duration": 3600000,
+          "remark": "https://youtu.be/nxTFmOa_DHQ?si=RTCm1osU7NFHaj52&t=999\n歐姆蛋, 打抛和牛",
+          "openings": [
+            {
+              "weekdays": [0, 1, 3, 4, 5, 6],
+              "startHour": 18,
+              "startMinute": 0,
+              "endHour": 22,
+              "endMinute": 0
+            }
+          ],
+          "color": "brown"
+        }
+      },
+      {
+        "id": 131,
+        "state": "idle",
+        "place": { "zone": "table" },
+        "content": {
+          "name": "Asiatique 市集",
+          "location": "Asiatique, 2194 Charoen Krung Road, Wat Phraya Krai, Bang Kho Laem, Bangkok",
+          "time": "2024-10-09T09:00:00.000Z",
+          "duration": 10800000,
+          "remark": "https://youtu.be/Yadfvipiiy0?si=Z-WMNyT-Tg79kpSJ&t=608",
+          "openings": [
+            {
+              "weekdays": [0, 1, 2, 3, 4, 5, 6],
+              "startHour": 11,
+              "startMinute": 0,
+              "endHour": 0,
+              "endMinute": 0
+            }
+          ],
+          "color": "green"
+        }
+      },
+      {
+        "id": 137,
+        "state": "idle",
+        "place": { "zone": "table" },
+        "content": {
+          "name": "Terminal 21",
+          "location": "Terminal 21 Asok, Bangkok",
+          "time": "2024-10-10T03:00:00.000Z",
+          "duration": 10800000,
+          "remark": "Food Court: 海南雞飯, 彩虹湯粉, 芒果糯米飯\nhttps://youtu.be/Nah2lfG-sfE?si=bHDyiwUX_Plwfdlw\n\n買衫食飯行商場",
+          "openings": [
+            {
+              "weekdays": [0, 1, 2, 3, 4, 5, 6],
+              "startHour": 10,
+              "startMinute": 0,
+              "endHour": 22,
+              "endMinute": 0
+            }
+          ],
+          "color": "brown"
+        }
+      },
+      {
+        "id": 147,
+        "state": "idle",
+        "place": { "zone": "table" },
+        "content": {
+          "name": "Cloud Nine 大麻店",
+          "location": "221 Sukhumvit Rd, Khlong Toei Nuea, Watthana, Bangkok",
+          "time": "2024-10-09T16:00:00.000Z",
+          "duration": 3600000,
+          "remark": "https://mamayahuhu.com/thailand-bangkok-top-five-dispensaries/",
+          "openings": [
+            {
+              "weekdays": [0, 1, 2, 3, 4, 5, 6],
+              "startHour": 10,
+              "startMinute": 0,
+              "endHour": 2,
+              "endMinute": 0
+            }
+          ],
+          "color": "green"
+        }
+      },
+      {
+        "id": 148,
+        "state": "idle",
+        "place": { "zone": "table" },
+        "content": {
+          "name": "Thermae 蛇美 Cafe",
+          "location": "Thermae, 199 Sukhumvit Rd, Khlong Toei Nuea, Watthana, Bangkok 10110泰國",
+          "time": "2024-10-09T15:00:00.000Z",
+          "duration": 3600000,
+          "remark": "",
+          "openings": [
+            {
+              "weekdays": [0, 1, 2, 3, 4, 5, 6],
+              "startHour": 21,
+              "startMinute": 0,
+              "endHour": 0,
+              "endMinute": 0
+            }
+          ],
+          "color": "blue"
+        }
+      }
+    ],
+    "editTime": "2025-01-18T17:51:27.634Z"
+  },
+  "editTime": "2025-01-18T17:51:27.635Z"
+}
