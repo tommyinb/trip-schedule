@@ -37,14 +37,14 @@ export function Load() {
     (async function () {
       const file = await (async function () {
         if (loadId) {
-          const loadFile = loadStorage(loadId);
+          const loadFile = await loadStorage(loadId);
           if (loadFile) {
             return loadFile;
           }
         }
 
         if (shareId) {
-          const shareFile = loadStorage(shareId);
+          const shareFile = await loadStorage(shareId);
           if (shareFile) {
             return shareFile;
           }

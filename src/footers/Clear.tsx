@@ -64,6 +64,12 @@ export function Clear() {
             setCards([]);
 
             setApplyId((id) => id + 1);
+
+            const oldHref = window.location.href;
+            const newHref = oldHref.replace(/\?.+/, "");
+            if (oldHref !== newHref) {
+              history.pushState(null, "", newHref);
+            }
           }}
         >
           Yes

@@ -1,7 +1,9 @@
 import { useContext, useEffect } from "react";
 import { Json } from "./Json";
+import { saveKey } from "./Save";
 import { SaveContext } from "./SaveContext";
 import exampleFile from "./exampleFile.json";
+import { exampleId } from "./exampleId";
 import { File } from "./file";
 import { retypeFile } from "./retypeFile";
 import { useApplyFileContent } from "./useApplyFileContent";
@@ -15,8 +17,20 @@ export default function Example() {
       return;
     }
 
-    const json = exampleFile as Json<File>;
-    const output = retypeFile(json);
+    const output = (() => {
+      const storageText = localStorage.getItem(`${saveKey}.${exampleId}`);
+      if (storageText) {
+        try {
+          const storageJson = JSON.parse(storageText) as Json<File>;
+          return retypeFile(storageJson);
+        } catch (error) {
+          console.error(`failed to load example from local storage`, error);
+        }
+      }
+
+      const exampleJson = exampleFile as Json<File>;
+      return retypeFile(exampleJson);
+    })();
 
     applyContent(output.content);
 
