@@ -8,7 +8,7 @@ export function SettingHour({ className }: Props) {
   const { startHour, setStartHour, endHour, setEndHour, editable } =
     useContext(TripContext);
 
-  const { applyId: id } = useContext(SaveContext);
+  const { applyId } = useContext(SaveContext);
 
   return (
     <div
@@ -18,7 +18,7 @@ export function SettingHour({ className }: Props) {
 
       <div className="content">
         <HourInput
-          key={`start-${id}`}
+          key={`start-${applyId}`}
           className="start"
           value={startHour}
           trySetValue={(value) => {
@@ -37,7 +37,7 @@ export function SettingHour({ className }: Props) {
         <div>-</div>
 
         <HourInput
-          key={`end-${id}`}
+          key={`end-${applyId}`}
           className="end"
           value={endHour}
           trySetValue={(value) => {

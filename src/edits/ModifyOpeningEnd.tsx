@@ -8,13 +8,13 @@ import "./ModifyOpeningEnd.css";
 import { TimeInput } from "./TimeInput";
 
 export function ModifyOpeningEnd({ card, opening }: Props) {
-  const { applyId: id } = useContext(SaveContext);
+  const { applyId } = useContext(SaveContext);
 
   const { setCards } = useContext(DeskContext);
 
   return (
     <TimeInput
-      key={id}
+      key={applyId}
       className="edits-ModifyOpeningEnd"
       value={{
         hour: opening.endHour,

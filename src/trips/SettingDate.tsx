@@ -9,7 +9,7 @@ export function SettingDate({ className }: Props) {
   const { startDate, setStartDate, endDate, setEndDate, editable } =
     useContext(TripContext);
 
-  const { applyId: id } = useContext(SaveContext);
+  const { applyId } = useContext(SaveContext);
 
   return (
     <div
@@ -19,7 +19,7 @@ export function SettingDate({ className }: Props) {
 
       <div className="content">
         <DateInput
-          key={`start-${id}`}
+          key={`start-${applyId}`}
           className="start"
           value={startDate}
           trySetValue={(value) => {
@@ -37,7 +37,7 @@ export function SettingDate({ className }: Props) {
         <div>-</div>
 
         <DateInput
-          key={`end-${id}`}
+          key={`end-${applyId}`}
           className="end"
           value={endDate}
           trySetValue={(value) => {

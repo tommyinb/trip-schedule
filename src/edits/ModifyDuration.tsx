@@ -8,7 +8,7 @@ import { getDurationText } from "./getDurationText";
 import "./ModifyDuration.css";
 
 export function ModifyDuration({ card }: Props) {
-  const { applyId: id } = useContext(SaveContext);
+  const { applyId } = useContext(SaveContext);
 
   const [text, setText] = useState(() =>
     getDurationText(card.content.duration)
@@ -33,7 +33,7 @@ export function ModifyDuration({ card }: Props) {
 
   return (
     <SoftInput
-      key={id}
+      key={applyId}
       className="edits-ModifyDuration"
       text={text}
       onText={(text) => {

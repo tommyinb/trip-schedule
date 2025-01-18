@@ -8,7 +8,7 @@ import { DateInput } from "./DateInput";
 import "./ModifyDate.css";
 
 export function ModifyDate({ card }: Props) {
-  const { applyId: id } = useContext(SaveContext);
+  const { applyId } = useContext(SaveContext);
 
   const cardDate = useMemo(
     () =>
@@ -39,7 +39,7 @@ export function ModifyDate({ card }: Props) {
 
   return (
     <DateInput
-      key={id}
+      key={applyId}
       className="edits-ModifyDate"
       value={cardDate}
       trySetValue={(value) => {

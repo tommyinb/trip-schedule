@@ -1,0 +1,12 @@
+.footers-Link {
+  background-color: #f8f8f8;
+  padding: 10px 10px;
+  text-align: center;
+  color: #ddd;
+
+  @media print {
+    .link {
+      text-decoration: underline;
+    }
+  }
+}
