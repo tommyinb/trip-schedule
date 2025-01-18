@@ -2,7 +2,7 @@
 
 Trip Schedule was created for my 2024 trip to Thailand. It is designed to make organizing plans simple and sharing them with friends effortless.
 
-👉 https://tommyinb.github.io/trip-schedule/
+> 👉 https://tommyinb.github.io/trip-schedule/
 
 ## Drag and Drop
 
@@ -10,7 +10,7 @@ During travel, unexpected situations, like oversleeping, traffic jams, or simple
 
 ![drag and drop](preview/drag.png)
 
-Implementing drag-and-drop in React, however, is no easy task. Especially when the encapsulation and top-down hierarchy, features React takes pride in, posed challenges rather than advantages in this case. To overcome this, I introduced a `<Desk>` component to work alongside the `<Table>`. Think of it as a timetable sheet placed neatly on a school desk.
+Implementing drag-and-drop in _React_, however, is no easy task. Especially when encapsulation and top-down hierarchy, features _React_ takes pride in, posed challenges rather than advantages in this case. To overcome this, I introduced a `<Desk>` component to work alongside the `<Table>` component. Think of it as a timetable sheet placed neatly on a school desk.
 
 `<Table>` focuses solely on rendering and positioning columns, cells, and cards, maintaining its simplicity and clarity. Meanwhile, `<Desk>` handles drag-and-drop interactions and calculates actions based on the layout rendered. This separation allows `<Desk>` to manage touch events independently, preserving the clean and elegant structure of the `<Table>` component. The result is a clear, **maintainable**, and effective solution for a full drag and drop feature.
 
