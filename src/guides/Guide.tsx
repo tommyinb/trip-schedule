@@ -27,8 +27,9 @@ export function Guide() {
 
           <div className="text">
             Open up <span className="gear" /> and set trip date. Double click on
-            the table and add new activities. Use <span className="plane" /> to
-            share with friends. Happy trip planning!
+            the table to add new activities. Long press to drag and drop. Use{" "}
+            <span className="plane" /> to share with friends. Happy trip
+            planning!
           </div>
         </>
       )}
